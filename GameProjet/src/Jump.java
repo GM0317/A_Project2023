@@ -39,4 +39,3 @@ public class Jump extends Thread {
         canvas.setJump(false); // GameCanvas의 점프 상태 업데이트
     }
 }
-//
