@@ -165,5 +165,5 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
 		public static void main(String[] args) {
 	           new GameCanvas();
 	    }
-
+//fgdgd
 }
