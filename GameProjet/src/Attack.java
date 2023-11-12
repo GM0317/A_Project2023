@@ -9,7 +9,7 @@ public class Attack extends JLabel{
 	private int speed; //공격 속도 
 	private int direction; // 공격 방향
 	private Image attack; // 공격 이미지
-	//private GameScreen gameScreen;
+	private GameScreen gameScreen;
 	// 움직이는 상태
 	private boolean left;
 	private boolean right;
