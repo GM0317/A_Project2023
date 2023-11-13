@@ -19,7 +19,7 @@ public class GameScreen extends JFrame{
 		
 		GameCanvas gameCanvas = new GameCanvas(); // Canvas에 있는 기능 불러오긷
         add(gameCanvas); // GameCnavas 추가
-        
+        //dd
 		setVisible(true); // 창을 화면애 보여준다. (이거 없으면 창 안보임.)
 
 	} 
