@@ -2,13 +2,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 
 public class Stage extends Thread{
-	private GameCanvas gameCanvas;
+	private Player gameCanvas;
 	private ArrayList<Monster> monList = new ArrayList<>(); //몬스터 담을 리스트
     public static boolean stageClear = false;
     public static boolean eatGrape = false;
     
     // Stage 클래스의 생성자에 gameCanvas 객체를 전달받도록함.
-    public Stage(GameCanvas gameCanvas) {
+    public Stage(Player gameCanvas) {
         this.gameCanvas = gameCanvas;
     }
     

@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameCanvas extends JPanel implements Runnable, KeyListener, ComponentListener {
+public class Player extends JPanel implements Runnable, KeyListener, ComponentListener {
 	//영은이 글추가함
 	//그래픽스 함수를 사용하기 위한 클래스
 		private Graphics bufferGraphics = null;
@@ -24,11 +24,13 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
 		private List<Attack> attacks = new ArrayList<>(); // 공격 클래스 목록
 		private boolean isJump = false; // 캐릭터가 점프 중인지 여부
 	    private int jumpHeight = 0; // 점프 높이
+	    private static final int PANEL_WIDTH = 700; // 패널 너비
+	    private static final int PANEL_HEIGHT = 400; // 패널 높이
 		
-
-		int x = 50, y = 150, sel = 1; // 캐릭터의 초기 위치와 선택 상태
+		int x = 50, y = 300, sel = 1; // 캐릭터의 초기 위치와 선택 상태
+		int bgX = 0; //배경 좌우키 이벤트 추가
 		
-		public GameCanvas(){
+		public Player(){
 			addKeyListener(this);
 		    setFocusable(true);
 		    setFocusTraversalKeysEnabled(false);
@@ -43,13 +45,15 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
 			int key = e.getKeyCode();
 			if(key == e.VK_RIGHT || key == e.VK_NUMPAD6 || key == e.VK_KP_RIGHT) {
 				sel = (sel == 1)?2:2;
-				x = (x < getWidth())?x + 10 : -image.getWidth(this); //x좌표측으로 이동하는 속도가 5	
+				x = (x < getWidth())?x + 10 : -image.getWidth(this); //x좌표측으로 이동하는 속도가 5
+				bgX -= 10; //배경도 같이 움직이는 코드 오른쪽으로 이동
 			}
 			else {
 				int key1 = e.getKeyCode();
 				if (key1 == e.VK_LEFT || key1 == e.VK_NUMPAD4 || key1 == e.VK_KP_LEFT){
 					sel = (sel == 1)?3:3;  //삼항연산자 
                     x = (x > 0)?x - 10 :getWidth() + image.getWidth(this);
+                    bgX += 10; //배경도 같이 움직이는 코드 왼쪽으로 이동
 				}
 				
 				int key2 = e.getKeyCode();
@@ -75,6 +79,17 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
                     attacks.add(attack);
                 	 sel = (sel == 1)?5:1;
                 }
+                if (x < 0) {
+                    x = 0;
+                } else if (x > PANEL_WIDTH - image.getWidth(this)) {
+                    x = PANEL_WIDTH - image.getWidth(this);
+                }
+
+                if (y < 0) {
+                    y = 0;
+                } else if (y > PANEL_HEIGHT - image.getHeight(this)) {
+                    y = PANEL_HEIGHT - image.getHeight(this);
+                }
 			}
 			 repaint(); //한번 실행하면 다시 원래 이미지로 복귀
 		}
@@ -90,11 +105,13 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
 	    public void setJump(boolean jump) {
 	        this.isJump = jump;
 	    }
-		
+	    public void setY(int newY) {
+	        y = newY;
+	    }
 		@Override
 		public void paint(Graphics g) {
 		    super.paintComponent(g); // 상위 JPanel의 paintComponent 메서드를 호출하여 배경을 지우도록
-		   // g.drawImage(background, 0, 0, background.getWidth(this), background.getHeight(this), this); // 배경 이미지 그리기
+		    g.drawImage(background, bgX, 0, this);
 
 		    // Attack 그리기
 		    for (Attack attack : attacks) {
@@ -123,6 +140,7 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
 		                 x - image.getWidth(this) / 2,
 		                 y - image.getHeight(this) / 2, this); //캐릭터 그리기
 		}
+		
 		
 		@Override
 		public void componentResized(ComponentEvent e) {
@@ -159,11 +177,10 @@ public class GameCanvas extends JPanel implements Runnable, KeyListener, Compone
 		public void run() {
 			// TODO Auto-generated method stub
 			
-			
 		} 
 		
 		public static void main(String[] args) {
-	           new GameCanvas();
+	           new Player();
 	    }
 
 }

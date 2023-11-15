@@ -17,9 +17,9 @@ public class GameScreen extends JFrame{
 		setLocationRelativeTo(null); // 창 화면을 중아에 위치시켜놓음.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프로그램을 완전히 꺼줌 (이거없으면 프로그램 꺼도 실행중임)
 		
-		GameCanvas gameCanvas = new GameCanvas(); // Canvas에 있는 기능 불러오긷
+		Player gameCanvas = new Player(); // Canvas에 있는 기능 불러오긷
         add(gameCanvas); // GameCnavas 추가
-        //dd
+
 		setVisible(true); // 창을 화면애 보여준다. (이거 없으면 창 안보임.)
 
 	} 
