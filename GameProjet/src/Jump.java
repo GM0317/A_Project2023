@@ -14,7 +14,7 @@ public class Jump extends Thread {
         System.out.println("위로 점프");
         System.out.println("x: "+player.x);
         System.out.println("y:"+player.y);
-        int originalY = 300; // 캐릭터의 초기 y 좌표 저장
+        int originalY = 500; // 캐릭터의 초기 y 좌표 저장
         for (int i = 0; i < jumpHeight; i += jumpSpeed) {
             player.setY(originalY - i); // 캐릭터의 y 좌표 설정
             player.repaint(); // 화면 다시 그리기

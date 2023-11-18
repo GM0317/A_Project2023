@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 
 public class GameScreen extends JFrame{
 	
-	public static final int WIDTH = 700; // 너비 700
-	public static final int HEIGHT = 400; // 높이 400
+	public static final int WIDTH = 1000; // 너비 700
+	public static final int HEIGHT = 600; // 높이 400
 	
 	public GameScreen() {
 		setTitle("어드벤처 게임"); // 게임 타이틀

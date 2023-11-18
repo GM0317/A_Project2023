@@ -24,10 +24,10 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		private List<Attack> attacks = new ArrayList<>(); // 공격 클래스 목록
 		private boolean isJump = false; // 캐릭터가 점프 중인지 여부
 	    private int jumpHeight = 0; // 점프 높이
-	    private static final int PANEL_WIDTH = 700; // 패널 너비
-	    private static final int PANEL_HEIGHT = 400; // 패널 높이
+	    private static final int PANEL_WIDTH = 1000; // 패널 너비
+	    private static final int PANEL_HEIGHT = 600; // 패널 높이
 		
-		int x = 50, y = 300, sel = 1; // 캐릭터의 초기 위치와 선택 상태
+		int x = 50, y = 500, sel = 1; // 캐릭터의 초기 위치와 선택 상태
 		int bgX = 0; //배경 좌우키 이벤트 추가
 		
 		public Player(){
@@ -36,7 +36,7 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		    setFocusTraversalKeysEnabled(false);
 		    addComponentListener(this);
 		    
-		    background = Toolkit.getDefaultToolkit().getImage("rsc/map.png"); //맵 이미지
+		    background = Toolkit.getDefaultToolkit().getImage("rsc/스테이지2 art.png"); //맵 이미지
 		}
 		
 		@Override
