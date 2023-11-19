@@ -9,12 +9,12 @@ public class Jump extends Thread {
 
     @Override
     public void run() {
-    	final int jumpHeight = 150; //높이 제한
+    	final int jumpHeight = 250; //높이 제한
         final int jumpSpeed = 2; // 점프 속도, 좀 더 자연스러운 점프 구현
         System.out.println("위로 점프");
         System.out.println("x: "+player.x);
         System.out.println("y:"+player.y);
-        int originalY = 500; // 캐릭터의 초기 y 좌표 저장
+        int originalY = 490; // 캐릭터의 초기 y 좌표 저장
         for (int i = 0; i < jumpHeight; i += jumpSpeed) {
             player.setY(originalY - i); // 캐릭터의 y 좌표 설정
             player.repaint(); // 화면 다시 그리기

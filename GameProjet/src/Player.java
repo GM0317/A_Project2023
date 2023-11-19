@@ -23,12 +23,13 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		private Image background; // 배경 이미지
 		private List<Attack> attacks = new ArrayList<>(); // 공격 클래스 목록
 		private PlayerHp playerHp; // PlayerHp 클래스 객체 선언
+		private Stage2Monster stage2monster;
 		private boolean isJump = false; // 캐릭터가 점프 중인지 여부
 	    private int jumpHeight = 0; // 점프 높이
 	    private static final int PANEL_WIDTH = 1000; // 패널 너비
 	    private static final int PANEL_HEIGHT = 600; // 패널 높이
 		
-		int x = 50, y = 500, sel = 1; // 캐릭터의 초기 위치와 선택 상태
+		int x = 50, y = 490, sel = 1; // 캐릭터의 초기 위치와 선택 상태
 		int bgX = 0; //배경 좌우키 이벤트 추가
 		
 		public Player(){
@@ -37,6 +38,7 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		    setFocusTraversalKeysEnabled(false);
 		    addComponentListener(this);
 		    playerHp = new PlayerHp(this); // PlayerHp 클래스 객체 초기화, this를 이용하여 Player 객체를 전달
+		    stage2monster = new Stage2Monster(); // Stage2Monster 객체 초기화
 		    background = Toolkit.getDefaultToolkit().getImage("rsc/스테이지2 art.png"); //맵 이미지
 		}
 		
@@ -113,6 +115,7 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		public void paint(Graphics g) {
 		    super.paintComponent(g); // 상위 JPanel의 paintComponent 메서드를 호출하여 배경을 지우도록
 		    g.drawImage(background, bgX, 0, this);
+		    stage2monster.draw(g);
 
 		    // Attack 그리기
 		    for (Attack attack : attacks) {
@@ -142,6 +145,7 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		                 y - image.getHeight(this) / 2, this); //캐릭터 그리기
 		 
 	        playerHp.draw(g); // PlayerHp 클래스의 draw 메서드 호출하여 체력 이미지 그리기
+	        
 		}
 		@Override
 		public void componentResized(ComponentEvent e) {
@@ -177,7 +181,8 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			
+	        
+
 		} 
 		
 		public static void main(String[] args) {
