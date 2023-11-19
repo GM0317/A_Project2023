@@ -18,14 +18,14 @@ public class GameScreen extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프로그램을 완전히 꺼줌 (이거없으면 프로그램 꺼도 실행중임)
 		
 		Player gameCanvas = new Player(); // Canvas에 있는 기능 불러오긷
-        add(gameCanvas); // GameCnavas 추가
+        add(gameCanvas); // GameCanvas 추가
 
 		setVisible(true); // 창을 화면애 보여준다. (이거 없으면 창 안보임.)
 
 	} 
 	
 	public static void main(String[] args) {
-        new GameScreen();
+        new GameStart();
     }
 
 }
