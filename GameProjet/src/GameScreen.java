@@ -9,7 +9,7 @@ public class GameScreen extends JFrame{
 	
 	public static final int WIDTH = 1000; // 너비 700
 	public static final int HEIGHT = 600; // 높이 400
-	
+	private int countNumber = 0;
 	public GameScreen() {
 		setTitle("어드벤처 게임"); // 게임 타이틀
 		setSize(WIDTH, HEIGHT); // 창 사이트 (너비, 높이)
@@ -21,7 +21,10 @@ public class GameScreen extends JFrame{
 
 		setVisible(true); // 창을 화면애 보여준다. (이거 없으면 창 안보임.)
 
-	} 
+	}
+	public int getCount() {
+		return this.countNumber;
+	}
 	
 	public static void main(String[] args) {
         new GameScreen();
