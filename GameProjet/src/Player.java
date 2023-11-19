@@ -22,6 +22,7 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		private Image door; // 문 이미지 생성
 		private Image background; // 배경 이미지
 		private List<Attack> attacks = new ArrayList<>(); // 공격 클래스 목록
+		private PlayerHp playerHp; // PlayerHp 클래스 객체 선언
 		private boolean isJump = false; // 캐릭터가 점프 중인지 여부
 	    private int jumpHeight = 0; // 점프 높이
 	    private static final int PANEL_WIDTH = 1000; // 패널 너비
@@ -35,7 +36,7 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		    setFocusable(true);
 		    setFocusTraversalKeysEnabled(false);
 		    addComponentListener(this);
-		    
+		    playerHp = new PlayerHp(this); // PlayerHp 클래스 객체 초기화, this를 이용하여 Player 객체를 전달
 		    background = Toolkit.getDefaultToolkit().getImage("rsc/스테이지2 art.png"); //맵 이미지
 		}
 		
@@ -139,9 +140,9 @@ public class Player extends JPanel implements Runnable, KeyListener, ComponentLi
 		    g.drawImage(image,
 		                 x - image.getWidth(this) / 2,
 		                 y - image.getHeight(this) / 2, this); //캐릭터 그리기
+		 
+	        playerHp.draw(g); // PlayerHp 클래스의 draw 메서드 호출하여 체력 이미지 그리기
 		}
-		
-		
 		@Override
 		public void componentResized(ComponentEvent e) {
 			// TODO Auto-generated method stub
