@@ -1,7 +1,6 @@
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.awt.event.ActionEvent;
@@ -25,7 +24,7 @@ public class GameStart extends JFrame {
 	
 	private Image bufferImage;
 	
-	private Image mainScreen = new ImageIcon("rsc/map.png").getImage();
+	private Image mainScreen = new ImageIcon("rsc/startimg.png").getImage();
 	
 	public GameStart() {
 		setTitle("Unknown Island");
@@ -33,7 +32,7 @@ public class GameStart extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        background = new ImageIcon("rsc/map.png").getImage();
+        background = new ImageIcon("rsc/startimg.png").getImage();
 		setLayout(null);
 		
         // 게임시작버튼
