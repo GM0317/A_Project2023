@@ -13,8 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
-
 public class GameStart extends JFrame {
 	private Image screenImage;
 	private Graphics screenGraphic;
@@ -32,7 +30,7 @@ public class GameStart extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        background = new ImageIcon("rsc/startimg.png").getImage();
+		background = mainScreen;
 		setLayout(null);
 		
         // 게임시작버튼
@@ -41,8 +39,11 @@ public class GameStart extends JFrame {
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	dispose();
                 // 버튼클릭시
-                JOptionPane.showMessageDialog(null, "Game Started!");
+            	if(e.getSource()== startButton) {
+                	new Stage1();
+                }
             }
         });
         add(startButton);
@@ -53,15 +54,17 @@ public class GameStart extends JFrame {
         finshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Game finsh!");
+            	dispose();
             }
         });
         add(finshButton);
-
-		
+	
+        
 		setVisible(true);
 		
 	}
+	
+    
 	public void paint(Graphics g) {
 		 super.paint(g);
 	     g.drawImage(background, 0, 0, getWidth(), getHeight(), this);

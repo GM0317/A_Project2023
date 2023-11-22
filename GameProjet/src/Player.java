@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player extends JPanel implements Runnable, KeyListener, ComponentListener {
-	//영은이 글추가함
 	//그래픽스 함수를 사용하기 위한 클래스
 		private Graphics bufferGraphics = null;
 		//bufferGraphics로 그림을 그릴 때 실제로 그려지는 가상 버퍼
