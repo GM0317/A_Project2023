@@ -1,56 +1,91 @@
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Timer;
+import java.util.TimerTask;
+import java.awt.event.ComponentEvent;
 import javax.swing.JPanel;
 
-public class GameCanvas extends JPanel {
-	private Image image; // 캐릭터 이미지
-	private Image background; // 배경 이미지
-	private List<Attack> attacks = new ArrayList<>(); // 공격 클래스 목록
+public class GameCanvas extends JPanel implements ComponentListener{
+	private static final long serialVersionUID = 5203228742370884076L;
+	private Graphics buffer;
+	private Image offScreen;
+	private Dimension dim;
 	private Player player; // GameCanvas 클래스의 인스턴스에 접근하기 위한 참조
-	
-	public void GameCanvas(Player player) {
+	private PlayerHp hp;
+	private Stage2 sg2;
+	private Player step = new Player();
+	private int countNumber = 0;
+	public GameCanvas(Player player) {
+		addKeyListener(player);
+		addComponentListener(this);
+		addKeyListener(step);
+		setFocusable(true);	 //키를 눌렀을 때 동작이 되도록해줌.
+		requestFocus(); //키를 눌렀을 때 동작이 되도록해줌.
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {		
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				repaint();
+				counting();
+			}
+		}, 0, 1);
 		this.player=player;
+		this.hp = new PlayerHp(player); // hp 초기화
+		this.sg2 = new Stage2();
+		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
+        //add(player);	
 	}
-	
+	public void counting() {
+		this.countNumber++;
+	}
+	public int getCount() {
+		return this.countNumber;
+	}
 	@Override
 	public void paint(Graphics g) {
-		 super.paintComponent(g); // 상위 JPanel의 paintComponent 메서드를 호출하여 배경을 지우도록
-		   // g.drawImage(background, 0, 0, background.getWidth(this), background.getHeight(this), this); // 배경 이미지 그리기 
-
-		    // Attack 그리기
-		    for (Attack attack : attacks) {
-		        attack.draw(g); // 공격 이미지 그리기
-		    }
-
-		    switch (player.sel) {
-		        case 1:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스1.png"); // 이미지1
-		            break;
-		        case 2:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스2.png"); // 이미지2
-		            break;
-		        case 3:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스3.png"); // 이미지3
-		            break;
-		        case 4:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스1.png"); // 이미지4
-		            break;
-		        case 5:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/공격.png");// 공격 이미지
-		            break;
-		    }
-		    
-		    g.drawImage(image,
-		                 player.x - image.getWidth(this) / 2,
-		                 player.y - image.getHeight(this) / 2, this); //캐릭터 그리기
+		//super.paint(g);
+	    initBuffer(); //Offscreen buffer 초기화
+	    buffer.clearRect(0, 0, dim.width, dim.height);
+	    sg2.draw(buffer); // stage2 그리기
+	    hp.draw(buffer);  // HP 이미지 그리기
+	    step.draw(buffer, this); //player 그리기
+	    g.drawImage(this.offScreen, 0, 0, this); 
+	    repaint();
 	}
-	
-	public static void main(String[] args) {
-		new GameCanvas();
+	private void initBuffer() {
+		this.dim = getSize();
+		this.offScreen = createImage(dim.width, dim.height);
+		this.buffer = this.offScreen.getGraphics();
 	}
-
+	@Override
+	public void update(Graphics g) {
+		paint(g);
+	}
+	@Override
+	public void componentResized(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		initBuffer();
+	}
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

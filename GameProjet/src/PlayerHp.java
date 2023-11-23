@@ -28,20 +28,21 @@ public class PlayerHp {
 	public void draw(Graphics g) {
 		if (player != null) {
             if (hp >= 500) {
-                g.drawImage(Heart6, 18, 18, 70, 25, null); // hp이미지 생성
+                g.drawImage(Heart6, 18, 18, 98, 30, null); // hp이미지 생성
             } else if (hp >= 450) {
-                g.drawImage(Heart5, 18, 18, 70, 25, null); // hp 이미지 생성
+                g.drawImage(Heart5, 18, 18, 98, 30, null); // hp 이미지 생성
             } else if (hp >= 400) {
-            	g.drawImage(Heart4, 18, 18, 70, 25, null); // hp 이미지 생성
+            	g.drawImage(Heart4, 18, 18, 98, 30, null); // hp 이미지 생성
             } else if (hp >= 350) {
-            	g.drawImage(Heart3, 18, 18, 70, 25, null); // hp 이미지 생성
+            	g.drawImage(Heart3, 18, 18, 98, 30, null); // hp 이미지 생성
             } else if (hp >= 300) {
-            	g.drawImage(Heart2, 18, 18, 70, 25, null); // hp 이미지 생성
+            	g.drawImage(Heart2, 18, 18, 98, 30, null); // hp 이미지 생성
             } else if (hp >= 200) {
-            	g.drawImage(Heart1, 18, 18, 70, 25, null); // hp 이미지 생성
+            	g.drawImage(Heart1, 18, 18, 98, 30, null); // hp 이미지 생성
             } else {
-            	g.drawImage(Heart0, 18, 18, 70, 25, null); // hp 이미지 생성
+            	g.drawImage(Heart0, 18, 18, 98, 30, null); // hp 이미지 생성
             }
+            
         }
 	}
 

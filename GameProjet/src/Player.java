@@ -1,192 +1,240 @@
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JPanel;
 
-import java.util.ArrayList;
-import java.util.List;
+public class Player implements KeyListener{
+	private Image player;
+	private GameCanvas canvas;
+	private Jump jump;
+	private BufferedImage sprite;
+	private BufferedImage jumping;
+	private Graphics g;
+	private State []jumpes;
+	private State []states;
+	private int stateIdx = 0;
+	private int x = 100;
+	private int y = 450;
+	private int speed = 5;
+	private int jumpHeight = 0; // 점프 높이
+	private boolean isJump = false; // 캐릭터가 점프 중인지 여부
+    
+	public Player() {
+		loadImage();
+		states = new State[6];
+		State state = new State();
+		states[0] = state;
+		
+		state.width = 58;
+		state.height = 77;
+		state.index_x = 0;
+		state.start_x = 0;
+		state.start_y = 0;
+		state.frame_size = 6;
+		state = new State();
+		
+		states[1] = state;
+		state.width = 58;
+		state.height = 77;
+		state.index_x = 1;
+		state.start_x = 121;
+		state.start_y = 76;
+		state.frame_size = 6;
+		//state.stop = true;
+		
+		state = new State();
+		states[2] = state;
+		state.width = 58;
+		state.height = 77;
+		state.index_x = 2;
+		state.start_x = 178;
+		state.start_y = 76;
+		state.frame_size = 6;
+		
+		state = new State();
+		states[3] = state;
+		state.width = 58;
+		state.height = 77;
+		state.index_x = 3;
+		state.start_x = 233;
+		state.start_y = 76;
+		state.frame_size = 6;
+		
+		state = new State();
+		states[4] = state;
+		state.width = 58;
+		state.height = 77;
+		state.index_x = 4;
+		state.start_x = 287;
+		state.start_y = 76;
+		state.frame_size = 6;
+		//state.stop = true;
+		
+		state = new State();
+		states[5] = state;
+		state.width = 58;
+		state.height = 77;
+		state.index_x = 5;
+		state.start_x = 337;
+		state.start_y = 76;
+		state.frame_size = 6;
+		state.stop = true;
+		
+		jumpes = new State[4];
+		State jump = new State();
+		jumpes[0] = jump;
+		
+		jump.width=58;
+		jump.height=79;
+		jump.index_x=0;
+		jump.start_x=0;
+		jump.start_y=0;
+		
+		jump.width=58;
+		jump.height=79;
+		jump.index_x=1;
+		jump.start_x=111;
+		jump.start_y=79;
 
-public class Player extends JPanel implements Runnable, KeyListener, ComponentListener {
-	//영은이 글추가함
-	//그래픽스 함수를 사용하기 위한 클래스
-		private Graphics bufferGraphics = null;
-		//bufferGraphics로 그림을 그릴 때 실제로 그려지는 가상 버퍼
-		private Image offscreen;
-		private Image image; // 캐릭터 이미지
-		private Image door; // 문 이미지 생성
-		private Image background; // 배경 이미지
-		private List<Attack> attacks = new ArrayList<>(); // 공격 클래스 목록
-		private PlayerHp playerHp; // PlayerHp 클래스 객체 선언
-		private Stage2Monster stage2monster;
-		private boolean isJump = false; // 캐릭터가 점프 중인지 여부
-	    private int jumpHeight = 0; // 점프 높이
-	    private static final int PANEL_WIDTH = 1000; // 패널 너비
-	    private static final int PANEL_HEIGHT = 600; // 패널 높이
+		jump.width=58;
+		jump.height=79;
+		jump.index_x=2;
+		jump.start_x=164;
+		jump.start_y=79;
 		
-		int x = 50, y = 490, sel = 1; // 캐릭터의 초기 위치와 선택 상태
-		int bgX = 0; //배경 좌우키 이벤트 추가
+		jump.width=58;
+		jump.height=79;
+		jump.index_x=3;
+		jump.start_x=216;
+		jump.start_y=79;
 		
-		public Player(){
-			addKeyListener(this);
-		    setFocusable(true);
-		    setFocusTraversalKeysEnabled(false);
-		    addComponentListener(this);
-		    playerHp = new PlayerHp(this); // PlayerHp 클래스 객체 초기화, this를 이용하여 Player 객체를 전달
-		    stage2monster = new Stage2Monster(); // Stage2Monster 객체 초기화
-		    background = Toolkit.getDefaultToolkit().getImage("rsc/스테이지2 art.png"); //맵 이미지
+		this.x = x;
+		this.y = y;
+	}
+	private void loadImage() {
+		try {
+			this.sprite = ImageIO.read(new File("character/step.png"));
+			this.jumping = ImageIO.read(new File("character/jump.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		@Override
-		public void keyPressed(java.awt.event.KeyEvent e) {
-			// TODO Auto-generated method stub
-			int key = e.getKeyCode();
-			if(key == e.VK_RIGHT || key == e.VK_NUMPAD6 || key == e.VK_KP_RIGHT) {
-				sel = (sel == 1)?2:2;
-				x = (x < getWidth())?x + 10 : -image.getWidth(this); //x좌표측으로 이동하는 속도가 5
-				bgX -= 10; //배경도 같이 움직이는 코드 오른쪽으로 이동
+	}
+
+	private State getState() {
+		return states[stateIdx];
+	}
+	private boolean flip = false;
+	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
+		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
+
+	    Graphics gb = bufferedImage.getGraphics();
+	    gb.drawImage(sprite, 
+				0, 0,  //위치 
+				0 + state.width, 0 + state.height, //크기 
+				state.width*state.index_x + state.start_x, 
+				state.height*state.index_y + state.start_y, 
+				state.width*state.index_x + state.width + state.start_x, 
+				state.height*state.index_y + state.start_y + state.height, 
+				gameCanvas);
+	   /* if (isJump) {
+	        gb.drawImage(jumping,
+	                0, 0,  // 위치
+	                0 + state.width, 0 + state.height, // 크기
+	                state.width * state.index_x + state.start_x,
+	                state.height * state.index_y + state.start_y,
+	                state.width * state.index_x + state.width + state.start_x,
+	                state.height * state.index_y + state.start_y + state.height,
+	                gameCanvas);
+	    }*/
+	    
+	    gb.dispose();
+	    
+	    if(this.flip) {
+		    AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+		    tx.translate(-state.width, 0);
+		    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		    bufferedImage = op.filter(bufferedImage, null);
+	    }
+	    g.drawImage(bufferedImage, x, y, null);
+	    
+	    
+		if(gameCanvas.getCount() % 50 == 0)
+		{
+			if(state.index_x < state.frame_size-1)
+			{
+				state.index_x++;
 			}
-			else {
-				int key1 = e.getKeyCode();
-				if (key1 == e.VK_LEFT || key1 == e.VK_NUMPAD4 || key1 == e.VK_KP_LEFT){
-					sel = (sel == 1)?3:3;  //삼항연산자 
-                    x = (x > 0)?x - 10 :getWidth() + image.getWidth(this);
-                    bgX += 10; //배경도 같이 움직이는 코드 왼쪽으로 이동
-				}
-				
-				int key2 = e.getKeyCode();
-                if(key2 == e.VK_UP || key2 == e.VK_NUMPAD8 || key2 == e.VK_KP_UP ) {
-                	//sel = (sel == 1)?4:1;  //삼항연산자 
-                   // y = (y > 0)?y - 10 : getHeight() + image.getHeight(this);
-                    if (!isJump) { //점프여부 확인하고 점프 기능 실행
-                        isJump = true;
-                        jump();
-                    }
-                }
-                
-                int key3 = e.getKeyCode();
-                if(key3 == e.VK_DOWN || key3 == e.VK_NUMPAD2 || key3 == e.VK_KP_DOWN) {
-                	sel = (sel == 1)?4:1;  //삼항연산자
-                    y = (y < getHeight())?y + 10 : image.getWidth(this);
-                }
-                
-                int key4 = e.getKeyCode();
-                if(key == e.VK_SPACE) {
-                	int attackSpeed = 5; // 공격의 이동 속도 설정
-                    Attack attack = new Attack(x, y, attackSpeed, sel);
-                    attacks.add(attack);
-                	 sel = (sel == 1)?5:1;
-                }
-                if (x < 0) {
-                    x = 0;
-                } else if (x > PANEL_WIDTH - image.getWidth(this)) {
-                    x = PANEL_WIDTH - image.getWidth(this);
-                }
-
-                if (y < 0) {
-                    y = 0;
-                } else if (y > PANEL_HEIGHT - image.getHeight(this)) {
-                    y = PANEL_HEIGHT - image.getHeight(this);
-                }
+			else
+			{
+				if(!state.stop)
+					state.index_x = 0;
+				else
+					state.index_x = state.frame_size-1;
 			}
-			 repaint(); //한번 실행하면 다시 원래 이미지로 복귀
 		}
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		switch(e.getKeyCode())
+		{
+		case KeyEvent.VK_LEFT:
+            this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
+			x -= 8;
+			System.out.println("왼쪽");
+			break;
+		case KeyEvent.VK_RIGHT:
+            this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
+			x += 4;
+			System.out.println("오른쪽");
+			break;
+		case KeyEvent.VK_SPACE:
+			if (!isJump) { //점프여부 확인하고 점프 기능 실행
+                isJump = true;
+                jump();
+            }
+			break;
+		case KeyEvent.VK_A:
+			//this.stateIdx = 4;
+			break;
+		}
+	}
+	private void jump() {
+        Jump jump = new Jump(this);
+        jump.start();
+    }
+	public boolean isJump() {
+        return isJump;
+    }
+    // isJump 필드의 setter
+    public void setJump(boolean jump) {
+        this.isJump = jump;
+    }
+    public void setY(int newY) {
+        y = newY;
+    }
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		this.stateIdx = 0;
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
 		
-		private void jump() {
-	        Jump jump = new Jump(this); // GameCanvas의 참조 전달
-	        jump.start();
-	    }
-		public boolean isJump() {
-	        return isJump;
-	    }
-	    // isJump 필드의 setter
-	    public void setJump(boolean jump) {
-	        this.isJump = jump;
-	    }
-	    public void setY(int newY) {
-	        y = newY;
-	    }
-		@Override
-		public void paint(Graphics g) {
-		    super.paintComponent(g); // 상위 JPanel의 paintComponent 메서드를 호출하여 배경을 지우도록
-		    g.drawImage(background, bgX, 0, this);
-		    stage2monster.draw(g);
-
-		    // Attack 그리기
-		    for (Attack attack : attacks) {
-		        attack.draw(g); // 공격 이미지 그리기
-		    }
-
-		    switch (sel) {
-		        case 1:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스1.png"); // 이미지1
-		            break;
-		        case 2:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스2.png"); // 이미지2
-		            break;
-		        case 3:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스3.png"); // 이미지3
-		            break;
-		        case 4:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/피스1.png"); // 이미지4
-		            break;
-		        case 5:
-		            image = Toolkit.getDefaultToolkit().getImage("rsc/공격.png");// 공격 이미지
-		            break;
-		    }
-		    
-		    g.drawImage(image,
-		                 x - image.getWidth(this) / 2,
-		                 y - image.getHeight(this) / 2, this); //캐릭터 그리기
-		 
-	        playerHp.draw(g); // PlayerHp 클래스의 draw 메서드 호출하여 체력 이미지 그리기
-	        
-		}
-		@Override
-		public void componentResized(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void componentMoved(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void componentShown(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void componentHidden(ComponentEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void keyTyped(java.awt.event.KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-		@Override
-		public void keyReleased(java.awt.event.KeyEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-	        
-
-		} 
-		
-		public static void main(String[] args) {
-	           new Player();
-	    }
-
+	}
+	public void draw(Graphics g, GameCanvas gameCanvas) {
+		//g.drawImage(sprite, 50, 50, 700, 150, gameCanvas);
+		drawCharacter(getState(), g, gameCanvas);
+	}
 }

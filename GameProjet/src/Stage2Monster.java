@@ -29,14 +29,11 @@ public class Stage2Monster {
 	}
 	public void moveLeft() { // 왼쪽으로 이동하는 메소드
         x -= speed; // x 좌표를 왼쪽으로 이동
-        // 이동 후의 추가 로직
     }
 
     public void moveRight() { // 오른쪽으로 이동하는 메소드
         x += speed; // x 좌표를 오른쪽으로 이동
-        // 이동 후의 추가 로직
     }
-    
 	public void draw(Graphics g) {
 		monster = new ImageIcon("rsc/monster2기본.png").getImage();
 		g.drawImage(monster, 100, 430, 150, 150, null); // monster 이미지를 현재 x, y 위치에 그림

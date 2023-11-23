@@ -3,7 +3,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public class Attack extends JLabel{
+public class Attack {
 	private int x; // 공격 x 좌표
 	private int y; // 공격 y 좌표
 	private int speed; //공격 속도 
