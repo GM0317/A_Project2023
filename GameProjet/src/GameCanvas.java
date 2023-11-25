@@ -19,6 +19,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private Player player; // GameCanvas 클래스의 인스턴스에 접근하기 위한 참조
 	private PlayerHp hp;
 	private Stage2 sg2;
+	private Stage1 sg1;
 	private Player step = new Player();
 	private int countNumber = 0;
 	public GameCanvas(Player player) {
@@ -56,7 +57,9 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	    sg2.draw(buffer); // stage2 그리기
 	    hp.draw(buffer);  // HP 이미지 그리기
 	    step.draw(buffer, this); //player 그리기
+	    //sg1.draw(buffer);
 	    g.drawImage(this.offScreen, 0, 0, this); 
+	    
 	    repaint();
 	}
 	private void initBuffer() {

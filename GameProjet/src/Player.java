@@ -16,6 +16,7 @@ public class Player implements KeyListener{
 	private Image player;
 	private GameCanvas canvas;
 	private Jump jump;
+	private Stage2 stage2;
 	private BufferedImage sprite;
 	private BufferedImage jumping;
 	private Graphics g;
@@ -27,6 +28,10 @@ public class Player implements KeyListener{
 	private int speed = 5;
 	private int jumpHeight = 0; // 점프 높이
 	private boolean isJump = false; // 캐릭터가 점프 중인지 여부
+	private int bgX = 0; //배경 좌우키 이벤트 추가
+	//private Image map;
+	private int minX = 0; // 최소 X 좌표
+	private int maxX = 1500; // 최대 X 좌표 (넓히고 싶은 범위에 맞게 설정)
     
 	public Player() {
 		loadImage();
@@ -119,6 +124,8 @@ public class Player implements KeyListener{
 		
 		this.x = x;
 		this.y = y;
+		this.stage2 = stage2;
+		//map = new ImageIcon("stage/1.png").getImage();
 	}
 	private void loadImage() {
 		try {
@@ -138,15 +145,8 @@ public class Player implements KeyListener{
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
-	    gb.drawImage(sprite, 
-				0, 0,  //위치 
-				0 + state.width, 0 + state.height, //크기 
-				state.width*state.index_x + state.start_x, 
-				state.height*state.index_y + state.start_y, 
-				state.width*state.index_x + state.width + state.start_x, 
-				state.height*state.index_y + state.start_y + state.height, 
-				gameCanvas);
-	   /* if (isJump) {
+	    
+	    if (isJump) {
 	        gb.drawImage(jumping,
 	                0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
@@ -155,7 +155,17 @@ public class Player implements KeyListener{
 	                state.width * state.index_x + state.width + state.start_x,
 	                state.height * state.index_y + state.start_y + state.height,
 	                gameCanvas);
-	    }*/
+	    }
+	    else {
+	    	gb.drawImage(sprite, 
+					0, 0,  //위치 
+					0 + state.width, 0 + state.height, //크기 
+					state.width*state.index_x + state.start_x, 
+					state.height*state.index_y + state.start_y, 
+					state.width*state.index_x + state.width + state.start_x, 
+					state.height*state.index_y + state.start_y + state.height, 
+					gameCanvas);
+	    }
 	    
 	    gb.dispose();
 	    
@@ -191,11 +201,13 @@ public class Player implements KeyListener{
 		case KeyEvent.VK_LEFT:
             this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
 			x -= 8;
+			bgX += 10;
 			System.out.println("왼쪽");
 			break;
 		case KeyEvent.VK_RIGHT:
             this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
 			x += 4;
+			bgX -= 10;
 			System.out.println("오른쪽");
 			break;
 		case KeyEvent.VK_SPACE:
@@ -235,6 +247,8 @@ public class Player implements KeyListener{
 	}
 	public void draw(Graphics g, GameCanvas gameCanvas) {
 		//g.drawImage(sprite, 50, 50, 700, 150, gameCanvas);
+		//g.drawImage(map, bgX, 0, 2000, 600, null);
 		drawCharacter(getState(), g, gameCanvas);
+		
 	}
 }

@@ -6,13 +6,14 @@ import javax.swing.JPanel;
 
 public class Stage2 {
 	private Image map;
-	//private GameCanvas Canvas;
-	int bgX = 0; //배경 좌우키 이벤트 추가
+	private Image floor;
 	public Stage2() {
-		map = new ImageIcon("rsc/스테이지2 art.png").getImage();
+		map = new ImageIcon("stage/1.png").getImage();
+		floor = new ImageIcon("stage/stage Floor.png").getImage();
 	}
 	public void draw(Graphics g) {
-		g.drawImage(map, 0, 0, null);
+		g.drawImage(map, 0, 0, 2000, 600, null);
+		g.drawImage(floor, 0, 0, 3500, 570, null);
 	}
 
 }

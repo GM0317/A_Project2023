@@ -49,9 +49,9 @@ public class Stage1 extends JFrame {
         g.dispose();
         return newImage;
         */
-	public void paint(Graphics g) {
+	public void draw(Graphics g) {
 		 super.paint(g);
 		 g.drawImage(this.offScreen, 0, 0, this);
-	     g.drawImage(background, 0, 0, GameScreen.WIDTH, GameScreen.HEIGHT, this);
+	     g.drawImage(background, 0, 0, 2000, 600, this);
 	}
 }
