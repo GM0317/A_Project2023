@@ -31,7 +31,7 @@ public class Player implements KeyListener{
 	private int bgX = 0; //배경 좌우키 이벤트 추가
 	private Image map;
 	private boolean isOnGround = false; // 바닥에 서 있는지 여부
-	int originalY = 450; // 캐릭터의 초기 y 좌표 저장
+	private int initialY; // 초기 Y 좌표
 	
 	private int width; // 추가: 캐릭터의 가로 길이
 	private int height; // 추가: 캐릭터의 세로 길이
@@ -130,6 +130,7 @@ public class Player implements KeyListener{
 		this.x = x;
 		this.y = y;
 		this.stage2 = stage2;
+		this.initialY = y; // 초기 Y 좌표 저장
 		//map = new ImageIcon("stage/1.png").getImage();
 	}
 	private void loadImage() {
@@ -183,7 +184,7 @@ public class Player implements KeyListener{
 	    g.drawImage(bufferedImage, x, y, null);
 	    
 	    
-		if(gameCanvas.getCount() % 50 == 0)
+		if(gameCanvas.getCount() % 70 == 0)
 		{
 			if(state.index_x < state.frame_size-1)
 			{
@@ -222,7 +223,7 @@ public class Player implements KeyListener{
             }
 			break;
 		case KeyEvent.VK_UP:
-            // 위쪽 키 눌렸을 때의 동작 (사다리 올라가기)
+            // up 키 눌렸을 때의 동작 (사다리 올라가기)
             if (isOnLadder()) { // 사다리 위에 있는지 확인
                 y -= speed; // y 좌표를 위로 이동
             }
@@ -280,7 +281,7 @@ public class Player implements KeyListener{
 		    prevX = x;
 		    prevY = y;
 
-		 // 캐릭터와 사각형 경계 간의 충돌 감지
+		    // 캐릭터와 사각형 경계 간의 충돌 감지
 		    if (x < rectX + rectWidth &&
 		        x + width > rectX &&
 		        y < rectY + rectHeight &&
@@ -288,12 +289,20 @@ public class Player implements KeyListener{
 		        // 충돌이 감지되면 캐릭터의 위치를 경계선 위로 고정
 		        y = rectY - height;
 		        System.out.println("충돌");
+		    }
+		    // 캐릭터와 사각형 경계 간의 충돌 감지
+		    if ((x < rectX || x + width > rectX + rectWidth || y + height < rectY) &&
+		        (x < rectX2 || x + width > rectX2 + rectWidth2 || y + height < rectY2)) {
+		        // 캐릭터가 사다리 경계선 이외의 영역에 있는 경우, 초기 Y 좌표까지만 떨어지도록 y 좌표를 증가시킴 
+		        y += speed;
+		        if (y > initialY) {
+		            y = initialY; // 초기 Y 좌표까지만 떨어지도록 제한
+		        }
 		    } else {
-		        // 충돌이 없을 때만 캐릭터를 그리고 이동
+		        // 사다리 경계선에 있는 경우나 충돌이 없는 경우 캐릭터를 그리고 이동
 		        drawCharacter(getState(), g, gameCanvas);
 		    }
 		    drawCharacter(getState(), g, gameCanvas);
-		  
 	}
 	private boolean isOnLadder() {
 	    // 사다리에 해당하는 영역을 정의하고, 현재 캐릭터가 해당 영역에 있는지 확인하여 사다리 위에 있는지 여부를 판단
