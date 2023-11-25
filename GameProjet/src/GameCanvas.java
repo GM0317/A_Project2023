@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -58,7 +59,23 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	    hp.draw(buffer);  // HP 이미지 그리기
 	    step.draw(buffer, this); //player 그리기
 	    //sg1.draw(buffer);
-	    g.drawImage(this.offScreen, 0, 0, this); 
+	    g.drawImage(this.offScreen, 0, 0, this);
+	    
+	    // 사각형 경계선 그리기
+	    g.setColor(Color.RED);
+	    int rectX = 600;
+	    int rectY = 400;
+	    int rectWidth = 140;
+	    int rectHeight = 40;
+	    // 바닥 경계선 
+	    g.setColor(Color.RED);
+	    int rectX1 = 635;
+	    int rectY2 = 400;
+	    int rectWidth3 = 35;
+	    int rectHeight4 = 130;
+	    // drawRect() 메서드를 사용하여 사각형의 경계선 그리기
+	    g.drawRect(rectX, rectY, rectWidth, rectHeight);
+	    g.drawRect(rectX1, rectY2, rectWidth3, rectHeight4);
 	    
 	    repaint();
 	}
@@ -91,4 +108,5 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
 }

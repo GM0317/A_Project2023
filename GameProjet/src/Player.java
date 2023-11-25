@@ -29,9 +29,14 @@ public class Player implements KeyListener{
 	private int jumpHeight = 0; // 점프 높이
 	private boolean isJump = false; // 캐릭터가 점프 중인지 여부
 	private int bgX = 0; //배경 좌우키 이벤트 추가
-	//private Image map;
-	private int minX = 0; // 최소 X 좌표
-	private int maxX = 1500; // 최대 X 좌표 (넓히고 싶은 범위에 맞게 설정)
+	private Image map;
+	private boolean isOnGround = false; // 바닥에 서 있는지 여부
+	int originalY = 450; // 캐릭터의 초기 y 좌표 저장
+	
+	private int width; // 추가: 캐릭터의 가로 길이
+	private int height; // 추가: 캐릭터의 세로 길이
+	private int prevX; // 추가: 이전 X 위치
+	private int prevY; // 추가: 이전 Y 위치
     
 	public Player() {
 		loadImage();
@@ -206,7 +211,7 @@ public class Player implements KeyListener{
 			break;
 		case KeyEvent.VK_RIGHT:
             this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
-			x += 4;
+			x += 8;
 			bgX -= 10;
 			System.out.println("오른쪽");
 			break;
@@ -215,6 +220,14 @@ public class Player implements KeyListener{
                 isJump = true;
                 jump();
             }
+			break;
+		case KeyEvent.VK_UP:
+            // 위쪽 키 눌렸을 때의 동작 (사다리 올라가기)
+            if (isOnLadder()) { // 사다리 위에 있는지 확인
+                y -= speed; // y 좌표를 위로 이동
+            }
+            break;
+		case KeyEvent.VK_DOWN:
 			break;
 		case KeyEvent.VK_A:
 			//this.stateIdx = 4;
@@ -248,7 +261,50 @@ public class Player implements KeyListener{
 	public void draw(Graphics g, GameCanvas gameCanvas) {
 		//g.drawImage(sprite, 50, 50, 700, 150, gameCanvas);
 		//g.drawImage(map, bgX, 0, 2000, 600, null);
-		drawCharacter(getState(), g, gameCanvas);
-		
+		//drawCharacter(getState(), g, gameCanvas);
+		 	int rectX = 600;
+		    int rectY = 400;
+		    int rectWidth = 140;
+		    int rectHeight = 40;
+		    
+		    int rectX2 = 635;
+		    int rectY2 = 400;
+		    int rectWidth2 = 35;
+		    int rectHeight2 = 130;
+
+		    // 현재 플레이어의 가로와 세로 길이
+		    width = getState().width;
+		    height = getState().height;
+
+		    // 캐릭터의 이전 위치 저장
+		    prevX = x;
+		    prevY = y;
+
+		 // 캐릭터와 사각형 경계 간의 충돌 감지
+		    if (x < rectX + rectWidth &&
+		        x + width > rectX &&
+		        y < rectY + rectHeight &&
+		        y + height > rectY) {
+		        // 충돌이 감지되면 캐릭터의 위치를 경계선 위로 고정
+		        y = rectY - height;
+		        System.out.println("충돌");
+		    } else {
+		        // 충돌이 없을 때만 캐릭터를 그리고 이동
+		        drawCharacter(getState(), g, gameCanvas);
+		    }
+		    drawCharacter(getState(), g, gameCanvas);
+		  
+	}
+	private boolean isOnLadder() {
+	    // 사다리에 해당하는 영역을 정의하고, 현재 캐릭터가 해당 영역에 있는지 확인하여 사다리 위에 있는지 여부를 판단
+	    int ladderX = 635;
+	    int ladderY = 400;
+	    int ladderWidth = 35;
+	    int ladderHeight = 130;
+	    // 캐릭터와 사다리 충돌 여부 확인
+	    return x < ladderX + ladderWidth &&
+	           x + width > ladderX &&
+	           y < ladderY + ladderHeight &&
+	           y + height > ladderY;
 	}
 }
