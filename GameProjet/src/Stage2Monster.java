@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -9,34 +10,42 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Stage2Monster {
-	private int x; //monster X좌표
-	private int y; //monster Y좌표
-	private int speed; //monster 이동속도
-	private State []states; //monster 상태 배열
-	private int state = 0;
-	private BufferedImage monster2;
-	private Image monster;
-	private Player player;
-	
-	public void Stage2Monster(){
-		this.x=0; //초기 x좌표
-		this.y=0; //초기 y좌표
-		this.speed=5; //monster 이동 속도 5
-		//this.player = player;
-		//this.monster = new ImageIcon("rsc/monster2기본.png").getImage(); // 몬스터 이미지 초기화
-		
-		
-	}
-	public void moveLeft() { // 왼쪽으로 이동하는 메소드
-        x -= speed; // x 좌표를 왼쪽으로 이동
+    private Image monster;
+    private Player player;
+    private State[] states;
+    private int stateIdx = 0;
+    private int x = 300;
+    private int y = 430;
+
+    public Stage2Monster() {
+        monster = new ImageIcon("rsc/monster2기본.png").getImage();
     }
 
-    public void moveRight() { // 오른쪽으로 이동하는 메소드
-        x += speed; // x 좌표를 오른쪽으로 이동
+    public void draw(Graphics g) {
+        g.drawImage(monster, x, y, 150, 150, null); // monster 이미지를 현재 x, y 위치에 그림
     }
-	public void draw(Graphics g) {
-		monster = new ImageIcon("rsc/monster2기본.png").getImage();
-		g.drawImage(monster, 100, 430, 150, 150, null); // monster 이미지를 현재 x, y 위치에 그림
-	}
-//
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return monster.getWidth(null); // 몬스터 이미지의 너비 반환
+    }
+
+    public int getHeight() {
+        return monster.getHeight(null); // 몬스터 이미지의 높이 반환
+    }
 }

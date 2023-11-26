@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 
@@ -25,6 +26,13 @@ public class PlayerHp {
         Heart1 = new ImageIcon("rsc/Heart1.png").getImage();
         Heart0 = new ImageIcon("rsc/Heart0.png").getImage();
     }
+    public void decreaseHp(int amount) { // Hp 감소시키기
+        hp -= amount;
+        if (hp < 0) {
+            hp = 0;
+            System.out.println("hp감소");
+        }
+    }
 	public void draw(Graphics g) {
 		if (player != null) {
             if (hp >= 500) {
@@ -42,7 +50,9 @@ public class PlayerHp {
             } else {
             	g.drawImage(Heart0, 18, 18, 98, 30, null); // hp 이미지 생성
             }
-            
+            // HP 값을 그래픽으로 표시
+            g.setColor(Color.WHITE);
+            g.drawString("HP: " + hp, 18, 60); // hp가 감소하는지 확인하기 위해 만듬.
         }
 	}
 

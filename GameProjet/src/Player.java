@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
@@ -17,6 +18,8 @@ public class Player implements KeyListener{
 	private GameCanvas canvas;
 	private Jump jump;
 	private Stage2 stage2;
+	private PlayerHp hp;
+	private Stage2Monster monster2;
 	private BufferedImage sprite;
 	private BufferedImage jumping;
 	private Graphics g;
@@ -131,6 +134,8 @@ public class Player implements KeyListener{
 		this.y = y;
 		this.stage2 = stage2;
 		this.initialY = y; // 초기 Y 좌표 저장
+		this.monster2 = new Stage2Monster();
+		this.hp = new PlayerHp(this); // PlayerHp 객체 인스턴스
 		//map = new ImageIcon("stage/1.png").getImage();
 	}
 	private void loadImage() {
@@ -142,7 +147,6 @@ public class Player implements KeyListener{
 			e.printStackTrace();
 		}
 	}
-
 	private State getState() {
 		return states[stateIdx];
 	}
@@ -235,6 +239,9 @@ public class Player implements KeyListener{
 			break;
 		}
 	}
+	public int getY() {
+        return y;
+    }
 	private void jump() {
         Jump jump = new Jump(this);
         jump.start();
@@ -259,48 +266,70 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+	private void monsterCheck() {
+	    Rectangle playerBox = new Rectangle(x, y, width, height); // 캐릭터의 충돌 박스
+	    Rectangle monsterBox = new Rectangle(monster2.getX(), monster2.getY(), monster2.getWidth(), monster2.getHeight()); // 몬스터의 충돌 박스
+
+	    if (playerBox.intersects(monsterBox)) {
+	        // 충돌이 감지되었을 때의 동작을 수행
+	        hp.decreaseHp(50); // 몬스터와 충돌 시 HP 50 감소
+	        System.out.println("몬스터와 충돌!");
+	    }
+	}
+/*
+	// Stage2Monster 클래스에 width, height 값을 반환하는 메서드 추가
+	public int getWidth() {
+	    return monster2.getWidth(); // 이미지의 폭을 반환
+	}
+
+	public int getHeight() {
+	    return monster2.getHeight(); // 이미지의 높이를 반환
+	}
+*/
+
 	public void draw(Graphics g, GameCanvas gameCanvas) {
+		monsterCheck(); // 충돌 체크
 		//g.drawImage(sprite, 50, 50, 700, 150, gameCanvas);
-		//g.drawImage(map, bgX, 0, 2000, 600, null);
+		//g.drawImage(map, bgX, 0, 2000, 600, null); //map 움직이기
 		//drawCharacter(getState(), g, gameCanvas);
-		 	int rectX = 600;
-		    int rectY = 400;
-		    int rectWidth = 140;
-		    int rectHeight = 40;
+		int rectX = 600;
+		int rectY = 400;
+		int rectWidth = 140;
+		int rectHeight = 40;
 		    
-		    int rectX2 = 635;
-		    int rectY2 = 400;
-		    int rectWidth2 = 35;
-		    int rectHeight2 = 130;
+		int rectX2 = 635;
+		int rectY2 = 400;
+		int rectWidth2 = 35;
+		int rectHeight2 = 130;
 
-		    // 현재 플레이어의 가로와 세로 길이
-		    width = getState().width;
-		    height = getState().height;
+		// 현재 플레이어의 가로와 세로 길이
+		width = getState().width;
+		height = getState().height;
 
-		    // 캐릭터의 이전 위치 저장
-		    prevX = x;
-		    prevY = y;
+		// 캐릭터의 이전 위치 저장
+		prevX = x;
+		prevY = y;
 
+		// 캐릭터와 사각형 경계 간의 충돌 감지
+		if (x < rectX + rectWidth &&
+		    x + width > rectX &&
+		    y < rectY + rectHeight &&
+		    y + height > rectY) {
+		// 충돌이 감지되면 캐릭터의 위치를 경계선 위로 고정
+		     y = rectY - height;
+		     System.out.println("충돌");
+		 	}
 		    // 캐릭터와 사각형 경계 간의 충돌 감지
-		    if (x < rectX + rectWidth &&
-		        x + width > rectX &&
-		        y < rectY + rectHeight &&
-		        y + height > rectY) {
-		        // 충돌이 감지되면 캐릭터의 위치를 경계선 위로 고정
-		        y = rectY - height;
-		        System.out.println("충돌");
-		    }
-		    // 캐릭터와 사각형 경계 간의 충돌 감지
-		    if ((x < rectX || x + width > rectX + rectWidth || y + height < rectY) &&
-		        (x < rectX2 || x + width > rectX2 + rectWidth2 || y + height < rectY2)) {
-		        // 캐릭터가 사다리 경계선 이외의 영역에 있는 경우, 초기 Y 좌표까지만 떨어지도록 y 좌표를 증가시킴 
-		        y += speed;
-		        if (y > initialY) {
-		            y = initialY; // 초기 Y 좌표까지만 떨어지도록 제한
+		if ((x < rectX || x + width > rectX + rectWidth || y + height < rectY) &&
+		    (x < rectX2 || x + width > rectX2 + rectWidth2 || y + height < rectY2)) {
+		    // 캐릭터가 사다리 경계선 이외의 영역에 있는 경우, 초기 Y 좌표까지만 떨어지도록 y 좌표를 증가시킴 
+		     y += speed;
+		     if (y > initialY) {
+		         y = initialY; // 초기 Y 좌표까지만 떨어지도록 제한
 		        }
 		    } else {
 		        // 사다리 경계선에 있는 경우나 충돌이 없는 경우 캐릭터를 그리고 이동
-		        drawCharacter(getState(), g, gameCanvas);
+		       // drawCharacter(getState(), g, gameCanvas);
 		    }
 		    drawCharacter(getState(), g, gameCanvas);
 	}

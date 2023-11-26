@@ -3,6 +3,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private PlayerHp hp;
 	private Stage2 sg2;
 	private Stage1 sg1;
+	private Stage2Monster monster2;
 	private Player step = new Player();
 	private int countNumber = 0;
 	public GameCanvas(Player player) {
@@ -41,6 +43,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		this.player=player;
 		this.hp = new PlayerHp(player); // hp 초기화
 		this.sg2 = new Stage2();
+		this.monster2 = new Stage2Monster();
 		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
         //add(player);	
 	}
@@ -52,13 +55,12 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	}
 	@Override
 	public void paint(Graphics g) {
-		//super.paint(g);
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
 	    sg2.draw(buffer); // stage2 그리기
 	    hp.draw(buffer);  // HP 이미지 그리기
+	    monster2.draw(buffer);
 	    step.draw(buffer, this); //player 그리기
-	    //sg1.draw(buffer);
 	    g.drawImage(this.offScreen, 0, 0, this);
 	    
 	    // 사각형 경계선 그리기
