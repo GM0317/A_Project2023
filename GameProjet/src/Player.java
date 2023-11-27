@@ -188,7 +188,7 @@ public class Player implements KeyListener{
 	    g.drawImage(bufferedImage, x, y, null);
 	    
 	    
-		if(gameCanvas.getCount() % 70 == 0)
+		if(gameCanvas.getCount() % 50 == 0)
 		{
 			if(state.index_x < state.frame_size-1)
 			{
@@ -271,11 +271,15 @@ public class Player implements KeyListener{
 	    Rectangle monsterBox = new Rectangle(monster2.getX(), monster2.getY(), monster2.getWidth(), monster2.getHeight()); // 몬스터의 충돌 박스
 
 	    if (playerBox.intersects(monsterBox)) {
-	        // 충돌이 감지되었을 때의 동작을 수행
-	        hp.decreaseHp(50); // 몬스터와 충돌 시 HP 50 감소
-	        System.out.println("몬스터와 충돌!");
-	    }
+            // 플레이어와 몬스터 간 충돌 감지
+            hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
+            System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+        }
 	}
+	public void setHp(PlayerHp hp) {
+        this.hp = hp; // 플레이어 체력 객체 설정
+    }
+
 /*
 	// Stage2Monster 클래스에 width, height 값을 반환하는 메서드 추가
 	public int getWidth() {

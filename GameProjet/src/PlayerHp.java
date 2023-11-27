@@ -33,8 +33,11 @@ public class PlayerHp {
             System.out.println("hp감소");
         }
     }
+    public int getHp() {
+        return hp; // 플레이어 체력을 반환
+    }
 	public void draw(Graphics g) {
-		if (player != null) {
+		if (player != null) { 
             if (hp >= 500) {
                 g.drawImage(Heart6, 18, 18, 98, 30, null); // hp이미지 생성
             } else if (hp >= 450) {
@@ -54,6 +57,7 @@ public class PlayerHp {
             g.setColor(Color.WHITE);
             g.drawString("HP: " + hp, 18, 60); // hp가 감소하는지 확인하기 위해 만듬.
         }
+		
 	}
 
 }
