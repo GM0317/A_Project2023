@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class PlayerHp {
-    private Player player;
+    //private Player player;
     private int hp;
     private Image Heart6;
     private Image Heart5;
@@ -15,8 +15,8 @@ public class PlayerHp {
     private Image Heart1;
     private Image Heart0;
 
-    public PlayerHp(Player player) { // Player를 받는 생성자 추가
-        this.player = player;
+    public PlayerHp() { // Player를 받는 생성자 추가
+        //this.player = player;
         this.hp = 500; // 체력을 500으로 초기화
         Heart6 = new ImageIcon("rsc/Heart6.png").getImage(); // 이미지 파일 가져오기
         Heart5 = new ImageIcon("rsc/Heart5.png").getImage();
@@ -32,12 +32,14 @@ public class PlayerHp {
             hp = 0;
             System.out.println("hp감소");
         }
+        
     }
     public int getHp() {
         return hp; // 플레이어 체력을 반환
     }
 	public void draw(Graphics g) {
-		if (player != null) { 
+		//System.out.println("player: "+player);
+		//if (player != null) { 
             if (hp >= 500) {
                 g.drawImage(Heart6, 18, 18, 98, 30, null); // hp이미지 생성
             } else if (hp >= 450) {
@@ -56,7 +58,6 @@ public class PlayerHp {
             // HP 값을 그래픽으로 표시
             g.setColor(Color.WHITE);
             g.drawString("HP: " + hp, 18, 60); // hp가 감소하는지 확인하기 위해 만듬.
-        }
 		
 	}
 

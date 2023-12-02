@@ -16,7 +16,7 @@ public class Stage1 extends JFrame {
 	private Image bufferImage;
 	private Graphics bufferGraphics;
 	private Image offScreen;
-	private Player ryu = new Player();	
+	//private Player ryu = new Player();	
 	
 	public Stage1(){
 		setTitle("Stage1");
@@ -27,7 +27,7 @@ public class Stage1 extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();
 		setLayout(null);
-		addKeyListener(ryu);
+		//addKeyListener(ryu);
 		setVisible(true);
 		
 		

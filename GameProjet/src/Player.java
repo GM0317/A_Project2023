@@ -19,29 +19,33 @@ public class Player implements KeyListener{
 	private Jump jump;
 	private Stage2 stage2;
 	private PlayerHp hp;
-	private Stage2Monster monster2;
+	private Attack atteck;//이건 클래스 가져온
 	private BufferedImage sprite;
 	private BufferedImage jumping;
+	private BufferedImage attack;
 	private Graphics g;
 	private State []jumpes;
 	private State []states;
+	private State []attacks;
 	private int stateIdx = 0;
 	private int x = 100;
 	private int y = 450;
 	private int speed = 5;
 	private int jumpHeight = 0; // 점프 높이
 	private boolean isJump = false; // 캐릭터가 점프 중인지 여부
-	private int bgX = 0; //배경 좌우키 이벤트 추가
-	private Image map;
 	private boolean isOnGround = false; // 바닥에 서 있는지 여부
 	private int initialY; // 초기 Y 좌표
-	
+	private long lastTime = 0; // 마지막 충돌 시간 저장
+    private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
+    private int bgX = 0;
+    private boolean isAttacking = false; // 공격 중인지 여부
+
 	private int width; // 추가: 캐릭터의 가로 길이
 	private int height; // 추가: 캐릭터의 세로 길이
 	private int prevX; // 추가: 이전 X 위치
 	private int prevY; // 추가: 이전 Y 위치
-    
-	public Player() {
+	public Player(Stage2 stage2) {
+		this.stage2 = stage2;
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -105,43 +109,56 @@ public class Player implements KeyListener{
 		jumpes = new State[4];
 		State jump = new State();
 		jumpes[0] = jump;
-		
-		jump.width=58;
-		jump.height=79;
-		jump.index_x=0;
-		jump.start_x=0;
-		jump.start_y=0;
-		
-		jump.width=58;
-		jump.height=79;
-		jump.index_x=1;
-		jump.start_x=111;
-		jump.start_y=79;
+		jump.width = 58;
+		jump.height = 79;
+		jump.index_x = 0;
+		jump.start_x = 0;
+		jump.start_y = 0;
 
+		jump = new State(); // 새로운 State 객체 생성
+		jumpes[1] = jump;
+		jump.width = 58;
+		jump.height = 79;
+		jump.index_x = 1;
+		jump.start_x = 111;
+		jump.start_y = 79;
+		
+		jump = new State(); // 새로운 State 객체 생성
+		jumpes[2] = jump;
 		jump.width=58;
 		jump.height=79;
 		jump.index_x=2;
 		jump.start_x=164;
 		jump.start_y=79;
 		
+		jump = new State(); // 새로운 State 객체 생성
+		jumpes[3] = jump;
 		jump.width=58;
 		jump.height=79;
 		jump.index_x=3;
 		jump.start_x=216;
 		jump.start_y=79;
 		
+		attacks = new State[4];
+		State attack = new State();
+		attacks[0] = attack;
+		attack.width = 100;
+		attack.height = 74;
+		attack.index_x = 0;
+		attack.start_x = 0;
+		attack.start_y = 0;
+
 		this.x = x;
 		this.y = y;
-		this.stage2 = stage2;
+		//this.stage2 = stage2;
 		this.initialY = y; // 초기 Y 좌표 저장
-		this.monster2 = new Stage2Monster();
-		this.hp = new PlayerHp(this); // PlayerHp 객체 인스턴스
-		//map = new ImageIcon("stage/1.png").getImage();
+		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 	}
 	private void loadImage() {
 		try {
 			this.sprite = ImageIO.read(new File("character/step.png"));
 			this.jumping = ImageIO.read(new File("character/jump.png"));
+			this.attack = ImageIO.read(new File("character/Attack.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,6 +169,7 @@ public class Player implements KeyListener{
 	}
 	private boolean flip = false;
 	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
+		hp.draw(g);
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
@@ -165,6 +183,11 @@ public class Player implements KeyListener{
 	                state.width * state.index_x + state.width + state.start_x,
 	                state.height * state.index_y + state.start_y + state.height,
 	                gameCanvas);
+	    }else if (isAttacking) {
+	    	gb.drawImage(attack,
+	    			0, 0,  // 위치
+	                40 + state.width, 3 + state.height,
+	                gameCanvas);
 	    }
 	    else {
 	    	gb.drawImage(sprite, 
@@ -176,6 +199,7 @@ public class Player implements KeyListener{
 					state.height*state.index_y + state.start_y + state.height, 
 					gameCanvas);
 	    }
+	    
 	    
 	    gb.dispose();
 	    
@@ -206,17 +230,18 @@ public class Player implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
+		this.stage2.keyPressed(e);
 		switch(e.getKeyCode())
 		{
 		case KeyEvent.VK_LEFT:
             this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
-			x -= 8;
+			x -= 4;
 			bgX += 10;
 			System.out.println("왼쪽");
 			break;
 		case KeyEvent.VK_RIGHT:
             this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
-			x += 8;
+			x += 4;
 			bgX -= 10;
 			System.out.println("오른쪽");
 			break;
@@ -227,7 +252,7 @@ public class Player implements KeyListener{
             }
 			break;
 		case KeyEvent.VK_UP:
-            // up 키 눌렸을 때의 동작 (사다리 올라가기)
+             // up 키 눌렸을 때의 동작 (사다리 올라가기)
             if (isOnLadder()) { // 사다리 위에 있는지 확인
                 y -= speed; // y 좌표를 위로 이동
             }
@@ -235,12 +260,26 @@ public class Player implements KeyListener{
 		case KeyEvent.VK_DOWN:
 			break;
 		case KeyEvent.VK_A:
-			//this.stateIdx = 4;
-			break;
+			 if (!isAttacking) {
+	                // 공격 중이 아닌 경우에만 공격 생성
+	                isAttacking = true; // 현재 공격 중
+	                // 공격 애니메이션 재생 또는 공격에 따른 동작 수행
+	            }
+	        break;
 		}
 	}
 	public int getY() {
         return y;
+    }
+	public int getX() {
+		return x;
+	}
+	public int getWidth() {
+        return this.width; // width는 캐릭터의 너비를
+    }
+
+    public int getHeight() {
+        return this.height; // height는 캐릭터의 높이
     }
 	private void jump() {
         Jump jump = new Jump(this);
@@ -260,6 +299,11 @@ public class Player implements KeyListener{
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		this.stateIdx = 0;
+		switch(e.getKeyCode()) {
+        case KeyEvent.VK_A:
+            isAttacking = false; // 공격 상태 해제
+            break;
+		}
 	}
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -267,41 +311,39 @@ public class Player implements KeyListener{
 		
 	}
 	private void monsterCheck() {
-	    Rectangle playerBox = new Rectangle(x, y, width, height); // 캐릭터의 충돌 박스
-	    Rectangle monsterBox = new Rectangle(monster2.getX(), monster2.getY(), monster2.getWidth(), monster2.getHeight()); // 몬스터의 충돌 박스
+        Rectangle playerBox = new Rectangle(x, y, width, height);
+        Rectangle monsterBox = new Rectangle(stage2.getX()+bgX+40, stage2.getY()+35, stage2.getWidth()-40, stage2.getHeight()-40);
 
-	    if (playerBox.intersects(monsterBox)) {
-            // 플레이어와 몬스터 간 충돌 감지
-            hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
-            System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+        if (playerBox.intersects(monsterBox)) {
+            if (System.currentTimeMillis() - lastTime > Delay) {
+                hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
+                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+                System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+            }
         }
-	}
+    }
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
 
-/*
-	// Stage2Monster 클래스에 width, height 값을 반환하는 메서드 추가
-	public int getWidth() {
-	    return monster2.getWidth(); // 이미지의 폭을 반환
-	}
-
-	public int getHeight() {
-	    return monster2.getHeight(); // 이미지의 높이를 반환
-	}
-*/
-
 	public void draw(Graphics g, GameCanvas gameCanvas) {
+		if (isAttacking) {
+	        // 공격 이미지를 그리는 로직 추가
+	        // 해당 로직을 통해 공격 이미지를 화면에 표시
+	    } else {
+	        // 기존의 캐릭터 이미지를 그리는 로직
+	        drawCharacter(getState(), g, gameCanvas);
+	    }
+		
 		monsterCheck(); // 충돌 체크
 		//g.drawImage(sprite, 50, 50, 700, 150, gameCanvas);
-		//g.drawImage(map, bgX, 0, 2000, 600, null); //map 움직이기
 		//drawCharacter(getState(), g, gameCanvas);
-		int rectX = 600;
+		int rectX = 600+bgX;
 		int rectY = 400;
 		int rectWidth = 140;
 		int rectHeight = 40;
 		    
-		int rectX2 = 635;
+		int rectX2 = 635+bgX;
 		int rectY2 = 400;
 		int rectWidth2 = 35;
 		int rectHeight2 = 130;
@@ -339,7 +381,7 @@ public class Player implements KeyListener{
 	}
 	private boolean isOnLadder() {
 	    // 사다리에 해당하는 영역을 정의하고, 현재 캐릭터가 해당 영역에 있는지 확인하여 사다리 위에 있는지 여부를 판단
-	    int ladderX = 635;
+	    int ladderX = 635+bgX;
 	    int ladderY = 400;
 	    int ladderWidth = 35;
 	    int ladderHeight = 130;

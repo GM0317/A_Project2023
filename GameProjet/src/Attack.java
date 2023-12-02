@@ -10,6 +10,7 @@ public class Attack {
 	private int direction; // 공격 방향
 	private Image attack; // 공격 이미지
 	private GameScreen gameScreen;
+	private boolean isAttacking = false; // 공격 중인지 여부
 	// 움직이는 상태
 	private boolean left;
 	private boolean right;
@@ -52,8 +53,15 @@ public class Attack {
 	    }
 	}
 	
+	public boolean isAttacking() {
+        return isAttacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        isAttacking = attacking;
+    }
 	public void draw(Graphics g) {
-		attack = new ImageIcon("rsc/pngwing.com (2).png").getImage(); //이미지 파일 가져오기
+		attack = new ImageIcon("character/총알.png").getImage(); //이미지 파일 가져오기
 		g.drawImage(attack, x, y, 50, 50, null); //공격 이미지 생성
 	}
 
