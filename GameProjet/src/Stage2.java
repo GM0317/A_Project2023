@@ -18,8 +18,8 @@ public class Stage2 {
 	private Image monster;
 	private int bgX = 0;
 	
-	private int monsterX = 300; // 몬스터의 초기 X 좌표
-    private int monsterY = 440; // 몬스터의 Y 좌표
+	private int monsterX = 1000; // 몬스터의 초기 X 좌표
+    private int monsterY = 468; // 몬스터의 Y 좌표
     private int width;
     private int height;
     private int monsterSpeed = 1; // 몬스터의 이동 속도
@@ -35,7 +35,7 @@ public class Stage2 {
 		Tile2 = new ImageIcon("stage/Tile_10.png").getImage();
 		Tile3 = new ImageIcon("stage/Tile_11.png").getImage();
 		Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
-		monsterImage = new ImageIcon("rsc/monster2기본.png").getImage();
+		monsterImage = new ImageIcon("stage/monster2.png").getImage();
 		
 		this.monsterX = monsterX;
         this.monsterY = monsterY;
@@ -72,13 +72,12 @@ public class Stage2 {
 	    g.drawRect(rectX, rectY, rectWidth, rectHeight); //타일 경계선
 	    g.drawRect(ladderX, ladderY, ladderWidth, ladderHeight); //사다리 경계선
 	    
-	    int monsterWidth = 150;
-	    int monsterHeight = 150;
+	    int monsterWidth = 70;
+	    int monsterHeight = 70;
+	    
 	    if (movingLeft) {
 	        g.drawImage(monsterImage, monsterX + bgX, monsterY, monsterWidth, monsterHeight, null);
 	    } else {
-	        // 몬스터 이미지를 오른쪽으로 이동할 때 반전하여 그립니다.
-	        // 이미지를 반전하기 위해 scale을 조절합니다.
 	        int imageWidth = monsterImage.getWidth(null);
 	        int imageHeight = monsterImage.getHeight(null);
 
@@ -87,7 +86,7 @@ public class Stage2 {
 
 	    // 충돌 판정을 몬스터 이미지 경계를 기준으로 그립니다
 	    g.setColor(Color.RED);
-	    g.drawRect(monsterX + bgX+45, monsterY +35, monsterWidth - 100, monsterHeight - 100); // 몬스터의 충돌 판정 영역
+	    g.drawRect(monsterX + bgX+10, monsterY +8, monsterWidth - 10, monsterHeight - 10); // 몬스터의 충돌 판정 영역
 	}
 	public void moveMonster() {
         // 몬스터를 수평으로 방향에 따라 이동합니다
@@ -98,9 +97,9 @@ public class Stage2 {
         }
 
         // 몬스터가 특정 좌표에 도달하면 방향을 변경합니다
-        if (monsterX <= 400) { // X 좌표가 700에 도달하면 방향을 변경합니다
+        if (monsterX <= 700) { // X 좌표가 700에 도달하면 방향을 변경합니다
             movingLeft = false;
-        } else if (monsterX >= 600) { // X 좌표가 1000에 도달하면 방향을 변경합니다
+        } else if (monsterX >= 1000) { // X 좌표가 1000에 도달하면 방향을 변경합니다
             movingLeft = true;
         }
     }

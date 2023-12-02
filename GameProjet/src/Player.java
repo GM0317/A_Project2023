@@ -312,7 +312,7 @@ public class Player implements KeyListener{
 	}
 	private void monsterCheck() {
         Rectangle playerBox = new Rectangle(x, y, width, height);
-        Rectangle monsterBox = new Rectangle(stage2.getX()+bgX+40, stage2.getY()+35, stage2.getWidth()-40, stage2.getHeight()-40);
+        Rectangle monsterBox = new Rectangle(stage2.getX()+bgX+10, stage2.getY()+8, stage2.getWidth()-10, stage2.getHeight()-10);
 
         if (playerBox.intersects(monsterBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
@@ -327,6 +327,7 @@ public class Player implements KeyListener{
     }
 
 	public void draw(Graphics g, GameCanvas gameCanvas) {
+		
 		if (isAttacking) {
 	        // 공격 이미지를 그리는 로직 추가
 	        // 해당 로직을 통해 공격 이미지를 화면에 표시
