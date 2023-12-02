@@ -33,6 +33,7 @@ public class Player implements KeyListener{
 	private int speed = 5;
 	private int jumpHeight = 0; // 점프 높이
 	private boolean isJump = false; // 캐릭터가 점프 중인지 여부
+	private boolean isFlip = false; // 캐릭터가 반전 중인지 여부
 	private boolean isOnGround = false; // 바닥에 서 있는지 여부
 	private int initialY; // 초기 Y 좌표
 	private long lastTime = 0; // 마지막 충돌 시간 저장
@@ -235,13 +236,15 @@ public class Player implements KeyListener{
 		{
 		case KeyEvent.VK_LEFT:
             this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
-			x -= 4;
+            isFlip = true;
+            x -= 4;
 			bgX += 10;
 			System.out.println("왼쪽");
 			break;
 		case KeyEvent.VK_RIGHT:
             this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
-			x += 4;
+            isFlip = false;
+            x += 4;
 			bgX -= 10;
 			System.out.println("오른쪽");
 			break;
@@ -288,6 +291,10 @@ public class Player implements KeyListener{
 	public boolean isJump() {
         return isJump;
     }
+	public boolean isFlip() {
+        return isFlip;
+    }
+
     // isJump 필드의 setter
     public void setJump(boolean jump) {
         this.isJump = jump;
@@ -295,6 +302,10 @@ public class Player implements KeyListener{
     public void setY(int newY) {
         y = newY;
     }
+    public void setX(int newX) {
+        x = newX;
+    }
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
