@@ -42,7 +42,7 @@ public class GameStart extends JFrame {
             	dispose();
                 // 버튼클릭시
             	if(e.getSource()== startButton) {
-                	new Stage1();
+                	new Stage2();
                 }
             }
         });
@@ -68,17 +68,6 @@ public class GameStart extends JFrame {
 	public void paint(Graphics g) {
 		 super.paint(g);
 	     g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-		/*
-		bufferImage = createImage(GameScreen.WIDTH, GameScreen.HEIGHT);
-		screenGraphic = bufferImage.getGraphics();
-		screenDraw(screenGraphic);
-		g.drawImage(background, 0, 0, 1000, 600, this);*/
 	}
-	/*
-	public void screenDraw(Graphics g) {
-		g.drawImage(background, 0, 0, 1000, 600, this);
-		this.repaint();
-	}
-	*/
 }
 
