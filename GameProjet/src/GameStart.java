@@ -22,7 +22,7 @@ public class GameStart extends JFrame {
 	
 	private Image bufferImage;
 	
-	private Image mainScreen = new ImageIcon("rsc/startimg.png").getImage();
+	private Image mainScreen = new ImageIcon("rsc/start.png").getImage();
 	
 	public GameStart() {
 		setTitle("Unknown Island");
@@ -42,7 +42,7 @@ public class GameStart extends JFrame {
             	dispose();
                 // 버튼클릭시
             	if(e.getSource()== startButton) {
-                	new Stage2();
+                	new Stage1();
                 }
             }
         });
