@@ -20,7 +20,7 @@ public class Stage2 extends Stage {
 		Tile3 = new ImageIcon("stage/Tile_11.png").getImage();
 		Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
 		Portal = new ImageIcon("stage/Tile_12.png").getImage();
-		monsterImage = new ImageIcon("stage/monster2.png").getImage();
+		
 		
 		super.monsterX = monsterX;
 		super.monsterY = monsterY;
@@ -131,19 +131,7 @@ public class Stage2 extends Stage {
 	    g.drawRect(rectX5, rectY5, rectWidth5, rectHeight5);
 	    g.drawRect(ladderX, ladderY, ladderWidth, ladderHeight); //사다리 경계선
 	    g.drawRect(ladderX2, ladderY2, ladderWidth2, ladderHeight2);	    
-	    int monsterWidth = 70;
-	    int monsterHeight = 70;    
-	    if (movingLeft) {
-	        g.drawImage(monsterImage, monsterX + bgX, monsterY, monsterWidth, monsterHeight, null);
-	    } else {
-	        int imageWidth = monsterImage.getWidth(null);
-	        int imageHeight = monsterImage.getHeight(null);
-
-	        g.drawImage(monsterImage, monsterX + monsterWidth + bgX, monsterY, -monsterWidth, monsterHeight, null);
-	    }
-	    // 충돌 판정을 몬스터 이미지 경계를 기준으로 그립니다
-	    g.setColor(Color.RED);
-	    g.drawRect(monsterX + bgX+10, monsterY +8, monsterWidth - 10, monsterHeight - 10); // 몬스터의 충돌 판정 영역
+	    
 	}
 		
 	public void keyPressed(KeyEvent e) {
