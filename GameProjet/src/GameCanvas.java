@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,16 +19,19 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private Graphics buffer;
 	private Image offScreen;
 	private Dimension dim;
-	//private Player player; // GameCanvas 클래스의 인스턴스에 접근하기 위한 참조
-	//private PlayerHp hp;
 	private Stage2 sg2;
 	private Stage1 sg1;
+	private Stage3 sg3;
+	private Attack attack;
 	private Player step;
 	private int countNumber = 0;
+	private LinkedList<Stage> stageList = new LinkedList<>();
 	public GameCanvas() {
 		this.sg2 = new Stage2();
-		this.step = new Player(sg2);
-		//addKeyListener(player);
+		this.sg3 = new Stage3();
+		stageList.add(sg2);
+		stageList.add(sg3);
+		this.step = new Player(stageList);	
 		addComponentListener(this);
 		addKeyListener(step);
 		setFocusable(true);	 //키를 눌렀을 때 동작이 되도록해줌.
@@ -57,7 +61,9 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	public void paint(Graphics g) {
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
-	    sg2.draw(buffer); // stage2 그리기
+	   
+	    ///sg2.draw(buffer); // stage2 그리기   
+	    ///sg3.draw(buffer);
 	    step.draw(buffer, this); //player 그리기
 	    g.drawImage(this.offScreen, 0, 0, this);
 	    sg2.moveMonster();// 몬스터 호출

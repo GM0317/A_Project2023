@@ -10,6 +10,8 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -17,7 +19,9 @@ public class Player implements KeyListener{
 	private Image player;
 	private GameCanvas canvas;
 	private Jump jump;
-	private Stage2 stage2;
+	//private Stage2 stage2;
+	//private Stage3 stage3;
+	private Stage stage;
 	private PlayerHp hp;
 	private Attack atteck;//이건 클래스 가져온
 	private BufferedImage sprite;
@@ -40,13 +44,15 @@ public class Player implements KeyListener{
     private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
     private int bgX = 0;
     private boolean isAttacking = false; // 공격 중인지 여부
+    private int gravitySpeed = 1; // 중력에 의한 낙하 속도
 
 	private int width; // 추가: 캐릭터의 가로 길이
 	private int height; // 추가: 캐릭터의 세로 길이
 	private int prevX; // 추가: 이전 X 위치
 	private int prevY; // 추가: 이전 Y 위치
-	public Player(Stage2 stage2) {
-		this.stage2 = stage2;
+
+	public Player(LinkedList<Stage> stageList) {
+		this.stage = stageList.get(1);
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -231,7 +237,7 @@ public class Player implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		this.stage2.keyPressed(e);
+		this.stage.keyPressed(e);
 		switch(e.getKeyCode())
 		{
 		case KeyEvent.VK_LEFT:
@@ -323,7 +329,7 @@ public class Player implements KeyListener{
 	}
 	private void monsterCheck() {
         Rectangle playerBox = new Rectangle(x, y, width, height);
-        Rectangle monsterBox = new Rectangle(stage2.getX()+bgX+40, stage2.getY()+35, stage2.getWidth()-40, stage2.getHeight()-40);
+        Rectangle monsterBox = new Rectangle(stage.getX()+bgX+10, stage.getY()+8, stage.getWidth()-10, stage.getHeight()-10);
 
         if (playerBox.intersects(monsterBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
@@ -332,12 +338,15 @@ public class Player implements KeyListener{
                 System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
             }
         }
+        stage.checkMonster(playerBox, prevY, initialY, gravitySpeed);
+       
     }
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
 
 	public void draw(Graphics g, GameCanvas gameCanvas) {
+		stage.draw(g);
 		if (isAttacking) {
 	        // 공격 이미지를 그리는 로직 추가
 	        // 해당 로직을 통해 공격 이미지를 화면에 표시
@@ -345,20 +354,7 @@ public class Player implements KeyListener{
 	        // 기존의 캐릭터 이미지를 그리는 로직
 	        drawCharacter(getState(), g, gameCanvas);
 	    }
-		
 		monsterCheck(); // 충돌 체크
-		//g.drawImage(sprite, 50, 50, 700, 150, gameCanvas);
-		//drawCharacter(getState(), g, gameCanvas);
-		int rectX = 600+bgX;
-		int rectY = 400;
-		int rectWidth = 140;
-		int rectHeight = 40;
-		    
-		int rectX2 = 635+bgX;
-		int rectY2 = 400;
-		int rectWidth2 = 35;
-		int rectHeight2 = 130;
-
 		// 현재 플레이어의 가로와 세로 길이
 		width = getState().width;
 		height = getState().height;
@@ -366,28 +362,6 @@ public class Player implements KeyListener{
 		// 캐릭터의 이전 위치 저장
 		prevX = x;
 		prevY = y;
-
-		// 캐릭터와 사각형 경계 간의 충돌 감지
-		if (x < rectX + rectWidth &&
-		    x + width > rectX &&
-		    y < rectY + rectHeight &&
-		    y + height > rectY) {
-		// 충돌이 감지되면 캐릭터의 위치를 경계선 위로 고정
-		     y = rectY - height;
-		     System.out.println("충돌");
-		 	}
-		    // 캐릭터와 사각형 경계 간의 충돌 감지
-		if ((x < rectX || x + width > rectX + rectWidth || y + height < rectY) &&
-		    (x < rectX2 || x + width > rectX2 + rectWidth2 || y + height < rectY2)) {
-		    // 캐릭터가 사다리 경계선 이외의 영역에 있는 경우, 초기 Y 좌표까지만 떨어지도록 y 좌표를 증가시킴 
-		     y += speed;
-		     if (y > initialY) {
-		         y = initialY; // 초기 Y 좌표까지만 떨어지도록 제한
-		        }
-		    } else {
-		        // 사다리 경계선에 있는 경우나 충돌이 없는 경우 캐릭터를 그리고 이동
-		       // drawCharacter(getState(), g, gameCanvas);
-		    }
 		    drawCharacter(getState(), g, gameCanvas);
 	}
 	private boolean isOnLadder() {
