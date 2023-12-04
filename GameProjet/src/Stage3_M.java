@@ -9,8 +9,9 @@ public class Stage3_M {
     private static int monsterSpeed = 2;  // 몬스터의 이동 속도 (static으로 변경)
     private Player player;
 
-    public Stage3_M(Player player) {
+    public Stage3_M() {
         this.player = player;
+        m3 = new ImageIcon("rsc/3_monster_1.png").getImage();
     }
 
     public void getMethod() {
@@ -39,11 +40,6 @@ public class Stage3_M {
             }
         }
     }*/
-
-    public Stage3_M() {
-        m3 = new ImageIcon("rsc/3_monster_1.png").getImage();
-    }
-
     public void draw(Graphics g) {
         g.drawImage(m3, monsterX, monsterY, 50, 50, null);
     }

@@ -7,24 +7,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-public class Stage2 {
-	private Image map;
-	private Image floor;
-	private Image ledder;
-	private Image Tile;
-	private Image Tile2;
-	private Image Tile3;
-	private Image Tile4;
-	private Image monster;
-	private int bgX = 0;
+public class Stage2 extends Stage {
 	
-	private int monsterX = 1000; // 몬스터의 초기 X 좌표
-    private int monsterY = 468; // 몬스터의 Y 좌표
-    private int width;
-    private int height;
-    private int monsterSpeed = 1; // 몬스터의 이동 속도
-    private boolean movingLeft = true; // 몬스터의 방향을 추적하는 플래그
-    private Image monsterImage;
 	public Stage2() {
 		//this.player = player;
 		//player = new Player(this);
@@ -35,12 +19,13 @@ public class Stage2 {
 		Tile2 = new ImageIcon("stage/Tile_10.png").getImage();
 		Tile3 = new ImageIcon("stage/Tile_11.png").getImage();
 		Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
+		Portal = new ImageIcon("stage/Tile_12.png").getImage();
 		monsterImage = new ImageIcon("stage/monster2.png").getImage();
 		
-		this.monsterX = monsterX;
-        this.monsterY = monsterY;
-        this.width = width;
-        this.height = height;
+		super.monsterX = monsterX;
+		super.monsterY = monsterY;
+		super.width = width;
+		super.height = height;
 	}
 	public void draw(Graphics g) {
 		g.drawImage(map, bgX, 0, 3000, 600, null); // 백그라운드 배경
@@ -50,11 +35,46 @@ public class Stage2 {
 	    g.drawImage(Tile2, 635 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile3, 670 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile4, 705 + bgX, 400, 35, 40, null);
+	    
+	    g.drawImage(Tile, 800 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile2, 835 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile3, 870 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile4, 905 + bgX, 300, 35, 40, null);
+	    
+	    g.drawImage(Tile, 1000 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1035 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1070 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1105 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1140 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1175 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1205 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1240 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1275 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1305 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1340 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile4, 1375 + bgX, 200, 35, 40, null);
+	    
+	    g.drawImage(Tile, 1500 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile2, 1535 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile3, 1570 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile4, 1605 + bgX, 300, 35, 40, null);
+	    
+	    g.drawImage(Tile, 1700 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile2, 1735 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile3, 1770 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile4, 1805 + bgX, 400, 35, 40, null);
 	    //사다리
 	    g.drawImage(ledder, 635 + bgX, 430, 35, 40, null);
 	    g.drawImage(ledder, 635 + bgX, 460, 35, 40, null);
 	    g.drawImage(ledder, 635 + bgX, 490, 35, 40, null);
 	    g.drawImage(ledder, 635 + bgX, 400, 35, 40, null);
+	    //사다리
+	    g.drawImage(ledder, 1760 + bgX, 430, 35, 40, null);
+	    g.drawImage(ledder, 1760 + bgX, 460, 35, 40, null);
+	    g.drawImage(ledder, 1760 + bgX, 490, 35, 40, null);
+	    g.drawImage(ledder, 1760 + bgX, 400, 35, 40, null);
+	    
+	    g.drawImage(Portal, 2800 + bgX, 460, null); //포털
 	 
 	    // 사각형 경계선 그리기
 	    g.setColor(Color.RED);
@@ -62,19 +82,57 @@ public class Stage2 {
 	    int rectY = 400; //경계선 Y좌표
 	    int rectWidth = 140; // 경계선 너비
 	    int rectHeight = 40; // 경계선 높이
+	    
+	    // 사각형 경계선 그리기
+	    g.setColor(Color.RED);
+	    int rectX2 = 800 + bgX;
+	    int rectY2 = 300; 
+	    int rectWidth2 = 140;
+	    int rectHeight2 = 40;
+	    
+	    // 사각형 경계선 그리기
+	    g.setColor(Color.RED);
+	    int rectX3 = 1000 + bgX;
+	    int rectY3 = 200;
+	    int rectWidth3 = 410;
+	    int rectHeight3 = 40;
+	    
+	    // 사각형 경계선 그리기
+	    g.setColor(Color.RED);
+	    int rectX4 = 1500 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
+	    int rectY4 = 300; //경계선 Y좌표
+	    int rectWidth4 = 140; // 경계선 너비
+	    int rectHeight4 = 40; // 경계선 높이
+	    
+	    // 사각형 경계선 그리기
+	    g.setColor(Color.RED);
+	    int rectX5 = 1700 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
+	    int rectY5 = 400; //경계선 Y좌표
+	    int rectWidth5 = 140; // 경계선 너비
+	    int rectHeight5 = 40; // 경계선 높이
 	    // 바닥 경계선 
 	    g.setColor(Color.RED);
 	    int ladderX = 635 + bgX;
 	    int ladderY = 400;
 	    int ladderWidth = 35;
 	    int ladderHeight = 130;
+	    
+	    g.setColor(Color.RED);
+	    int ladderX2 = 1760 + bgX;
+	    int ladderY2 = 400;
+	    int ladderWidth2 = 35;
+	    int ladderHeight2 = 130;
+	    
 	    // drawRect() 메서드를 사용하여 사각형의 경계선 그리기
 	    g.drawRect(rectX, rectY, rectWidth, rectHeight); //타일 경계선
+	    g.drawRect(rectX2, rectY2, rectWidth2, rectHeight2);
+	    g.drawRect(rectX3, rectY3, rectWidth3, rectHeight3);
+	    g.drawRect(rectX4, rectY4, rectWidth4, rectHeight4);
+	    g.drawRect(rectX5, rectY5, rectWidth5, rectHeight5);
 	    g.drawRect(ladderX, ladderY, ladderWidth, ladderHeight); //사다리 경계선
-	    
+	    g.drawRect(ladderX2, ladderY2, ladderWidth2, ladderHeight2);	    
 	    int monsterWidth = 70;
-	    int monsterHeight = 70;
-	    
+	    int monsterHeight = 70;    
 	    if (movingLeft) {
 	        g.drawImage(monsterImage, monsterX + bgX, monsterY, monsterWidth, monsterHeight, null);
 	    } else {
@@ -83,44 +141,11 @@ public class Stage2 {
 
 	        g.drawImage(monsterImage, monsterX + monsterWidth + bgX, monsterY, -monsterWidth, monsterHeight, null);
 	    }
-
 	    // 충돌 판정을 몬스터 이미지 경계를 기준으로 그립니다
 	    g.setColor(Color.RED);
 	    g.drawRect(monsterX + bgX+10, monsterY +8, monsterWidth - 10, monsterHeight - 10); // 몬스터의 충돌 판정 영역
 	}
-	public void moveMonster() {
-        // 몬스터를 수평으로 방향에 따라 이동합니다
-        if (movingLeft) {
-            monsterX -= monsterSpeed;
-        } else {
-            monsterX += monsterSpeed;
-        }
-
-        // 몬스터가 특정 좌표에 도달하면 방향을 변경합니다
-        if (monsterX <= 700) { // X 좌표가 700에 도달하면 방향을 변경합니다
-            movingLeft = false;
-        } else if (monsterX >= 1000) { // X 좌표가 1000에 도달하면 방향을 변경합니다
-            movingLeft = true;
-        }
-    }
-	// getX() 메서드: X 좌표 반환
-    public int getX() {
-        return monsterX;
-    }
-
-    // getY() 메서드: Y 좌표 반환
-    public int getY() {
-        return monsterY;
-    }
-
-    public int getWidth() {
-        return monsterImage.getWidth(null); // 몬스터 이미지의 너비 반환
-    }
-
-    public int getHeight() {
-        return monsterImage.getHeight(null); // 몬스터 이미지의 높이 반환
-    }
-	
+		
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		switch(e.getKeyCode())
