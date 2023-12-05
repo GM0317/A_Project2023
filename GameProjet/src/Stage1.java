@@ -14,7 +14,7 @@ public class Stage1 extends JFrame {
 	private Image background;
 	private Graphics bufferGraphics;
 	private Image floor;
-	private Monster1 monster1;
+	//private Monster1 monster1;
 
 	public Stage1(){
 		setTitle("Stage1");
@@ -25,7 +25,7 @@ public class Stage1 extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		background = new ImageIcon("stage/stage1.png").getImage();
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
-		monster1 = new Monster1();// Monster1 객체 생성
+		//monster1 = new Monster1();// Monster1 객체 생성
 		setLayout(null);
 		setVisible(true);
 		
@@ -35,7 +35,7 @@ public class Stage1 extends JFrame {
 		 super.paint(g);
 	     g.drawImage(background, 0, 0, 3000, 600, this);
 	     g.drawImage(floor, 0, 0, 3000, 600, this);
-	     monster1.draw(g); // Monster1 그리기
+	     //monster1.draw(g); // Monster1 그리기
 	}
 	
 	public void keyPressed(KeyEvent e) {
