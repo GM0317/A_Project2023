@@ -11,7 +11,7 @@ public class Stage3_M {
 
     public Stage3_M() {
         this.player = player;
-        m3 = new ImageIcon("rsc/3_monster_1.png").getImage();
+        
     }
 
     public void getMethod() {

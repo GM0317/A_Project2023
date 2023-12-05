@@ -31,7 +31,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		this.sg3 = new Stage3();
 		stageList.add(sg2);
 		stageList.add(sg3);
-		this.step = new Player(stageList);	
+		this.step = new Player(stageList);
 		addComponentListener(this);
 		addKeyListener(step);
 		setFocusable(true);	 //키를 눌렀을 때 동작이 되도록해줌.
