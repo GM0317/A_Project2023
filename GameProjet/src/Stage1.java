@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Canvas;
 import java.awt.Dimension;
-
+import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -14,16 +14,8 @@ public class Stage1 extends JFrame {
 	private Image background;
 	private Graphics bufferGraphics;
 	private Image floor;
-	
-	private int monsterX = 300; // 몬스터의 초기 X 좌표
-    private int monsterY = 440; // 몬스터의 Y 좌표
-    private int width;
-    private int height;
-    private int monsterSpeed = 1; // 몬스터의 이동 속도
-    private boolean movingLeft = true; // 몬스터의 방향을 추적하는 플래그
-    private Image monsterImage;
-	
-    
+	private Monster1 monster1;
+
 	public Stage1(){
 		setTitle("Stage1");
 		setSize(GameScreen.WIDTH, GameScreen.HEIGHT);
@@ -33,7 +25,7 @@ public class Stage1 extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		background = new ImageIcon("stage/stage1.png").getImage();
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
-		monsterImage = new ImageIcon("rsc/모나피.png").getImage();
+		monster1 = new Monster1();// Monster1 객체 생성
 		setLayout(null);
 		setVisible(true);
 		
@@ -43,5 +35,11 @@ public class Stage1 extends JFrame {
 		 super.paint(g);
 	     g.drawImage(background, 0, 0, 3000, 600, this);
 	     g.drawImage(floor, 0, 0, 3000, 600, this);
+	     monster1.draw(g); // Monster1 그리기
+	}
+	
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

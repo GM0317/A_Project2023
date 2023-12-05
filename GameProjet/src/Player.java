@@ -161,6 +161,7 @@ public class Player implements KeyListener{
 		this.initialY = y; // 초기 Y 좌표 저장
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 	}
+	
 	private void loadImage() {
 		try {
 			this.sprite = ImageIO.read(new File("character/step.png"));
