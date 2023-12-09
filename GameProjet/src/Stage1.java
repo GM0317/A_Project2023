@@ -56,4 +56,5 @@ public class Stage1 extends Stage {
 	     //monster1.draw(g); // Monster1 그리기
 	}
 	
+	
 }
