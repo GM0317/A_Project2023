@@ -23,7 +23,7 @@ public class GameScreen extends JFrame{
 
 	}
 	public static void main(String[] args) {
-        new GameScreen();
+        new GameStart();
     }
 
 }

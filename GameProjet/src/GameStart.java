@@ -22,7 +22,7 @@ public class GameStart extends JFrame {
 	
 	private Image bufferImage;
 	
-	private Image mainScreen = new ImageIcon("rsc/startimg.png").getImage();
+	private Image mainScreen = new ImageIcon("rsc/start.png").getImage();
 	
 	public GameStart() {
 		setTitle("Unknown Island");
@@ -68,17 +68,6 @@ public class GameStart extends JFrame {
 	public void paint(Graphics g) {
 		 super.paint(g);
 	     g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-		/*
-		bufferImage = createImage(GameScreen.WIDTH, GameScreen.HEIGHT);
-		screenGraphic = bufferImage.getGraphics();
-		screenDraw(screenGraphic);
-		g.drawImage(background, 0, 0, 1000, 600, this);*/
 	}
-	/*
-	public void screenDraw(Graphics g) {
-		g.drawImage(background, 0, 0, 1000, 600, this);
-		this.repaint();
-	}
-	*/
 }
 
