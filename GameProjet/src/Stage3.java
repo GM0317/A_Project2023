@@ -6,37 +6,30 @@ import java.util.LinkedList;
 import javax.swing.ImageIcon;
 
 public class Stage3 extends Stage {
-<<<<<<< HEAD
    private Image map;
    private Image floor;
    private int bgX = 0;
    private LinkedList<Onbject> objectList = new LinkedList<>();
+   private LinkedList<Monster> monsterList = new LinkedList<>();
    public Stage3() {
-=======
-	private Image map;
-	private Image floor;
-	private Image monsterImage;
-	protected monster3 m3;
-   
-	public Stage3() {
->>>>>>> branch 'main' of https://github.com/GM0317/A_Project2023.git
       map = new ImageIcon("stage/stage3.png").getImage();
       floor = new ImageIcon("stage/stage Floor.png").getImage();
       monsterImage = new ImageIcon("rsc/3_monster_1.png").getImage();
     
 	}
-	
+   //public Stage3(LinkedList<Monster> monsterList) {
+	   /*this.monster = monsterList.get(0);
+		loadImage();
+	   this.x = 0;
+		this.y = y;
+		//this.stage2 = stage2;
+		this.initialY = y; // 초기 Y 좌표 저장
+	}*/
    
    public void draw(Graphics g) {
-<<<<<<< HEAD
 	   super.draw(g);
       g.drawImage(map, bgX, 0, 3500, 600, null);
       g.drawImage(floor, bgX, 0, 3500, 570, null);
-=======
-      g.drawImage(map, 0, 0, 3500, 600, null);
-      g.drawImage(floor, 0, 0, 3500, 570, null);
-      g.drawImage(monsterImage, 10, 10, 50, 50, null);
->>>>>>> branch 'main' of https://github.com/GM0317/A_Project2023.git
    }
 	@Override
 	public void keyPressed(KeyEvent e) {

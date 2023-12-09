@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 public class Stage2 extends Stage {
 	private LinkedList<Onbject> objectList = new LinkedList<>();
+	private LinkedList<Monster> monsterList = new LinkedList<>();
 	public Stage2() {
 		map = new ImageIcon("stage/1.png").getImage();
 		floor = new ImageIcon("stage/stage Floor.png").getImage();

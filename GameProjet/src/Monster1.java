@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Monster1 {
+public class Monster1{
     private Image monster;
     private Player player;
     private State[] states;

@@ -5,13 +5,15 @@ import javax.swing.ImageIcon;
 
 public class monster2 extends Monster{
 	protected Image monsterImage;
-	public monster2(int monX, int monY, int monsterWidth, int monsterHeight){ 
-		super(monX, monY, monsterWidth, monsterHeight);
+	
+	public monster2(int monX, int monY, int mWidth, int mHeight) {
+		super(monX, monY, mWidth, mHeight);
+		monsterImage = new ImageIcon("stage/monster2.png").getImage();
 	}
 	
-	public void draw(Graphics g) { //몬스터 그림 그리기
-		monsterImage = new ImageIcon("stage/monster2.png").getImage();
-	};
+	public void draw(Graphics g) {
+        //g.drawImage(monsterImage, x, y, 1000, 1430, null); // monster 이미지를 현재 x, y 위치에 그림
+    }
 	public void moveMonster() { //몬스터 이동하는 설명
 		
 	};
