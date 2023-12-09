@@ -53,7 +53,7 @@ public class Player implements KeyListener{
 	private int prevY; // 추가: 이전 Y 위치
 
 	public Player(LinkedList<Stage> stageList) {
-		this.stage = stageList.get(0);
+		this.stage = stageList.get(2);
 		loadImage();
 		states = new State[6];
 		State state = new State();

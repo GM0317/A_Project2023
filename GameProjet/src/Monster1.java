@@ -9,19 +9,20 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Monster1{
-    private Image monster;
-    private Player player;
+public class Monster1 extends Monster{
+    private Image monsterImage;
     private State[] states;
     private int stateIdx = 0;
-    private int x = 50;
+
+    /*private int x = 50;
     private int y = 505;
     public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-    public Monster1() {
-        monster = new ImageIcon("rsc/모나피.png").getImage();
+	}*/
+	public Monster1(int x, int y) {
+		super(x, y, 1000, 1430);
+    	monsterImage = new ImageIcon("rsc/모나피.png").getImage();
         //loadImage();
 		
 		states = new State[5];
@@ -80,7 +81,7 @@ public class Monster1{
     }
 
     public void draw(Graphics g) {
-        g.drawImage(monster, x, y, 1000, 1430, null); // monster 이미지를 현재 x, y 위치에 그림
+        g.drawImage(monsterImage, x, y, mWidth, mHeight, null); // monster 이미지를 현재 x, y 위치에 그림
     }
     
 	/*
@@ -90,27 +91,9 @@ public class Monster1{
 	 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
 	 */
 
-    public int getX() {
-        return x;
-    }
+ 
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getWidth() {
-        return monster.getWidth(null); // 몬스터 이미지의 너비 반환
-    }
-
-    public int getHeight() {
-        return monster.getHeight(null); // 몬스터 이미지의 높이 반환
-    }
+    public void moveMonster(int direction) {
+    	
+    };
 }

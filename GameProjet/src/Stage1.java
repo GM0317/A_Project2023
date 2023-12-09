@@ -12,7 +12,7 @@ public class Stage1 extends Stage {
 	private int bgX = 0;
 	private LinkedList<Onbject> objectList = new LinkedList<>();
 	private LinkedList<Monster> monsterList = new LinkedList<>();
-	public Stage1(){
+	public Stage1(){;
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
 	}
@@ -22,6 +22,9 @@ public class Stage1 extends Stage {
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
 	}
 	
+	public Stage1(LinkedList<Stage1> monsterList) {
+		
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
