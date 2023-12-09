@@ -1,4 +1,5 @@
 import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -22,16 +23,23 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private Stage2 sg2;
 	private Stage1 sg1;
 	private Stage3 sg3;
+	private Ruins ruins;
 	private Attack attack;
 	private Player step;
 	private int countNumber = 0;
 	private LinkedList<Stage> stageList = new LinkedList<>();
 	public GameCanvas() {
+		this.sg1 = new Stage1();
 		this.sg2 = new Stage2();
 		this.sg3 = new Stage3();
+		this.ruins = new Ruins(step);
+		stageList.add(sg1);
 		stageList.add(sg2);
 		stageList.add(sg3);
+		stageList.add(ruins);
+		
 		this.step = new Player(stageList);	
+		ruins.setPlaer(step);
 		addComponentListener(this);
 		addKeyListener(step);
 		setFocusable(true);	 //키를 눌렀을 때 동작이 되도록해줌.
@@ -61,9 +69,6 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	public void paint(Graphics g) {
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
-	   
-	    ///sg2.draw(buffer); // stage2 그리기   
-	    ///sg3.draw(buffer);
 	    step.draw(buffer, this); //player 그리기
 	    g.drawImage(this.offScreen, 0, 0, this);
 	    sg2.moveMonster();// 몬스터 호출

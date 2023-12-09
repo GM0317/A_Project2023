@@ -2,11 +2,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 
 public abstract class Stage {
 	protected Image map;
 	protected Image floor;
-	protected Image ledder;
+	//protected Image ledder;
 	protected Image Tile;
 	protected Image Tile2;
 	protected Image Tile3;
@@ -15,6 +16,9 @@ public abstract class Stage {
 	protected Image monster;
 	protected int bgX = 0;
 	
+	private Ledder ledder;
+	private Tile tile;
+	
 	protected int monsterX = 1000; // 몬스터의 초기 X 좌표
 	protected int monsterY = 468; // 몬스터의 Y 좌표
 	protected int width;
@@ -22,7 +26,13 @@ public abstract class Stage {
 	protected int monsterSpeed = 1; // 몬스터의 이동 속도
 	protected boolean movingLeft = true; // 몬스터의 방향을 추적하는 플래그
 	protected Image monsterImage = null;
-	
+	private LinkedList<Onbject> objectList = new LinkedList<>();
+	public Stage() {
+		this.ledder = new Ledder(this);
+		this.tile = new Tile(this);
+		objectList.add(ledder);
+		objectList.add(tile);
+	}
 	public void moveMonster() {
         // 몬스터를 수평으로 방향에 따라 이동합니다
         if (movingLeft) {
@@ -38,6 +48,9 @@ public abstract class Stage {
             movingLeft = true;
         }
     }
+	public int getBGX() {
+		return bgX;
+	}
 	// getX() 메서드: X 좌표 반환
     public int getX() {
         return monsterX;
@@ -56,19 +69,19 @@ public abstract class Stage {
     		return 0;
         return monsterImage.getHeight(null); // 몬스터 이미지의 높이 반환
     }
-    // Stage2의 각 타일에 대한 직사각형 정의
-    Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-        new Rectangle(600 + bgX, 400, 140, 40),
-        new Rectangle(800 + bgX, 300, 140, 40),
-        new Rectangle(1000 + bgX, 200, 410, 40),
-        new Rectangle(1500 + bgX, 300, 140, 40),
-        new Rectangle(1700 + bgX, 400, 140, 40)
-        // 필요에 따라 다른 타일의 직사각형 추가 가능
-    };
+    
     
     public void checkMonster(Rectangle playerBox, int y, int initialY, int gravitySpeed) {
 	    boolean isOnTile = false; // 캐릭터가 타일 위에 있는지 여부를 확인하는 플래그
-	
+	 // Stage2의 각 타일에 대한 직사각형 정의
+	    Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
+	        new Rectangle(600 + bgX, 400, 140, 40),
+	        new Rectangle(800 + bgX, 300, 140, 40),
+	        new Rectangle(1000 + bgX, 200, 410, 40),
+	        new Rectangle(1500 + bgX, 300, 140, 40),
+	        new Rectangle(1700 + bgX, 400, 140, 40)
+	        // 필요에 따라 다른 타일의 직사각형 추가 가능
+	    };
 	    // 각 타일과의 충돌 확인
 	    for (Rectangle tileBoundary : tileLine) {
 	        if (playerBox.intersects(tileBoundary)) {
@@ -99,6 +112,19 @@ public abstract class Stage {
 	        // 낙하 속도를 제어하기 위해 gravitySpeed 조절 가능
 	    }
     }
-	public abstract void draw(Graphics g);
+    public abstract void drawBackground(Graphics g);
+    public void drawObject(Graphics g) {
+    	for(Onbject ob : objectList) {
+			ob.draw(g);
+		}
+    }
+    public abstract void drawTile(Graphics g);
+    public abstract void drawMonster(Graphics g);
+	public void draw(Graphics g) {
+		drawBackground(g);
+		drawTile(g);
+		drawObject(g);
+		drawMonster(g);
+	}
 	public abstract void keyPressed(KeyEvent e);
 }

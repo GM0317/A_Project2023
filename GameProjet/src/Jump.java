@@ -1,4 +1,4 @@
-/*public class Jump extends Thread  {
+public class Jump extends Thread  {
     private Player player;
 
     public Jump(Player player) {
@@ -49,8 +49,8 @@
         player.setJump(false);
     }
     
-}*/
-public class Jump extends Thread  {
+}
+/*public class Jump extends Thread  {
     private Player player;
     public Jump(Player player) {
         this.player = player;
@@ -84,3 +84,4 @@ public class Jump extends Thread  {
         player.setJump(false);
     }
 }
+*/

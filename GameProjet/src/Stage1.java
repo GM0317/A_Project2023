@@ -1,57 +1,52 @@
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.util.LinkedList;
 import java.awt.Canvas;
 import java.awt.Dimension;
-
-
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
-public class Stage1 extends JFrame {
-	private Image screenImage;
-	private Graphics screenGraphic;
+
+public class Stage1 extends Stage {
 	private Image background;
-	private Image bufferImage;
-	private Graphics bufferGraphics;
-	private Image offScreen;
-	//private Player ryu = new Player();	
-	
-	public Stage1(){
-		setTitle("Stage1");
-		setSize(GameScreen.WIDTH, GameScreen.HEIGHT);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setFocusable(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		background = new ImageIcon("rsc/스테이지1art.png").getImage();
-		setLayout(null);
-		//addKeyListener(ryu);
-		setVisible(true);
-		
+	private Image floor;
+	private int bgX = 0;
+	private LinkedList<Onbject> objectList = new LinkedList<>();
+	public Stage1(){;
+		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
+		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
+	}
+	public void draw(Graphics g) {
+		super.draw(g);
+	     g.drawImage(background, bgX, 0, 3000, 600, null);
+	     g.drawImage(floor, bgX, 0, 3500, 560, null);
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		switch(e.getKeyCode())
+		{
+		case KeyEvent.VK_LEFT:
+			bgX += 10;
+			break;
+		case KeyEvent.VK_RIGHT:
+			bgX -= 10;
+			break;
+		}
+	}
+	@Override
+	public void drawBackground(Graphics g) {
+		// TODO Auto-generated method stub
 		
 	}
-	/*
-	private BufferedImage resizeImage(BufferedImage image, int newWidth) {
-		int imageWidth = image.getWidth(null);
-        int imageHeight = image.getHeight(null);
-
-        double ratio = (double)newWidth/(double)imageWidth;
-        int w = (int)(imageWidth * ratio);
-        int h = (int)(imageHeight * ratio);
-		Image resizeImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-		 
-        // 새 이미지  저장하기
-        BufferedImage newImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        Graphics g = newImage.getGraphics();
-        g.drawImage(resizeImage, 0, 0, null);
-        g.dispose();
-        return newImage;
-        */
-	public void draw(Graphics g) {
-		 super.paint(g);
-		 g.drawImage(this.offScreen, 0, 0, this);
-	     g.drawImage(background, 0, 0, 2000, 600, this);
+	@Override
+	public void drawTile(Graphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void drawMonster(Graphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 }

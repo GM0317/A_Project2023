@@ -28,11 +28,12 @@ public class Player implements KeyListener{
 	private BufferedImage jumping;
 	private BufferedImage attack;
 	private Graphics g;
+	private int state = 0;
 	private State []jumpes;
 	private State []states;
 	private State []attacks;
 	private int stateIdx = 0;
-	private int x = 100;
+	private int x ;
 	private int y = 450;
 	private int speed = 5;
 	private int jumpHeight = 0; // 점프 높이
@@ -52,7 +53,7 @@ public class Player implements KeyListener{
 	private int prevY; // 추가: 이전 Y 위치
 
 	public Player(LinkedList<Stage> stageList) {
-		this.stage = stageList.get(1);
+		this.stage = stageList.get(3);
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -154,8 +155,7 @@ public class Player implements KeyListener{
 		attack.index_x = 0;
 		attack.start_x = 0;
 		attack.start_y = 0;
-
-		this.x = x;
+		this.x = 0;
 		this.y = y;
 		//this.stage2 = stage2;
 		this.initialY = y; // 초기 Y 좌표 저장
@@ -245,14 +245,14 @@ public class Player implements KeyListener{
             isFlip = true;
             x -= 4;
 			bgX += 10;
-			System.out.println("왼쪽");
+			//System.out.println("왼쪽");
 			break;
 		case KeyEvent.VK_RIGHT:
             this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
             isFlip = false;
             x += 4;
 			bgX -= 10;
-			System.out.println("오른쪽");
+			//System.out.println("오른쪽");
 			break;
 		case KeyEvent.VK_SPACE:
 			if (!isJump) { //점프여부 확인하고 점프 기능 실행
@@ -277,19 +277,30 @@ public class Player implements KeyListener{
 	        break;
 		}
 	}
-	public int getY() {
-        return y;
-    }
-	public int getX() {
-		return x;
+	public Rectangle getRect() {
+		return new Rectangle(x, y, this.states[state].width, this.states[state].height);
 	}
-	public int getWidth() {
-        return this.width; // width는 캐릭터의 너비를
+	public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
+    }
+
+    public int getWidth() {
+        return this.width;
     }
 
     public int getHeight() {
-        return this.height; // height는 캐릭터의 높이
+        return this.height;
     }
+	public int prevX() {
+		return this.prevX;
+	}
+	public int prevY() {
+		return this.prevY;
+	}
 	private void jump() {
         Jump jump = new Jump(this);
         jump.start();
