@@ -9,22 +9,33 @@ import javax.swing.ImageIcon;
 public class Stage1 extends Stage {
 	private Image background;
 	private Image floor;
+	private PlayerHp hp;
+	private Monster Mhp;
 	private int bgX = 0;
 	private LinkedList<Onbject> objectList = new LinkedList<>();
 	private LinkedList<Monster> monsterList = new LinkedList<>();
-	public Stage1(){;
+	
+	public Stage1(Player player){;
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
-	}
-	public void draw(Graphics g) {
-		super.draw(g);
-	     g.drawImage(background, bgX, 0, 3000, 600, null);
-	     g.drawImage(floor, bgX, 0, 3500, 560, null);
-	}
-	
-	public Stage1(LinkedList<Stage1> monsterList) {
+		monsterList.add(new Monster1(player, 50, 505, bgX));
+		this.hp = player.getPlayerHp();
 		
 	}
+	
+	public void draw(Graphics g) {
+		super.draw(g);
+	    g.drawImage(background, bgX, 0, 3000, 600, null);
+	    g.drawImage(floor, bgX, 0, 3500, 560, null);
+	    drawMonster(g);
+	    for(Monster monster : monsterList) {
+	    	if(monster.Checkmonster()) {
+	    		hp.draw(g);
+	    		monster.DieMT(50);
+	    	}
+	    }
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -38,6 +49,7 @@ public class Stage1 extends Stage {
 			break;
 		}
 	}
+	
 	@Override
 	public void drawBackground(Graphics g) {
 		// TODO Auto-generated method stub
@@ -50,6 +62,14 @@ public class Stage1 extends Stage {
 	}
 	@Override
 	public void drawMonster(Graphics g) {
+		LinkedList<Monster> removeM = new LinkedList<>();
+		for (Monster monster : monsterList) {
+            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
+        if(monster.getHP()==0) {
+  		  	removeM.add(monster);
+      	  }
+		}
+		monsterList.removeAll(removeM);
 	}
 	
 	public void paint(Graphics g) {

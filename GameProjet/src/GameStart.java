@@ -41,9 +41,9 @@ public class GameStart extends JFrame {
             public void actionPerformed(ActionEvent e) {
             	dispose();
                 // 버튼클릭시
-            	if(e.getSource()== startButton) {
+            	/*if(e.getSource()== startButton) {
                 	new Stage1();
-                }
+                }*/
             }
         });
         add(startButton);

@@ -2,12 +2,12 @@ import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 
-public class monster3 extends Monster {
+public class Monster3 extends Monster {
     private Image monsterImage;
 
-    public monster3(int x, int y, int bgX) {
+    public Monster3(Player play, int x, int y, int bgX){
         // 배경의 초기 위치를 고려하여 몬스터의 초기 x 좌표 설정
-        super(x + bgX, y, 50, 50);
+        super(play, x + bgX, y, 50, 50, 100);
         monsterImage = new ImageIcon("rsc/3_monster_1.png").getImage();
     }
     @Override

@@ -8,24 +8,34 @@ import javax.swing.ImageIcon;
 public class Stage3 extends Stage {
    private Image map;
    private Image floor;
-   //private Image monsterImage;
+   private PlayerHp hp;
+   private Monster Mhp;
    private int bgX = 0;
    private LinkedList<Onbject> objectList = new LinkedList<>();
    private LinkedList<Monster> monsterList = new LinkedList<>();
-   public Stage3() {
+   
+   public Stage3(Player player) {
       map = new ImageIcon("stage/stage3.png").getImage();
       floor = new ImageIcon("stage/stage Floor.png").getImage();
-      monsterList.add(new monster3(300, 490, bgX));
-      //monsterImage = new ImageIcon("rsc/3_monster_1.png").getImage();
+      monsterList.add(new Monster3(player, 300, 490, bgX));
+      monsterList.add(new Monster3(player, 500, 490, bgX));
+      this.hp = player.getPlayerHp();
    }
    
    public void draw(Graphics g) {
 	  super.draw(g);
       g.drawImage(map, bgX, 0, 3500, 600, null);
       g.drawImage(floor, bgX, 0, 3500, 570, null);
-      //g.drawImage(monsterImage, 400, 490, 100, 100, null);
       drawMonster(g);
+      for(Monster monster : monsterList) {
+    	  if(monster.Checkmonster()) {
+    		  hp.draw(g);
+    		  monster.DieMT(50);
+    	  }
+    		  
+      }
    }
+   
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    switch (e.getKeyCode()) {
@@ -56,8 +66,13 @@ public class Stage3 extends Stage {
 	}
 	@Override
 	public void drawMonster(Graphics g) {
+		LinkedList<Monster> removeM = new LinkedList<>();
 		for (Monster monster : monsterList) {
             monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
-        }
+        if(monster.getHP()==0) {
+  		  	removeM.add(monster);
+      	  }
+		}
+		monsterList.removeAll(removeM);
 	}
 }
