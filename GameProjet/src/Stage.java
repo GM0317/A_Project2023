@@ -18,6 +18,7 @@ public abstract class Stage {
 	
 	private Ledder ledder;
 	private Tile tile;
+	private Tile2 tile2;
 	
 	protected int monsterX = 1000; // 몬스터의 초기 X 좌표
 	protected int monsterY = 468; // 몬스터의 Y 좌표
@@ -30,8 +31,10 @@ public abstract class Stage {
 	public Stage() {
 		this.ledder = new Ledder(this);
 		this.tile = new Tile(this);
+		this.tile2 = new Tile2(this);
 		objectList.add(ledder);
 		objectList.add(tile);
+		objectList.add(tile2);
 	}
 	public void moveMonster() {
         // 몬스터를 수평으로 방향에 따라 이동합니다
@@ -74,7 +77,7 @@ public abstract class Stage {
     public void checkMonster(Rectangle playerBox, int y, int initialY, int gravitySpeed) {
 	    boolean isOnTile = false; // 캐릭터가 타일 위에 있는지 여부를 확인하는 플래그
 	 // Stage2의 각 타일에 대한 직사각형 정의
-	    Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
+	  /*  Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
 	        new Rectangle(600 + bgX, 400, 140, 40),
 	        new Rectangle(800 + bgX, 300, 140, 40),
 	        new Rectangle(1000 + bgX, 200, 410, 40),
@@ -110,12 +113,12 @@ public abstract class Stage {
 	        // 중력이나 낙하 효과 적용
 	        y += gravitySpeed; // 낙하를 위해 'y' 위치 조정
 	        // 낙하 속도를 제어하기 위해 gravitySpeed 조절 가능
-	    }
+	    }*/
     }
     public abstract void drawBackground(Graphics g);
     public void drawObject(Graphics g) {
     	for(Onbject ob : objectList) {
-			ob.draw(g);
+			//ob.draw(g);
 		}
     }
     public abstract void drawTile(Graphics g);

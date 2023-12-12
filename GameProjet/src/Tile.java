@@ -1,9 +1,11 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 
 public class Tile extends Onbject{
+	private Player player;
 	protected Image Tile;
 	protected Image Tile2;
 	protected Image Tile3;
@@ -21,7 +23,7 @@ public class Tile extends Onbject{
 	    g.drawImage(Tile3, 870 + stage.getBGX(), 300, 35, 40, null);
 	    g.drawImage(Tile4, 905 + stage.getBGX(), 300, 35, 40, null);
 		// 사다리와 Tile 이미지를 고정된 좌표에 그리기
-	   /* g.drawImage(Tile, 600 + stage.getBGX(), 400, 35, 40, null);
+	    g.drawImage(Tile, 600 + stage.getBGX(), 400, 35, 40, null);
 	    g.drawImage(Tile2, 635 + stage.getBGX(), 400, 35, 40, null);
 	    g.drawImage(Tile3, 670 + stage.getBGX(), 400, 35, 40, null);
 	    g.drawImage(Tile4, 705 + stage.getBGX(), 400, 35, 40, null);
@@ -52,8 +54,9 @@ public class Tile extends Onbject{
 	    g.drawImage(Tile, 1700 + stage.getBGX(), 400, 35, 40, null);
 	    g.drawImage(Tile2, 1735 + stage.getBGX(), 400, 35, 40, null);
 	    g.drawImage(Tile3, 1770 + stage.getBGX(), 400, 35, 40, null);
-	    g.drawImage(Tile4, 1805 + stage.getBGX(), 400, 35, 40, null);*/
+	    g.drawImage(Tile4, 1805 + stage.getBGX(), 400, 35, 40, null);
 		
 	}
+	
 
 }

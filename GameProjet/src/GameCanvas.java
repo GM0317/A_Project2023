@@ -29,18 +29,19 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private int countNumber = 0;
 	private LinkedList<Stage> stageList = new LinkedList<>();
 	public GameCanvas() {
+		this.step = new Player();
 		this.sg1 = new Stage1();
-		this.sg2 = new Stage2();
-		this.sg3 = new Stage3();
+		this.sg2 = new Stage2(step);
+		this.sg3 = new Stage3(step);
 		this.ruins = new Ruins(step);
 		stageList.add(sg1);
 		stageList.add(sg2);
 		stageList.add(sg3);
 		stageList.add(ruins);
 		
-		this.step = new Player(stageList);	
+		this.step.setStage(stageList.get(3));
+		
 		ruins.setPlaer(step);
-		this.step = new Player(stageList);
 		addComponentListener(this);
 		addKeyListener(step);
 		setFocusable(true);	 //키를 눌렀을 때 동작이 되도록해줌.
@@ -54,11 +55,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 				counting();
 			}
 		}, 0, 1);
-		//this.player=player;
-		//this.hp = new PlayerHp(step); // hp 초기화
-		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
-        //add(player);	
-		
+		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때	
 	}
 	public void counting() {
 		this.countNumber++;

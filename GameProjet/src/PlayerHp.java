@@ -17,7 +17,7 @@ public class PlayerHp {
 
     public PlayerHp() { // Player를 받는 생성자 추가
         //this.player = player;
-        this.hp = 500; // 체력을 500으로 초기화
+        this.hp = 300; // 체력을 500으로 초기화
         Heart6 = new ImageIcon("rsc/Heart6.png").getImage(); // 이미지 파일 가져오기
         Heart5 = new ImageIcon("rsc/Heart5.png").getImage();
         Heart4 = new ImageIcon("rsc/Heart4.png").getImage();
@@ -34,23 +34,22 @@ public class PlayerHp {
         }
         
     }
+    
     public int getHp() {
         return hp; // 플레이어 체력을 반환
     }
 	public void draw(Graphics g) {
-		//System.out.println("player: "+player);
-		//if (player != null) { 
-            if (hp >= 500) {
+            if (hp >= 300) {
                 g.drawImage(Heart6, 18, 18, 98, 30, null); // hp이미지 생성
-            } else if (hp >= 450) {
+            } else if (hp >= 250) {
                 g.drawImage(Heart5, 18, 18, 98, 30, null); // hp 이미지 생성
-            } else if (hp >= 400) {
-            	g.drawImage(Heart4, 18, 18, 98, 30, null); // hp 이미지 생성
-            } else if (hp >= 350) {
-            	g.drawImage(Heart3, 18, 18, 98, 30, null); // hp 이미지 생성
-            } else if (hp >= 300) {
-            	g.drawImage(Heart2, 18, 18, 98, 30, null); // hp 이미지 생성
             } else if (hp >= 200) {
+            	g.drawImage(Heart4, 18, 18, 98, 30, null); // hp 이미지 생성
+            } else if (hp >= 150) {
+            	g.drawImage(Heart3, 18, 18, 98, 30, null); // hp 이미지 생성
+            } else if (hp >= 100) {
+            	g.drawImage(Heart2, 18, 18, 98, 30, null); // hp 이미지 생성
+            } else if (hp >= 50) {
             	g.drawImage(Heart1, 18, 18, 98, 30, null); // hp 이미지 생성
             } else {
             	g.drawImage(Heart0, 18, 18, 98, 30, null); // hp 이미지 생성
@@ -58,7 +57,6 @@ public class PlayerHp {
             // HP 값을 그래픽으로 표시
             g.setColor(Color.WHITE);
             g.drawString("HP: " + hp, 18, 60); // hp가 감소하는지 확인하기 위해 만듬.
-		
 	}
 
 }

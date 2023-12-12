@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
@@ -52,8 +51,7 @@ public class Player implements KeyListener{
 	private int prevX; // 추가: 이전 X 위치
 	private int prevY; // 추가: 이전 Y 위치
 
-	public Player(LinkedList<Stage> stageList) {
-		this.stage = stageList.get(3);
+	public Player() {
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -162,6 +160,10 @@ public class Player implements KeyListener{
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 	}
 	
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+	
 	private void loadImage() {
 		try {
 			this.sprite = ImageIO.read(new File("character/step.png"));
@@ -177,7 +179,7 @@ public class Player implements KeyListener{
 	}
 	private boolean flip = false;
 	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
-		hp.draw(g);
+		//hp.draw(g);
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
@@ -258,7 +260,7 @@ public class Player implements KeyListener{
 		case KeyEvent.VK_SPACE:
 			if (!isJump) { //점프여부 확인하고 점프 기능 실행
                 isJump = true;
-                jump();
+                jump(100);
             }
 			break;
 		case KeyEvent.VK_UP:
@@ -302,7 +304,7 @@ public class Player implements KeyListener{
 	public int prevY() {
 		return this.prevY;
 	}
-	private void jump() {
+	private void jump(int jumpHeight) {
         Jump jump = new Jump(this);
         jump.start();
     }
