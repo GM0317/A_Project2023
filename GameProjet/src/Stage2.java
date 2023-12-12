@@ -10,8 +10,10 @@ import javax.swing.JPanel;
 
 public class Stage2 extends Stage {
 	private Player player;
+	private GameCanvas canvas;
 	private LinkedList<Onbject> objectList = new LinkedList<>();
-	public Stage2(Player player) {
+	public Stage2(Player player, GameCanvas canvas) {
+		this.canvas = canvas;
 		this.player = player; //초기화
 		if(player == null) {
 			System.out.println("plaer는 null...");
@@ -192,7 +194,8 @@ public class Stage2 extends Stage {
 			    };
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {                	
+                if (playerBox.intersects(tileBoundary)) {  
+                	canvas.changeStage(3);
                 	System.out.println("Portal!");	
                 }
             }	

@@ -31,7 +31,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	public GameCanvas() {
 		this.step = new Player();
 		this.sg1 = new Stage1(step);
-		this.sg2 = new Stage2(step);
+		this.sg2 = new Stage2(step,this);
 		this.sg3 = new Stage3(step);
 		this.ruins = new Ruins(step);
 		stageList.add(sg1);
@@ -39,7 +39,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		stageList.add(sg3);
 		stageList.add(ruins);
 		
-		this.step.setStage(stageList.get(2));
+		this.step.setStage(stageList.get(0));
 		
 		ruins.setPlaer(step);
 		addComponentListener(this);
@@ -56,6 +56,9 @@ public class GameCanvas extends JPanel implements ComponentListener{
 			}
 		}, 0, 1);
 		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때	
+	}
+	public void changeStage(int num) {
+		this.step.setStage(stageList.get(num));
 	}
 	public void counting() {
 		this.countNumber++;

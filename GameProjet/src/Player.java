@@ -26,11 +26,13 @@ public class Player implements KeyListener{
 	private BufferedImage sprite;
 	private BufferedImage jumping;
 	private BufferedImage attack;
+	private BufferedImage standing;
 	private Graphics g;
 	private int state = 0;
 	private State []jumpes;
 	private State []states;
 	private State []attacks;
+	private State []standings;
 	private int stateIdx = 0;
 	private int x ;
 	private int y = 450;
@@ -145,14 +147,24 @@ public class Player implements KeyListener{
 		jump.start_x=216;
 		jump.start_y=79;
 		
-		attacks = new State[4];
+		attacks = new State[1];
 		State attack = new State();
 		attacks[0] = attack;
-		attack.width = 100;
+		attack.width = 58;
 		attack.height = 74;
 		attack.index_x = 0;
-		attack.start_x = 0;
-		attack.start_y = 0;
+		attack.start_x = 84;
+		attack.start_y = 76;
+		
+		standings = new State[1];
+		State stand = new State();
+		standings[0] = stand;
+		stand.width = 58;
+		stand.height = 74;
+		stand.index_x = 0;
+		stand.start_x = 84;
+		stand.start_y = 76;
+		
 		this.x = 0;
 		this.y = y;
 		//this.stage2 = stage2;
@@ -172,6 +184,7 @@ public class Player implements KeyListener{
 			this.sprite = ImageIO.read(new File("character/step.png"));
 			this.jumping = ImageIO.read(new File("character/jump.png"));
 			this.attack = ImageIO.read(new File("character/Attack.png"));
+			this.standing = ImageIO.read(new File("character/standing.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,7 +195,7 @@ public class Player implements KeyListener{
 	}
 	private boolean flip = false;
 	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
-		hp.draw(g);
+		//hp.draw(g);
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
@@ -197,12 +210,22 @@ public class Player implements KeyListener{
 	                state.height * state.index_y + state.start_y + state.height,
 	                gameCanvas);
 	    }else if (isAttacking) {
-	    	gb.drawImage(attack,
-	    			0, 0,  // 위치
-	                40 + state.width, 3 + state.height,
+	    	gb.drawImage(attack,0, 0,  // 위치
+	                0 + state.width, 0 + state.height, // 크기
+	                state.start_x,
+	                state.start_y,
+	                state.width + state.start_x,
+	                state.start_y + state.height,
 	                gameCanvas);
-	    }
-	    else {
+	    }/*else if(x == prevX && y == prevY){
+	    	gb.drawImage(standing,0, 0,  // 위치
+	                0 + state.width, 0 + state.height, // 크기
+	                state.start_x,
+	                state.start_y,
+	                state.width + state.start_x,
+	                state.start_y + state.height,
+	                gameCanvas);
+	    }*/else{
 	    	gb.drawImage(sprite, 
 					0, 0,  //위치 
 					0 + state.width, 0 + state.height, //크기 
@@ -214,6 +237,7 @@ public class Player implements KeyListener{
 	    }
 	    
 	    
+	    
 	    gb.dispose();
 	    
 	    if(this.flip) {
@@ -222,7 +246,7 @@ public class Player implements KeyListener{
 		    AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 		    bufferedImage = op.filter(bufferedImage, null);
 	    }
-	    g.drawImage(bufferedImage, x, y, null);
+	    g.drawImage(bufferedImage, x, y,null);
 	    
 	    
 		if(gameCanvas.getCount() % 50 == 0)
@@ -249,21 +273,22 @@ public class Player implements KeyListener{
 		case KeyEvent.VK_LEFT:
             this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
             isFlip = true;
-            x -= 4;
+            x -= 3;
 			bgX += 10;
 			//System.out.println("왼쪽");
 			break;
 		case KeyEvent.VK_RIGHT:
             this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
             isFlip = false;
-            x += 4;
+            x += 3;
 			bgX -= 10;
 			//System.out.println("오른쪽");
 			break;
 		case KeyEvent.VK_SPACE:
-			if (!isJump) { //점프여부 확인하고 점프 기능 실행
+			if (!isJump)
+			{ //점프여부 확인하고 점프 기능 실행
                 isJump = true;
-                jump(100);
+                jump(80);
             }
 			break;
 		case KeyEvent.VK_UP:
@@ -308,7 +333,7 @@ public class Player implements KeyListener{
 		return this.prevY;
 	}
 	private void jump(int jumpHeight) {
-        Jump jump = new Jump(this);
+        Jump jump = new Jump(this, jumpHeight);
         jump.start();
     }
 	public boolean isJump() {
@@ -336,6 +361,13 @@ public class Player implements KeyListener{
 		switch(e.getKeyCode()) {
         case KeyEvent.VK_A:
             isAttacking = false; // 공격 상태 해제
+            break;
+            
+        case KeyEvent.VK_SPACE:
+            // 캐릭터가 점프 중이라면 점프를 중지
+            if (isJump) {
+                isJump = false; // 점프를 멈춤
+            }
             break;
 		}
 	}
