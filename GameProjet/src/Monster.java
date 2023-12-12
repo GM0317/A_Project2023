@@ -1,54 +1,59 @@
 import java.awt.Graphics;
-import java.awt.Image;
-import java.util.LinkedList;
+import java.awt.Rectangle;
 
 public abstract class Monster {
-	protected int monX;
-	protected int monY;
-	protected int mWidth;
-	protected int mHeight;
-	private LinkedList<Monster> monsterList = new LinkedList<>();
-	protected Monster1 m1;
-	protected monster2 m2;
-	protected monster3 m3;
-	
-	public Monster(int monX, int monY, int mWidth, int mHeight) {
-	    this.monX = monX;
-	    this.monY = monY;
-	    this.mWidth = mWidth;
-	    this.mHeight = mHeight;
+    protected int x;
+    protected int y;
+    protected int mWidth;
+    protected int mHeight;
+    private Player player;
+    private int Mhp;
+    private long lastTime = 0; // 마지막 충돌 시간 저장
+    private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
 
-	    /*this.m1 = new Monster1(10, 20, 30, 40); // 적절한 초기값을 넣어주세요
-	    this.m2 = new monster2(50, 60, 70, 80); // 적절한 초기값을 넣어주세요
-	    this.m3 = new monster3(90, 100, 110, 120); // 적절한 초기값을 넣어주세요*/
-	}
+    public Monster(Player play, int x, int y, int mWidth, int mHeight, int Mhp) {
+        this.x = x;
+        this.y = y;
+        this.mWidth = mWidth;
+        this.mHeight = mHeight;
+        this.Mhp=Mhp;
+        this.player = play;
+    }
 
-	public Monster() {
-		this.m1 = new Monster1();
-		//this.m2 = new monster2();
-		//this.m3 = new monster3();
-		//monsterList.add(m1);
-		monsterList.add(m2);
-		monsterList.add(m3);
-	}
+    public abstract void moveMonster(int direction);
+    public abstract void draw(Graphics g);
+    
+    public int getX() {
+        return x;
+    }
 
-	
-	public int getX() {
-		return monX;
-	}
-	
-	public int getY() {
-		return monY;
-	}
-	/*public int getWidth() {
-		return getWidth(null); // 몬스터 이미지의 너비 반환
-	}
-
-    public int getHeight() {
-    	return getHeight(null); // 몬스터 이미지의 높이 반환
-	}*/
-	public abstract void moveMonster();
-	
-	
-
+    public int getY() {
+        return y;
+    }
+    public int getHP() {
+    	return Mhp;
+    }
+    
+    public boolean Checkmonster() {
+    	Rectangle playerBox = player.getRect();
+    	Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
+    	
+        if (playerBox.intersects(monsterBox)) {
+            if (System.currentTimeMillis() - lastTime > Delay) {
+                player.getPlayerHp().decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
+                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+                System.out.println("몬스터와 충돌! 플레이어 체력: " + player.getPlayerHp().getHp()+"몬스터 체력 : " + Mhp);
+                return true;
+            }
+        }
+        return false;
+    }
+    public void DieMT(int amount) { // Hp 감소시키기
+        Mhp -= amount;
+        if (Mhp < 0) {
+            Mhp = 0;
+            System.out.println(Mhp);
+        }
+    }
+  
 }

@@ -46,6 +46,7 @@ public class GameStart extends JFrame {
                     // 현재 화면은 종료
                     dispose();
                 }
+
             }
         });
      // 게임 종료 버튼

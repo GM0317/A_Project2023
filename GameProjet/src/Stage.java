@@ -20,8 +20,8 @@ public abstract class Stage {
 	private Tile tile;
 	
 	private Monster1 m1;
-	private monster2 m2;
-	private monster3 m3;
+	private Monster2 m2;
+	private Monster3 m3;
 	
 	
 	protected int monsterX = 1000; // 몬스터의 초기 X 좌표

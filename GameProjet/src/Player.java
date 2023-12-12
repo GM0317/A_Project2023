@@ -22,7 +22,13 @@ public class Player implements KeyListener{
 	//private Stage2 stage2;
 	//private Stage3 stage3;
 	private Stage stage;
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
 	private PlayerHp hp;
+	public PlayerHp getPlayerHp() {
+		return this.hp;
+	}
 	private Attack atteck;//이건 클래스 가져온
 	private BufferedImage sprite;
 	private BufferedImage jumping;
@@ -41,8 +47,8 @@ public class Player implements KeyListener{
 	private boolean isFlip = false; // 캐릭터가 반전 중인지 여부
 	private boolean isOnGround = false; // 바닥에 서 있는지 여부
 	private int initialY; // 초기 Y 좌표
-	private long lastTime = 0; // 마지막 충돌 시간 저장
-    private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
+	
+    
     private int bgX = 0;
     private boolean isAttacking = false; // 공격 중인지 여부
     private int gravitySpeed = 1; // 중력에 의한 낙하 속도
@@ -52,8 +58,7 @@ public class Player implements KeyListener{
 	private int prevX; // 추가: 이전 X 위치
 	private int prevY; // 추가: 이전 Y 위치
 
-	public Player(LinkedList<Stage> stageList) {
-		this.stage = stageList.get(0);
+	public Player() {
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -342,7 +347,7 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	private void monsterCheck() {
+	/*private void monsterCheck() {
         Rectangle playerBox = new Rectangle(x, y, width, height);
         Rectangle monsterBox = new Rectangle(stage.getX()+bgX+10, stage.getY()+8, stage.getWidth()-10, stage.getHeight()-10);
 
@@ -355,7 +360,7 @@ public class Player implements KeyListener{
         }
         stage.checkMonster(playerBox, prevY, initialY, gravitySpeed);
        
-    }
+    }*/
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
@@ -377,7 +382,7 @@ public class Player implements KeyListener{
 	        // 기존의 캐릭터 이미지를 그리는 로직
 	        drawCharacter(getState(), g, gameCanvas);
 	    }
-		monsterCheck(); // 충돌 체크
+		//monsterCheck(); // 충돌 체크
 		// 현재 플레이어의 가로와 세로 길이
 		width = getState().width;
 		height = getState().height;

@@ -9,6 +9,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Stage2 extends Stage {
+	
+	
 	private LinkedList<Onbject> objectList = new LinkedList<>();
 	private LinkedList<Monster> monsterList = new LinkedList<>();
 	public Stage2() {
