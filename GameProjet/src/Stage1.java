@@ -14,20 +14,33 @@ public class Stage1 extends Stage {
 	private Tile2 tile2;
 	private Ledder ledder;
 	private int bgX = 0;
+	private Monster Mhp;
+	private PlayerHp hp;
+	 private LinkedList<Monster> monsterList = new LinkedList<>();
 	private LinkedList<Onbject> objectList = new LinkedList<>();
-	public Stage1(){
+	public Stage1(Player player){
 		this.tile2 = new Tile2(this);
 		//this.ledder = new Ledder(this);
 		objectList.add(tile2);
 		 objectList.add(ledder);
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
+		 monsterList.add(new Monster1(player, 50, 505, bgX));
+	     // this.hp = player.getPlayerHp();
+
 	}
-//	public void draw(Graphics g) {
-//		super.draw(g);
-//	     g.drawImage(background, bgX, 0, 3000, 600, null);
-//	     g.drawImage(floor, bgX, 0, 3500, 560, null);
-//	}
+	public void draw(Graphics g) {
+		super.draw(g);
+	     g.drawImage(background, bgX, 0, 3000, 600, null);
+	     g.drawImage(floor, bgX, 0, 3500, 560, null);
+	     drawMonster(g);
+	       for(Monster monster : monsterList) {
+	          if(monster.Checkmonster()) {
+	             hp.draw(g);
+	             monster.DieMT(50);
+	          }
+	       }
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -56,13 +69,21 @@ public class Stage1 extends Stage {
 	@Override
 	public void drawBackground(Graphics g) {
 		//super.draw(g);
-	     g.drawImage(background, bgX, 0, 3000, 600, null);
-	     g.drawImage(floor, bgX, 0, 3500, 560, null);
+	    // g.drawImage(background, bgX, 0, 3000, 600, null);
+	    // g.drawImage(floor, bgX, 0, 3500, 560, null);
 	}
 
 	@Override
 	public void drawMonster(Graphics g) {
 		// TODO Auto-generated method stub
-		
+		LinkedList<Monster> removeM = new LinkedList<>();
+	      for (Monster monster : monsterList) {
+	            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
+	        if(monster.getHP()==0) {
+	             removeM.add(monster);
+	           }
+	      }
+	      monsterList.removeAll(removeM);
+
 	}
 }

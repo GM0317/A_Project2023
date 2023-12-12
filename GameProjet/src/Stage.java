@@ -20,6 +20,11 @@ public abstract class Stage {
 	private Tile tile;
 	private Tile2 tile2;
 	
+	private Monster1 m1;
+	private Monster2 m2;
+	private Monster3 m3;
+	
+	
 	protected int monsterX = 1000; // 몬스터의 초기 X 좌표
 	protected int monsterY = 468; // 몬스터의 Y 좌표
 	protected int width;
@@ -28,13 +33,18 @@ public abstract class Stage {
 	protected boolean movingLeft = true; // 몬스터의 방향을 추적하는 플래그
 	protected Image monsterImage = null;
 	private LinkedList<Onbject> objectList = new LinkedList<>();
+	private LinkedList<Monster> monsterList = new LinkedList<>();
 	public Stage() {
-		this.ledder = new Ledder(this);
+		/*this.ledder = new Ledder(this);
 		this.tile = new Tile(this);
 		this.tile2 = new Tile2(this);
 		objectList.add(ledder);
+<<<<<<< HEAD
 		objectList.add(tile);
 		objectList.add(tile2);
+=======
+		objectList.add(tile);*/
+		
 	}
 	public void moveMonster() {
         // 몬스터를 수평으로 방향에 따라 이동합니다

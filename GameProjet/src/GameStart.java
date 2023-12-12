@@ -1,73 +1,75 @@
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 public class GameStart extends JFrame {
-	private Image screenImage;
-	private Graphics screenGraphic;
-	private Image background;
-	private JButton startButton;
-	private JButton finshButton;
 	
-	private Image bufferImage;
-	
-	private Image mainScreen = new ImageIcon("rsc/start.png").getImage();
-	
-	public GameStart() {
-		setTitle("Unknown Island");
-		setSize(GameScreen.WIDTH, GameScreen.HEIGHT);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		background = mainScreen;
-		setLayout(null);
-		
-        // 게임시작버튼
-        startButton = new JButton("Start Game");
-        startButton.setBounds(400, 300, 200, 50);
-        startButton.addActionListener(new ActionListener() {
+    //private Graphics backgraphic; 
+    private Image background = new ImageIcon("rsc/Startback.png").getImage();
+    private Image startButton = new ImageIcon("rsc/STARTbt.png").getImage();
+    private Image finishButton = new ImageIcon("rsc/EXITbt.png").getImage();
+    private Image Gamename = new ImageIcon("rsc/GameName.png").getImage();
+    
+    public GameStart() {
+        setTitle("Unknown Island");
+        setSize(1050, 650);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+        setVisible(true);
+        
+
+     // 게임 시작 버튼
+        addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-            	dispose();
-                // 버튼클릭시
-            	if(e.getSource()== startButton) {
-                	new Stage1();
+            public void mouseClicked(MouseEvent e) {
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+                
+                // Image startButton이 마우스 클릭 범위에 포함되어 있는지 확인
+                if (mouseX >= 384 && mouseX <= 664 && mouseY >= 451 && mouseY <= 531) {
+                    // Stage1 클래스의 화면 보이도록 호출
+                	 //Stage1 stage1 = 
+                	 new GameScreen();
+                	 //stage1.setVisible(true); // Stage1 클래스의 화면 보이도록 설정
+                    // 현재 화면은 종료
+                    dispose();
+                }
+
+            }
+        });
+     // 게임 종료 버튼
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int mouseX = e.getX();
+                int mouseY = e.getY();
+                
+                // Image finishButton이 마우스 클릭 범위에 포함되어 있는지 확인
+                if (mouseX >= 384 && mouseX <= 664 && mouseY >= 530 && mouseY <= 610) {
+                    // 현재 화면은 종료
+                    dispose();
                 }
             }
         });
-        add(startButton);
-
-        //게임종료
-        finshButton = new JButton("finsh Game");
-        finshButton.setBounds(400, 400, 200, 50);
-        finshButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-            	dispose();
-            }
-        });
-        add(finshButton);
-	
-        
-		setVisible(true);
-		
-	}
-	
-    
-	public void paint(Graphics g) {
-		 super.paint(g);
-	     g.drawImage(background, 0, 0, getWidth(), getHeight(), this);
-	}
+    }
+   
+    public void paint(Graphics g) {
+        super.paint(g);
+        g.drawImage(background, 0, 0, 1050, 650, this);
+        g.drawImage(startButton, 384, 451, 280, 80, this);
+        g.drawImage(finishButton, 384, 530, 280, 80, this);
+        g.drawImage(Gamename, 240, 30, 580, 142, this);
+    }
 }
-

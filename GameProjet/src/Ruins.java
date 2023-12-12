@@ -80,7 +80,7 @@ public class Ruins extends Stage{
 	    	keyCheck();
 	    	flamesCheck();
 	    	flamesCheck2();
-	    	hp.draw(g);
+	    	//hp.draw(g);
 	    	
 	    	if (isKeyCollected) {
 	    		drawEnergyBar(g);

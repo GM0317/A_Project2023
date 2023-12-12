@@ -159,6 +159,9 @@ public class Player implements KeyListener{
 		this.initialY = y; // 초기 Y 좌표 저장
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 	}
+	public PlayerHp getPlayerHp() {
+		return this.hp;
+	}
 	
 	public void setStage(Stage stage) {
 		this.stage = stage;
@@ -179,7 +182,7 @@ public class Player implements KeyListener{
 	}
 	private boolean flip = false;
 	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
-		//hp.draw(g);
+		hp.draw(g);
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
