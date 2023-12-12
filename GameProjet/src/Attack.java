@@ -1,5 +1,10 @@
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -15,13 +20,23 @@ public class Attack {
 	private boolean left;
 	private boolean right;
 	private boolean up;
+	protected Image boom;
 	
 	public Attack(int x, int y, int speed, int direction) {
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
-		this.direction = direction;		
+		this.direction = direction;	
+		loadImage();
 	}
+	 private void loadImage() {
+	        try {
+	            this.boom = ImageIO.read(new File("character/총알.png"));
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
 	
 	public int getX() {
         return x;
@@ -33,8 +48,10 @@ public class Attack {
 	
 	public void move() {
 		// 공격의 위치를 이동
+		// 총알의 이동 로직을 직선으로 수정
+		//x += speed;
 	    switch (direction) {
-	        case 1:
+	       case 1:
 	            // 위
 	            y -= speed;
 	            break;
@@ -51,6 +68,7 @@ public class Attack {
 	            y += speed;
 	            break;
 	    }
+	    System.out.println("x: "+x+", speed: "+speed+", direction:"+ direction);
 	}
 	
 	public boolean isAttacking() {
@@ -61,8 +79,8 @@ public class Attack {
         isAttacking = attacking;
     }
 	public void draw(Graphics g) {
-		attack = new ImageIcon("character/총알.png").getImage(); //이미지 파일 가져오기
-		g.drawImage(attack, x, y, 50, 50, null); //공격 이미지 생성
+		boom = new ImageIcon("character/총알.png").getImage(); //이미지 파일 가져오기
+		g.drawImage(boom, x, y, 50, 50, null); //공격 이미지 생성
 	}
 
 }

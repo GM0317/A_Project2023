@@ -10,19 +10,22 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class Monster1{
-    private Image monster;
+	private BufferedImage sprite;
+    //private Image monster;
     private Player player;
     private State[] states;
     private int stateIdx = 0;
-    private int x = 50;
+    private int x = 100;
     private int y = 505;
-    public void setPosition(int x, int y) {
+   
+    /*public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
+	}*/
+    
+    
     public Monster1() {
-        monster = new ImageIcon("rsc/모나피.png").getImage();
-        //loadImage();
+        loadImage();
 		
 		states = new State[5];
 		State state = new State();
@@ -79,17 +82,47 @@ public class Monster1{
 		state.stop = true;
     }
 
-    public void draw(Graphics g) {
-        g.drawImage(monster, x, y, 1000, 1430, null); // monster 이미지를 현재 x, y 위치에 그림
+    private void loadImage() {
+    	try {
+			this.sprite = ImageIO.read(new File("rsc/모나피.png"));
+			//this.sprite = TransformColorToTransparency(this.sprite, new Color(70, 112, 104));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    private State getState() {
+		return states[stateIdx];
+	}
+	public void draw(Graphics g, GameCanvas screen) {
+        drawMonster(getState(), g, screen); // monster 이미지를 현재 x, y 위치에 그림
     }
-    
-	/*
-	 * private void loadImage() { try { this.sprite = ImageIO.read(new
-	 * File("resources/ryu.png")); this.sprite =
-	 * TransformColorToTransparency(this.sprite, new Color(70, 112, 104)); } catch
-	 * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
-	 */
-
+	private void drawMonster(State state, Graphics g, GameCanvas screen) {
+		g.drawImage(sprite, 
+				x, y,  //위치 
+				x + state.width, y + state.height, //크기 
+				state.width*state.index_x + state.start_x, 
+				state.height*state.index_y + state.start_y, 
+				state.width*state.index_x + state.start_x + state.width, 
+				state.height*state.index_y + state.start_y + state.height, 
+				screen);
+		
+		if(screen.getCount() % 100 == 0)
+		{
+			if(state.index_x < state.frame_size-1)
+			{
+				state.index_x++;
+			}
+			else
+			{
+				if(!state.stop)
+					state.index_x = 0;
+				else
+					state.index_x = state.frame_size-1;
+			}
+		}
+	}
+	
     public int getX() {
         return x;
     }
@@ -105,7 +138,7 @@ public class Monster1{
     public void setY(int y) {
         this.y = y;
     }
-
+/*
     public int getWidth() {
         return monster.getWidth(null); // 몬스터 이미지의 너비 반환
     }
@@ -113,4 +146,5 @@ public class Monster1{
     public int getHeight() {
         return monster.getHeight(null); // 몬스터 이미지의 높이 반환
     }
+    */
 }
