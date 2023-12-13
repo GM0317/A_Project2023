@@ -7,7 +7,7 @@ public class Monster3 extends Monster {
 
     public Monster3(Player play, int x, int y, int bgX){
         // 배경의 초기 위치를 고려하여 몬스터의 초기 x 좌표 설정
-        super(play, x + bgX, y, 50, 50, 100);
+        super(play, x + bgX, y, 100, 100, 100);
         monsterImage = new ImageIcon("rsc/3_monster_1.png").getImage();
     }
     @Override

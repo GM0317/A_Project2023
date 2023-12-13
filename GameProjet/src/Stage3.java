@@ -9,37 +9,45 @@ import javax.swing.ImageIcon;
 
 public class Stage3 extends Stage {
    private Player player;
+   private GameCanvas canvas;
    private Image map;
    private Image floor;
    private int bgX = 0;
    private PlayerHp hp;
    private Monster Mhp;
+   private int Px = 400; //포탈 x좌표
+   private int Py = 400; //포탈 y좌표
    private LinkedList<Monster> monsterList = new LinkedList<>();
    private LinkedList<Onbject> objectList = new LinkedList<>(); 
-	public Stage3(Player player) {
+	public Stage3(Player player, GameCanvas canvas) {
+		this.canvas = canvas;
 		this.player = player;
-      map = new ImageIcon("stage/stage3.png").getImage();
-      floor = new ImageIcon("stage/stage Floor.png").getImage();
-      
-      Tile = new ImageIcon("stage/Tiles1.png").getImage();
-      Tile2 = new ImageIcon("stage/Tiles2.png").getImage();
-      Tile3 = new ImageIcon("stage/Tiles3.png").getImage();
-      //Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
-      monsterList.add(new Monster3(player, 300, 490, bgX));
-      monsterList.add(new Monster3(player, 500, 490, bgX));
+		map = new ImageIcon("stage/stage3.png").getImage();
+		floor = new ImageIcon("stage/stage Floor.png").getImage();
+	      
+		Tile = new ImageIcon("stage/Tiles1.png").getImage();
+		Tile2 = new ImageIcon("stage/Tiles2.png").getImage();
+	 	Tile3 = new ImageIcon("stage/Tiles3.png").getImage();
+	 	//Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
+	 	Portal = new ImageIcon("stage/유적 입구.png").getImage();
+	 	monsterList.add(new Monster3(player, 300, 440, bgX));
+	 	monsterList.add(new Monster3(player, 500, 440, bgX));
+	 	this.hp = player.getPlayerHp();
 	}
 	public void setPlayer(Player p) {
 		player = p;
 	}
-   public void draw(Graphics g) {
+	public void draw(Graphics g) {
 	   super.draw(g);
-      g.drawImage(map, bgX, 0, 3500, 600, null);
-      g.drawImage(floor, bgX, 0, 3500, 570, null);    
-      drawMonster(g);
-      for(Monster monster : monsterList) {
-         if(monster.Checkmonster()) {
-            hp.draw(g);
-            monster.DieMT(50);
+	   g.drawImage(map, bgX, 0, 3500, 600, null);
+	   g.drawImage(floor, bgX, 0, 3500, 570, null);  
+	   g.drawImage(Portal, Px+bgX, Py ,120, 150, null);
+	   drawMonster(g);
+	   PortalChek();
+	   for(Monster monster : monsterList) {
+		   if(monster.Checkmonster()) {
+			   hp.draw(g);
+			   monster.Checkattack();
          }
             
       }
@@ -172,13 +180,28 @@ public class Stage3 extends Stage {
 	}
 	@Override
 	public void drawMonster(Graphics g) {
-	      LinkedList<Monster> removeM = new LinkedList<>();
-	      for (Monster monster : monsterList) {
-	            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
-	        if(monster.getHP()==0) {
-	             removeM.add(monster);
-	           }
-	      }
-	      monsterList.removeAll(removeM);
-	   }
+		LinkedList<Monster> removeM = new LinkedList<>();
+		for (Monster monster : monsterList) {
+            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
+        if(monster.getHP()==0) {
+  		  	removeM.add(monster);
+      	  }
+		}
+		monsterList.removeAll(removeM);
+	}
+	public void PortalChek() {
+		if (player != null) {
+			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
+					new Rectangle(Px + bgX, Py, 90, 100)
+			        // 필요에 따라 다른 타일의 직사각형 추가 가능
+			    };
+			Rectangle playerBox = player.getRect();
+            for (Rectangle tileBoundary : tileLine) {
+                if (playerBox.intersects(tileBoundary)) {  
+                	canvas.changeStage(0); //유적으로 이동
+                	System.out.println("Portal!");	
+                }
+            }	
+		 }
+	}
 }

@@ -170,6 +170,7 @@ public class Player implements KeyListener{
 		//this.stage2 = stage2;
 		this.initialY = y; // 초기 Y 좌표 저장
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
+		this.atteck = new Attack(x+20, y+20, 100, 1);//x, y, speed, direction
 	}
 	public PlayerHp getPlayerHp() {
 		return this.hp;
@@ -303,6 +304,7 @@ public class Player implements KeyListener{
 			 if (!isAttacking) {
 	                // 공격 중이 아닌 경우에만 공격 생성
 	                isAttacking = true; // 현재 공격 중
+	                atteck = new Attack(x + 65, y +12  , 1, 2); // 총알의 초기 위치 설정
 	                // 공격 애니메이션 재생 또는 공격에 따른 동작 수행
 	            }
 	        break;
@@ -396,10 +398,16 @@ public class Player implements KeyListener{
 
 	public void draw(Graphics g, GameCanvas gameCanvas) {
 		stage.draw(g);
+		atteck.move();
 		if (isAttacking) {
+			atteck.draw(g);
 	        // 공격 이미지를 그리는 로직 추가
 	        // 해당 로직을 통해 공격 이미지를 화면에 표시
-	    } else {
+			// 총알이 화면을 벗어나면 공격 종료
+	        if (atteck.getX() > gameCanvas.getWidth()) {
+	            isAttacking = false;
+	        }
+		} else {
 	        // 기존의 캐릭터 이미지를 그리는 로직
 	        drawCharacter(getState(), g, gameCanvas);
 	    }

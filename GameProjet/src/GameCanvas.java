@@ -30,16 +30,16 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private LinkedList<Stage> stageList = new LinkedList<>();
 	public GameCanvas() {
 		this.step = new Player();
-		this.sg1 = new Stage1(step);
+		this.sg1 = new Stage1(step,this);
 		this.sg2 = new Stage2(step,this);
-		this.sg3 = new Stage3(step);
+		this.sg3 = new Stage3(step,this);
 		this.ruins = new Ruins(step);
+		stageList.add(ruins);
 		stageList.add(sg1);
 		stageList.add(sg2);
 		stageList.add(sg3);
-		stageList.add(ruins);
 		
-		this.step.setStage(stageList.get(0));
+		this.step.setStage(stageList.get(1));
 		
 		ruins.setPlaer(step);
 		addComponentListener(this);

@@ -10,7 +10,11 @@ import javax.swing.JPanel;
 
 public class Stage2 extends Stage {
 	private Player player;
+	private PlayerHp hp;
 	private GameCanvas canvas;
+	private Monster Mhp;
+	private int Px = 400; //포탈 x좌표
+	private int Py = 400; //포탈 y좌표
 	private LinkedList<Onbject> objectList = new LinkedList<>();
 	public Stage2(Player player, GameCanvas canvas) {
 		this.canvas = canvas;
@@ -31,6 +35,7 @@ public class Stage2 extends Stage {
 		super.monsterY = monsterY;
 		super.width = width;
 		super.height = height;
+		this.hp = player.getPlayerHp();
 	}
 	public void setPlaer(Player p) {
 		player = p;
@@ -51,7 +56,7 @@ public class Stage2 extends Stage {
 	public void drawBackground(Graphics g) {
 		g.drawImage(map, bgX, 0, 3000, 600, null); // 백그라운드 배경
 		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥	
-		g.drawImage(Portal, 400+bgX, 400,130, 150, null);
+		g.drawImage(Portal, Px+bgX, Py ,130, 150, null);
 		
 	}
 	@Override
@@ -96,7 +101,7 @@ public class Stage2 extends Stage {
 	}
 	@Override
 	public void drawMonster(Graphics g) {
-		g.drawImage(Portal, 2800 + bgX, 460, null); //포털
+		//g.drawImage(Portal, 2800 + bgX, 460, null); //포털
 		 
 	    // 사각형 경계선 그리기
 	    g.setColor(Color.RED);
@@ -189,13 +194,13 @@ public class Stage2 extends Stage {
 	public void PortalChek() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-			        new Rectangle(420 + bgX, 430, 90, 100)
+			        new Rectangle(Px + bgX, Py, 90, 100)
 			        // 필요에 따라 다른 타일의 직사각형 추가 가능
 			    };
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(3);
+                	canvas.changeStage(3); //유적으로 이동
                 	System.out.println("Portal!");	
                 }
             }	

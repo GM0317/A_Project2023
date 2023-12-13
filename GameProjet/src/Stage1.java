@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 
 public class Stage1 extends Stage {
 	private Graphics screenGraphic;
+	private GameCanvas canvas;
 	private Image background;
 	private Image floor;
 	private Tile2 tile2;
@@ -18,22 +19,28 @@ public class Stage1 extends Stage {
 	private Monster Mhp;
 	private PlayerHp hp;
 	private Player player;
+	private int Px = 1000; //포탈 x좌표
+	private int Py = 400; //포탈 y좌표
 	
 	 private LinkedList<Monster> monsterList = new LinkedList<>();
 	private LinkedList<Onbject> objectList = new LinkedList<>();
-	public Stage1(Player player){
+	public Stage1(Player player, GameCanvas canvas){
+		this.canvas = canvas;
 		this.player = player;
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
+		Portal = new ImageIcon("stage/유적 입구.png").getImage();
 		monsterList.add(new Monster1(player, 50, 505, bgX));
 	    this.hp = player.getPlayerHp();
 
 	}
 	public void draw(Graphics g) {
 		super.draw(g);
-	     g.drawImage(background, bgX, 0, 3000, 600, null);
+	     g.drawImage(background, bgX, 0, 3500, 600, null);
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
+	     g.drawImage(Portal, Px+bgX, Py ,120, 150, null);
 	     drawMonster(g);
+	     PortalChek();
 	       for(Monster monster : monsterList) {
 	          if(monster.Checkmonster()) {
 	             hp.draw(g);
@@ -108,7 +115,7 @@ public class Stage1 extends Stage {
 	}
 
 	@Override
-	public void drawMonster(Graphics g) {
+	public void drawMonster(Graphics g) {;
 		// TODO Auto-generated method stub
 		LinkedList<Monster> removeM = new LinkedList<>();
 	      for (Monster monster : monsterList) {
@@ -119,5 +126,20 @@ public class Stage1 extends Stage {
 	      }
 	      monsterList.removeAll(removeM);
 
+	}
+	public void PortalChek() {
+		if (player != null) {
+			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
+			        new Rectangle(Px + bgX, 400, 100, 120)
+			        // 필요에 따라 다른 타일의 직사각형 추가 가능
+			    };
+			Rectangle playerBox = player.getRect();
+            for (Rectangle tileBoundary : tileLine) {
+                if (playerBox.intersects(tileBoundary)) {  
+                	canvas.changeStage(2);
+                	System.out.println("Portal!");	
+                }
+            }	
+		 }
 	}
 }
