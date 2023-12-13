@@ -289,14 +289,11 @@ public class Player implements KeyListener{
 			if (!isJump)
 			{ //점프여부 확인하고 점프 기능 실행
                 isJump = true;
-                jump(80);
+                jump(70);
             }
 			break;
 		case KeyEvent.VK_UP:
-             // up 키 눌렸을 때의 동작 (사다리 올라가기)
-            if (isOnLadder()) { // 사다리 위에 있는지 확인
-                y -= speed; // y 좌표를 위로 이동
-            }
+             
             break;
 		case KeyEvent.VK_DOWN:
 			break;
@@ -365,12 +362,12 @@ public class Player implements KeyListener{
             isAttacking = false; // 공격 상태 해제
             break;
             
-        case KeyEvent.VK_SPACE:
+       /* case KeyEvent.VK_SPACE:
             // 캐릭터가 점프 중이라면 점프를 중지
             if (isJump) {
                 isJump = false; // 점프를 멈춤
             }
-            break;
+            break;*/
 		}
 	}
 	@Override
@@ -395,15 +392,11 @@ public class Player implements KeyListener{
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
-
 	public void draw(Graphics g, GameCanvas gameCanvas) {
 		stage.draw(g);
 		atteck.move();
 		if (isAttacking) {
 			atteck.draw(g);
-	        // 공격 이미지를 그리는 로직 추가
-	        // 해당 로직을 통해 공격 이미지를 화면에 표시
-			// 총알이 화면을 벗어나면 공격 종료
 	        if (atteck.getX() > gameCanvas.getWidth()) {
 	            isAttacking = false;
 	        }
@@ -412,25 +405,12 @@ public class Player implements KeyListener{
 	        drawCharacter(getState(), g, gameCanvas);
 	    }
 		monsterCheck(); // 충돌 체크
-		// 현재 플레이어의 가로와 세로 길이
-		width = getState().width;
+		width = getState().width;		// 현재 플레이어의 가로와 세로 길이
 		height = getState().height;
-
 		// 캐릭터의 이전 위치 저장
 		prevX = x;
 		prevY = y;
 		    drawCharacter(getState(), g, gameCanvas);
 	}
-	private boolean isOnLadder() {
-	    // 사다리에 해당하는 영역을 정의하고, 현재 캐릭터가 해당 영역에 있는지 확인하여 사다리 위에 있는지 여부를 판단
-	    int ladderX = 635+bgX;
-	    int ladderY = 400;
-	    int ladderWidth = 35;
-	    int ladderHeight = 130;
-	    // 캐릭터와 사다리 충돌 여부 확인
-	    return x < ladderX + ladderWidth &&
-	           x + width > ladderX &&
-	           y < ladderY + ladderHeight &&
-	           y + height > ladderY;
-	}
+
 }

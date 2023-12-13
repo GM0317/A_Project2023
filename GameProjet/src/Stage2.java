@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Stage2 extends Stage {
+	protected Image sign;
 	private Player player;
 	private PlayerHp hp;
 	private GameCanvas canvas;
@@ -23,6 +24,7 @@ public class Stage2 extends Stage {
 		if(player == null) {
 			System.out.println("plaer는 null...");
 		}
+		sign = new ImageIcon("stage/표시판.png").getImage();
 		map = new ImageIcon("stage/1.png").getImage();
 		floor = new ImageIcon("stage/stage Floor.png").getImage();
 		Tile = new ImageIcon("stage/Tile_09.png").getImage();
@@ -54,13 +56,17 @@ public class Stage2 extends Stage {
 	                monster.moveMonster(-1); // 몬스터를 왼쪽으로 이동
 	            }
 	            break;
+	        case KeyEvent.VK_UP:
+	            PortalChek();
+	            PortalChek2();
+	            break;
+			}    
 	    }
-	}
 	@Override
 	public void drawBackground(Graphics g) {
 		g.drawImage(map, bgX, 0, 3000, 600, null); // 백그라운드 배경
-		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥	
-		g.drawImage(Portal, Px+bgX, Py ,130, 150, null);
+		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥		
+		g.drawImage(sign, 2800+bgX, 453 ,100, 100, null); //포털
 		
 	}
 	@Override
@@ -71,35 +77,42 @@ public class Stage2 extends Stage {
 	    g.drawImage(Tile3, 670 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile4, 705 + bgX, 400, 35, 40, null);
 	    
-	    g.drawImage(Tile, 800 + bgX, 300, 35, 40, null);
-	    g.drawImage(Tile2, 835 + bgX, 300, 35, 40, null);
-	    g.drawImage(Tile3, 870 + bgX, 300, 35, 40, null);
-	    g.drawImage(Tile4, 905 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile, 870 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile2, 905 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile3, 940 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile4, 975 + bgX, 300, 35, 40, null);
 	    
-	    g.drawImage(Tile, 1000 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile2, 1035 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile2, 1070 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile2, 1105 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile2, 1140 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile3, 1175 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile3, 1205 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile3, 1240 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile3, 1275 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile3, 1305 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile3, 1340 + bgX, 200, 35, 40, null);
-	    g.drawImage(Tile4, 1375 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile, 1205 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1240 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1275 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1305 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile2, 1340 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1375 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1405 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1440 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1475 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1505 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile3, 1540 + bgX, 200, 35, 40, null);
+	    g.drawImage(Tile4, 1575 + bgX, 200, 35, 40, null);
 	    
-	    g.drawImage(Tile, 1500 + bgX, 300, 35, 40, null);
-	    g.drawImage(Tile2, 1535 + bgX, 300, 35, 40, null);
-	    g.drawImage(Tile3, 1570 + bgX, 300, 35, 40, null);
-	    g.drawImage(Tile4, 1605 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile, 1805 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile2, 1840 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile3, 1875 + bgX, 300, 35, 40, null);
+	    g.drawImage(Tile4, 1905 + bgX, 300, 35, 40, null);
 	    
-	    g.drawImage(Tile, 1700 + bgX, 400, 35, 40, null);
-	    g.drawImage(Tile2, 1735 + bgX, 400, 35, 40, null);
-	    g.drawImage(Tile3, 1770 + bgX, 400, 35, 40, null);
-	    g.drawImage(Tile4, 1805 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile, 2075 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile2, 2105 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile3, 2140 + bgX, 400, 35, 40, null);
+	    g.drawImage(Tile4, 2175 + bgX, 400, 35, 40, null);
+	    
+	    g.drawImage(Portal, 1345+bgX, 75 ,130, 150, null);//유적 포털
+	    g.setColor(Color.RED);
+	    int rectX7 = 3220 + bgX; 
+	    int rectY7 = 460; 
+	    int rectWidth7 = 50; 
+	    int rectHeight7 = 50; 
+	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 	}
-	
 	public void drawPotal(Graphics g) {
 		
 	}
@@ -114,22 +127,19 @@ public class Stage2 extends Stage {
       	  }
 		}
 		monsterList.removeAll(removeM);
-		
-		g.drawImage(Portal, 2800 + bgX, 460, null); //포털
 		check();
-		PortalChek();
-	}
-	
+		//PortalChek();
+		//PortalChek2();
+	}	
 	public void check() {
 		 if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-			        new Rectangle(800 + bgX, 300, 35, 40),
-			        new Rectangle(800 + bgX, 300, 140, 40),
-			        new Rectangle(1000 + bgX, 200, 410, 40),
-			        new Rectangle(1500 + bgX, 300, 140, 40),
-			        new Rectangle(1700 + bgX, 400, 140, 40),
-			        new Rectangle(0 + bgX, 524, 3500, 40)
-			        // 필요에 따라 다른 타일의 직사각형 추가 가능
+			        new Rectangle(600 + bgX, 400, 140, 1),
+			        new Rectangle(870 + bgX, 300, 140, 1),
+			        new Rectangle(1205 + bgX, 200, 410, 1),
+			        new Rectangle(1805 + bgX, 300, 130, 1),
+			        new Rectangle(2075 + bgX, 400, 130, 1),
+			        new Rectangle(0 + bgX, 524, 3500, 40)//땅바닥
 			    };
 			Rectangle playerBox = player.getRect();
 			boolean onGround = false;
@@ -139,14 +149,12 @@ public class Stage2 extends Stage {
                     int playerBottom = playerBox.y + playerBox.height;
                     int tileTop = tileBoundary.y;
                     int overlap = playerBottom - tileTop;
-
                     // 플레이어를 경계선 위로 이동시킴
                     player.setY(player.getY() - overlap);
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
             }
-
             // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
             if (!onGround) {
                 player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
@@ -158,17 +166,33 @@ public class Stage2 extends Stage {
 	public void PortalChek() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-			        new Rectangle(Px + bgX, Py, 90, 100)
-			        // 필요에 따라 다른 타일의 직사각형 추가 가능
+			        new Rectangle(1392+bgX, 140 , 35, 60)
 			    };
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(3); //유적으로 이동
+                	canvas.changeStage(0); //유적으로 이동
+                	player.setX(50);
+                	player.setY(445);
                 	System.out.println("Portal!");	
                 }
             }	
 		 }
 	}
-	
+	public void PortalChek2() {
+		if (player != null) {
+			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
+					new Rectangle(2800 + bgX, 460, 50, 50)
+			    };
+			Rectangle playerBox = player.getRect();
+            for (Rectangle tileBoundary : tileLine) {
+                if (playerBox.intersects(tileBoundary)) {  
+                	canvas.changeStage(3); //유적으로 이동
+                	player.setX(50);
+                	player.setY(445);
+                	System.out.println("Portal!");	
+                }
+            }	
+		 }
+	}
 }

@@ -12,6 +12,7 @@ public class Stage3 extends Stage {
    private GameCanvas canvas;
    private Image map;
    private Image floor;
+   protected Image sign;
    private int bgX = 0;
    private PlayerHp hp;
    private Monster Mhp;
@@ -24,6 +25,7 @@ public class Stage3 extends Stage {
 		this.player = player;
 		map = new ImageIcon("stage/stage3.png").getImage();
 		floor = new ImageIcon("stage/stage Floor.png").getImage();
+		sign = new ImageIcon("stage/표시판.png").getImage();
 	      
 		Tile = new ImageIcon("stage/Tiles1.png").getImage();
 		Tile2 = new ImageIcon("stage/Tiles2.png").getImage();
@@ -42,8 +44,8 @@ public class Stage3 extends Stage {
 	   g.drawImage(map, bgX, 0, 3500, 600, null);
 	   g.drawImage(floor, bgX, 0, 3500, 570, null);  
 	   g.drawImage(Portal, Px+bgX, Py ,120, 150, null);
+	   g.drawImage(sign, 3200+bgX, 453 ,100, 100, null);
 	   drawMonster(g);
-	   PortalChek();
 	   for(Monster monster : monsterList) {
 		   if(monster.Checkmonster()) {
 			   hp.draw(g);
@@ -166,6 +168,9 @@ public class Stage3 extends Stage {
 	                   monster.moveMonster(-1); // 몬스터를 왼쪽으로 이동
 	               }
 	               break;
+	           case KeyEvent.VK_UP:
+	               PortalChek();
+	               break;
 	       }
 	   }
 	@Override
@@ -192,13 +197,13 @@ public class Stage3 extends Stage {
 	public void PortalChek() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-					new Rectangle(Px + bgX, Py, 90, 100)
+					new Rectangle(3220 + bgX, 460, 50, 50)
 			        // 필요에 따라 다른 타일의 직사각형 추가 가능
 			    };
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(0); //유적으로 이동
+                	canvas.changeStage(0); //마지막 라스트 스테이지로 이동 아직 구현이 안되어있어 0으로 함.
                 	System.out.println("Portal!");	
                 }
             }	
