@@ -16,6 +16,7 @@ public class Stage2 extends Stage {
 	private int Px = 400; //포탈 x좌표
 	private int Py = 400; //포탈 y좌표
 	private LinkedList<Onbject> objectList = new LinkedList<>();
+	private LinkedList<Monster> monsterList = new LinkedList<>();
 	public Stage2(Player player, GameCanvas canvas) {
 		this.canvas = canvas;
 		this.player = player; //초기화
@@ -29,28 +30,31 @@ public class Stage2 extends Stage {
 		Tile3 = new ImageIcon("stage/Tile_11.png").getImage();
 		Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
 		Portal = new ImageIcon("stage/유적 입구.png").getImage();
-		monsterImage = new ImageIcon("stage/monster2.png").getImage();
-		
-		super.monsterX = monsterX;
-		super.monsterY = monsterY;
-		super.width = width;
-		super.height = height;
+		monsterList.add(new Monster2(player, 300, 400, bgX)); //x, y좌표 설정
 		this.hp = player.getPlayerHp();
+
 	}
 	public void setPlaer(Player p) {
 		player = p;
 	}
+	
+	@Override
 	public void keyPressed(KeyEvent e) {
-		// TODO Auto-generated method stub
-		switch(e.getKeyCode())
-		{
-		case KeyEvent.VK_LEFT:
-			bgX += 10;
-			break;
-		case KeyEvent.VK_RIGHT:
-			bgX -= 10;
-			break;
-		}
+	    switch (e.getKeyCode()) {
+	        case KeyEvent.VK_LEFT:
+	            bgX += 10; // 배경을 왼쪽으로 스크롤
+	            for (Monster monster : monsterList) {
+	                monster.moveMonster(1); // 몬스터를 오른쪽으로 이동
+	                //monster.moveMonster();
+	            }
+	            break;
+	        case KeyEvent.VK_RIGHT:
+	            bgX -= 10; // 배경을 오른쪽으로 스크롤
+	            for (Monster monster : monsterList) {
+	                monster.moveMonster(-1); // 몬스터를 왼쪽으로 이동
+	            }
+	            break;
+	    }
 	}
 	@Override
 	public void drawBackground(Graphics g) {
@@ -101,61 +105,21 @@ public class Stage2 extends Stage {
 	}
 	@Override
 	public void drawMonster(Graphics g) {
-		//g.drawImage(Portal, 2800 + bgX, 460, null); //포털
-		 
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX = 600 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY = 400; //경계선 Y좌표
-	    int rectWidth = 140; // 경계선 너비
-	    int rectHeight = 40; // 경계선 높이
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX2 = 800 + bgX;
-	    int rectY2 = 300; 
-	    int rectWidth2 = 140;
-	    int rectHeight2 = 40;
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX3 = 1000 + bgX;
-	    int rectY3 = 200;
-	    int rectWidth3 = 410;
-	    int rectHeight3 = 40;
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX4 = 1500 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY4 = 300; //경계선 Y좌표
-	    int rectWidth4 = 140; // 경계선 너비
-	    int rectHeight4 = 40; // 경계선 높이
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX5 = 1700 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY5 = 400; //경계선 Y좌표
-	    int rectWidth5 = 140; // 경계선 너비
-	    int rectHeight5 = 40; // 경계선 높이
-	    // 바닥 경계선 	    
-	    g.setColor(Color.RED);
-	    int PortalX = 420 + bgX;
-	    int PortalY = 430; 
-	    int PortalWidth = 90;
-	    int PortalHeight = 100; 
-	    
-	    // drawRect() 메서드를 사용하여 사각형의 경계선 그리기
-	    g.drawRect(rectX, rectY, rectWidth, rectHeight); //타일 경계선
-	    g.drawRect(rectX2, rectY2, rectWidth2, rectHeight2);
-	    g.drawRect(rectX3, rectY3, rectWidth3, rectHeight3);
-	    g.drawRect(rectX4, rectY4, rectWidth4, rectHeight4);
-	    g.drawRect(rectX5, rectY5, rectWidth5, rectHeight5);
-	    g.drawRect(PortalX, PortalY, PortalWidth, PortalHeight);
-	    
-	    check();
-	    PortalChek();
+		LinkedList<Monster> removeM = new LinkedList<>();
+		for (Monster monster : monsterList) {
+            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
+            //monster.moveMonster();
+            if(monster.getHP()==0) {
+  		  	removeM.add(monster);
+      	  }
+		}
+		monsterList.removeAll(removeM);
 		
+		g.drawImage(Portal, 2800 + bgX, 460, null); //포털
+		check();
+		PortalChek();
 	}
+	
 	public void check() {
 		 if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
