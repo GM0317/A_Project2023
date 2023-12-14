@@ -6,11 +6,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+//import javazoom.jl.player.Player;
+
 import javax.swing.JFrame;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 
 public class GameStart extends JFrame {
 	
@@ -29,7 +36,7 @@ public class GameStart extends JFrame {
         setLayout(null);
         setVisible(true);
         
-
+        bgplay();
      // 게임 시작 버튼
         addMouseListener(new MouseAdapter() {
             @Override
@@ -65,6 +72,29 @@ public class GameStart extends JFrame {
         });
     }
    
+	private void bgplay() {
+		Player jlPlayer = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream("Sound/gamestart.wav");
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
+            //jlPlayer = new Player(bufferedInputStream);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        /*
+        final Player player = jlPlayer;
+        new Thread() {
+            public void run() {
+                try {
+                	player.play();
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }*/
+        //.start();
+    }
+    
     public void paint(Graphics g) {
         super.paint(g);
         g.drawImage(background, 0, 0, 1050, 650, this);

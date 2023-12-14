@@ -14,9 +14,10 @@ public class Monster1 extends Monster{
     private State[] states;
     private int stateIdx = 0;
     private BufferedImage sprite;
+    private int x = 50;
+	private int y = 450;
 
    public Monster1(Player play, int x, int y, int bgX) {
-      
 
       super(play, x, y, 1000, 1430, 200);
        monsterImage = new ImageIcon("rsc/모나피.png").getImage();
@@ -87,8 +88,8 @@ public class Monster1 extends Monster{
             e.printStackTrace();
          }
       }
-       private State getState() {
-         return states[stateIdx];
+    private State getState() {
+    	return states[stateIdx];
       }
 
 
