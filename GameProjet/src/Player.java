@@ -52,8 +52,9 @@ public class Player implements KeyListener{
 	private int height; // 추가: 캐릭터의 세로 길이
 	private int prevX; // 추가: 이전 X 위치
 	private int prevY; // 추가: 이전 Y 위치
-
+	private boolean isStanding;
 	public Player() {
+		isStanding = true;
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -172,6 +173,9 @@ public class Player implements KeyListener{
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 		this.atteck = new Attack(x+20, y+20, 100, 1);//x, y, speed, direction
 	}
+	public Attack getAttack() {
+		return this.atteck;
+	}
 	public PlayerHp getPlayerHp() {
 		return this.hp;
 	}
@@ -196,7 +200,7 @@ public class Player implements KeyListener{
 	}
 	private boolean flip = false;
 	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
-		//hp.draw(g);
+		hp.draw(g);
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
@@ -210,7 +214,8 @@ public class Player implements KeyListener{
 	                state.width * state.index_x + state.width + state.start_x,
 	                state.height * state.index_y + state.start_y + state.height,
 	                gameCanvas);
-	    }else if (isAttacking) {
+	    }
+	    else if (isAttacking) {
 	    	gb.drawImage(attack,0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
 	                state.start_x,
@@ -218,7 +223,8 @@ public class Player implements KeyListener{
 	                state.width + state.start_x,
 	                state.start_y + state.height,
 	                gameCanvas);
-	    }/*else if(x == prevX && y == prevY){
+	    }
+	    else if(isStanding){
 	    	gb.drawImage(standing,0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
 	                state.start_x,
@@ -226,7 +232,8 @@ public class Player implements KeyListener{
 	                state.width + state.start_x,
 	                state.start_y + state.height,
 	                gameCanvas);
-	    }*/else{
+	    }
+	    else{
 	    	gb.drawImage(sprite, 
 					0, 0,  //위치 
 					0 + state.width, 0 + state.height, //크기 
@@ -269,6 +276,7 @@ public class Player implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		this.stage.keyPressed(e);
+		isStanding = false;
 		switch(e.getKeyCode())
 		{
 		case KeyEvent.VK_LEFT:
@@ -356,6 +364,7 @@ public class Player implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		isStanding = true;
 		this.stateIdx = 0;
 		switch(e.getKeyCode()) {
         case KeyEvent.VK_A:

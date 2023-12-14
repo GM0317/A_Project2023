@@ -49,10 +49,11 @@ public class Stage3 extends Stage {
 	   for(Monster monster : monsterList) {
 		   if(monster.Checkmonster()) {
 			   hp.draw(g);
-			   monster.Checkattack();
-         }
-            
-      }
+		   }
+		   if(monster.Checkattack()) {
+			   hp.draw(g);
+		   }
+	   }
       
    // 사각형 경계선 그리기
 	    g.setColor(Color.RED);
@@ -203,7 +204,7 @@ public class Stage3 extends Stage {
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(0); //마지막 라스트 스테이지로 이동 아직 구현이 안되어있어 0으로 함.
+                	canvas.changeStage(4); 
                 	System.out.println("Portal!");	
                 }
             }	

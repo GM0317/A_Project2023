@@ -10,7 +10,6 @@ public abstract class Monster {
     private int Mhp;
     private long lastTime = 0; // 마지막 충돌 시간 저장
     private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
-    protected Attack boom;
 
     public Monster(Player play, int x, int y, int mWidth, int mHeight, int Mhp) {
         this.x = x;
@@ -19,13 +18,11 @@ public abstract class Monster {
         this.mHeight = mHeight;
         this.Mhp=Mhp;
         this.player = play;
-        this.boom = new Attack(this.x, this.y, 100, 1);// x, y, speed, direction
-
+        
     }
 
     public abstract void moveMonster(int direction);
     public abstract void draw(Graphics g);
-    
     public int getX() {
         return x;
     }
@@ -40,7 +37,7 @@ public abstract class Monster {
     public boolean Checkmonster() {
        Rectangle playerBox = player.getRect();
        Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
-       Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
+       //Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
        
         if (playerBox.intersects(monsterBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
@@ -55,8 +52,9 @@ public abstract class Monster {
     
     public boolean Checkattack() {
         Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
-        Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
-        boom.move();
+        Rectangle attackbox = new Rectangle(player.getAttack().getX(), player.getAttack().getY(), 10, 10);
+        //System.out.println("x:"+boom.getX()+", y:"+boom.getY() + monsterBox);
+        
          if (monsterBox.intersects(attackbox)) {
              if (System.currentTimeMillis() - lastTime > Delay) {
                  DieMT(50); // 충돌 시 몬스터의 체력을 50 감소
