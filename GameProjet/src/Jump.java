@@ -20,13 +20,17 @@ public class Jump extends Thread  {
         final int gravity = 2; // 중력을 낮춤으로써 천천히 점프 및 낙하되도록 설정
         
         for (int i=0; i<jumpHeight; i++) {
-           Y = Y-gravity;
-           if(player.isFlip()) {
-              X = X-MoveX;
-           }
-           else {
-              X = X+MoveX;
-           }
+        	Y = Y-gravity;
+            if(player.isFlip()) {
+              if(X>-3) {
+                 X = X-MoveX;
+              }
+            }
+            else {
+               if(X<930)
+                  X = X+MoveX;
+            }
+
            player.setY(Y);
            player.setX(X);
            try {
@@ -40,11 +44,15 @@ public class Jump extends Thread  {
         for (int i=0; i<jumpHeight; i++) {
            Y = Y+gravity;
            if(player.isFlip()) {
-              X = X-MoveX;
-           }
-           else {
-              X = X+MoveX;
-           }
+               if(X>-3) {
+                  X = X-MoveX;
+               }
+            }
+            else {
+               if(X<930)
+                  X = X+MoveX;
+            }
+
            player.setX(X);
            //player.setY(Y);
            try {

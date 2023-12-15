@@ -285,15 +285,20 @@ public class Player implements KeyListener{
 			case KeyEvent.VK_LEFT:
 				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
 				isFlip = true;
-				x -= 3;
-				bgX += 10;
+				if(x>-3) {
+					x -= 3;
+					bgX += 10;
+				}
+				
 				//System.out.println("왼쪽");
 				break;
 			case KeyEvent.VK_RIGHT:
 				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
 				isFlip = false;
-				x += 3;
-				bgX -= 10;
+				if(x<930) {
+					x += 3;
+					bgX -= 10;
+				}
 				//System.out.println("오른쪽");
 				break;
 			case KeyEvent.VK_SPACE:
