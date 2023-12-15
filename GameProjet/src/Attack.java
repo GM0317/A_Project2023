@@ -2,8 +2,9 @@
 	import java.awt.Image;
 	import java.io.File;
 	import java.io.IOException;
-	
-	import javax.imageio.ImageIO;
+import java.util.LinkedList;
+
+import javax.imageio.ImageIO;
 	import javax.imageio.stream.ImageInputStream;
 	import javax.swing.ImageIcon;
 	import javax.swing.JLabel;
@@ -15,13 +16,14 @@
 		private int direction; // 공격 방향
 		private Image attack; // 공격 이미지
 		private GameScreen gameScreen;
+		private BulletManager bulletManager;
 		private boolean isAttacking = false; // 공격 중인지 여부
+		private boolean isShooting = false;
 		// 움직이는 상태
 		private boolean left;
 		private boolean right;
 		private boolean up;
 		protected Image boom;
-		
 		public Attack(int x, int y, int speed, int direction) {
 			this.x = x;
 			this.y = y;
@@ -74,12 +76,12 @@
 		public boolean isAttacking() {
 	        return isAttacking;
 	    }
-	
+
 	    public void setAttacking(boolean attacking) {
 	        isAttacking = attacking;
 	    }
 		public void draw(Graphics g) {
-			boom = new ImageIcon("character/총알.png").getImage(); //이미지 파일 가져오기
+			//boom = new ImageIcon("character/총알.png").getImage(); //이미지 파일 가져오기
 			g.drawImage(boom, x, y, 50, 50, null); //공격 이미지 생성
 		}
 	

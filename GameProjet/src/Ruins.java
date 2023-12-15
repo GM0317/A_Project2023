@@ -109,12 +109,12 @@ public class Ruins extends Stage{
 
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {
-                    int playerBottom = playerBox.y + playerBox.height;
-                    int tileTop = tileBoundary.y;
-                    int overlap = playerBottom - tileTop;
+                    //int playerBottom = playerBox.y + playerBox.height;
+                    //int tileTop = tileBoundary.y;
+                    //int overlap = playerBottom - tileTop;
 
                     // 플레이어를 경계선 위로 이동시킴
-                    player.setY(player.getY() - overlap);
+                    //player.setY(player.getY() - overlap);
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }

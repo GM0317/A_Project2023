@@ -22,7 +22,9 @@ public class Player implements KeyListener{
 	//private Stage3 stage3;
 	private Stage stage;
 	private PlayerHp hp;
-	private Attack atteck;//이건 클래스 가져온
+	//private Attack atteck;//이건 클래스 가져온
+	private LinkedList<Attack> attackList = new LinkedList<>();
+	private BulletManager bullet;
 	private BufferedImage sprite;
 	private BufferedImage jumping;
 	private BufferedImage attack;
@@ -169,13 +171,15 @@ public class Player implements KeyListener{
 		this.x = 0;
 		this.y = y;
 		//this.stage2 = stage2;
+		
 		this.initialY = y; // 초기 Y 좌표 저장
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
-		this.atteck = new Attack(x+20, y+20, 100, 1);//x, y, speed, direction
+		//this.atteck = new Attack(x+20, y+20, 100, 1);//x, y, speed, direction
 	}
-	public Attack getAttack() {
-		return this.atteck;
+	public LinkedList<Attack> getAttackList() {
+		return this.attackList;
 	}
+
 	public PlayerHp getPlayerHp() {
 		return this.hp;
 	}
@@ -308,8 +312,17 @@ public class Player implements KeyListener{
 				if (!isAttacking) {
 	                // 공격 중이 아닌 경우에만 공격 생성
 	                isAttacking = true; // 현재 공격 중
-	                atteck = new Attack(x + 65, y +12  , 1, 2); // 총알의 초기 위치 설정
+	               //atteck = new Attack(x + 65, y +12  , 1, 2); // 총알의 초기 위치 설정
 	                // 공격 애니메이션 재생 또는 공격에 따른 동작 수행
+	                if (isFlip) {
+	                    // 캐릭터가 반전된 상태이면, 오른쪽으로 공격
+	                	attackList.add(new Attack(x + 65, y + 12, 1, 3));
+	                    //atteck = new Attack(x + 65, y + 12, 1, 3);
+	                } else {
+	                    // 반전되지 않은 상태이면, 왼쪽으로 공격
+	                	attackList.add(new Attack(x + 65, y + 12, 1, 2));
+	                    //atteck = new Attack(x + 65, y + 12, 1, 2);
+	                }
 	            }
 				break;
 		}
@@ -370,12 +383,12 @@ public class Player implements KeyListener{
             isAttacking = false; // 공격 상태 해제
             break;
             
-       /* case KeyEvent.VK_SPACE:
-            // 캐릭터가 점프 중이라면 점프를 중지
-            if (isJump) {
-                isJump = false; // 점프를 멈춤
-            }
-            break;*/
+//       /* case KeyEvent.VK_SPACE:
+//            // 캐릭터가 점프 중이라면 점프를 중지
+//            if (isJump) {
+//                isJump = false; // 점프를 멈춤
+//            }
+//            break;*/
 		}
 	}
 	@Override
@@ -403,14 +416,33 @@ public class Player implements KeyListener{
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
+	
+	private void clearAttack(GameCanvas gameCanvas) {
+		LinkedList<Attack> removeList = new LinkedList<>();
+		for(Attack attack : attackList) {
+			if (attack.getX() > gameCanvas.getWidth()) {
+	            isAttacking = false;
+	            removeList.add(attack);
+	        }
+		}
+		
+		for(Attack revAttack : removeList) {
+			attackList.remove(revAttack);
+		}
+	}
 	public void draw(Graphics g, GameCanvas gameCanvas) {
 		if(stage == null)
 			return;
 		
 		stage.draw(g);
-		atteck.move();
+		for(Attack attack : attackList) {
+			attack.move();
+			attack.draw(g);
+		}
+		clearAttack(gameCanvas);
+		drawCharacter(getState(), g, gameCanvas);
+		/*
 		if (isAttacking) {
-			atteck.draw(g);
 	        if (atteck.getX() > gameCanvas.getWidth()) {
 	            isAttacking = false;
 	        }
@@ -418,13 +450,18 @@ public class Player implements KeyListener{
 	        // 기존의 캐릭터 이미지를 그리는 로직
 	        drawCharacter(getState(), g, gameCanvas);
 	    }
+<<<<<<< HEAD
 		//monsterCheck(); // 충돌 체크
+=======
+	    */
+		/*monsterCheck(); // 충돌 체크
+>>>>>>> branch 'main' of https://github.com/GM0317/A_Project2023.git
 		width = getState().width;		// 현재 플레이어의 가로와 세로 길이
 		height = getState().height;
 		// 캐릭터의 이전 위치 저장
 		prevX = x;
 		prevY = y;
-		    drawCharacter(getState(), g, gameCanvas);
+		    drawCharacter(getState(), g, gameCanvas);*/
 	}
 
 }
