@@ -80,7 +80,6 @@ public class Ruins extends Stage{
 	    	keyCheck();
 	    	flamesCheck();
 	    	flamesCheck2();
-	    	hp.draw(g);
 	    	
 	    	if (isKeyCollected) {
 	    		drawEnergyBar(g);
@@ -153,7 +152,7 @@ public class Ruins extends Stage{
 	        if (playerBox.intersects(flameBox)) {
 	            System.out.println("아얏!"); // 충돌 시 수행할 동작
 	            if (System.currentTimeMillis() - lastTime > Delay) {
-	                hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
+	            	player.getPlayerHp().decreaseHp(50);// 충돌 시 플레이어의 체력을 50 감소
 	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
 	                System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
 	            }       
