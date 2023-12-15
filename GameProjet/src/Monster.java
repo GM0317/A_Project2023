@@ -2,11 +2,11 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public abstract class Monster {
-    protected int x;
-    protected int y;
+	protected int x;
+	protected int y;
     protected int mWidth;
     protected int mHeight;
-    private Player player;
+    protected Player player;
     private int Mhp;
     private long lastTime = 0; // 마지막 충돌 시간 저장
     private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
@@ -22,7 +22,7 @@ public abstract class Monster {
     }
 
     public abstract void moveMonster(int direction);
-    public abstract void draw(Graphics g);
+    public abstract void draw(Graphics g, GameCanvas screen);
     public int getX() {
         return x;
     }
@@ -36,10 +36,10 @@ public abstract class Monster {
     
     public boolean Checkmonster() {
        Rectangle playerBox = player.getRect();
-       Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
+       Rectangle monsterBox = new Rectangle(this.getX(), this.getY(), this.mWidth, this.mHeight);
        //Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
-       
-        if (playerBox.intersects(monsterBox)) {
+       //System.out.println(this.getClass().getName()+", "+playerBox+", "+monsterBox+":"+playerBox.intersects(monsterBox));
+        if (monsterBox.intersects(playerBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
                 player.getPlayerHp().decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
                 lastTime = System.currentTimeMillis(); // 충돌 시간 갱신

@@ -281,36 +281,35 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		this.stage.keyPressed(e);
 		isStanding = false;
-		switch(e.getKeyCode())
-		{
-		case KeyEvent.VK_LEFT:
-            this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
-            isFlip = true;
-            x -= 3;
-			bgX += 10;
-			//System.out.println("왼쪽");
-			break;
-		case KeyEvent.VK_RIGHT:
-            this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
-            isFlip = false;
-            x += 3;
-			bgX -= 10;
-			//System.out.println("오른쪽");
-			break;
-		case KeyEvent.VK_SPACE:
-			if (!isJump)
-			{ //점프여부 확인하고 점프 기능 실행
-                isJump = true;
-                jump(70);
-            }
-			break;
-		case KeyEvent.VK_UP:
+		switch(e.getKeyCode()){
+			case KeyEvent.VK_LEFT:
+				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
+				isFlip = true;
+				x -= 3;
+				bgX += 10;
+				//System.out.println("왼쪽");
+				break;
+			case KeyEvent.VK_RIGHT:
+				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
+				isFlip = false;
+				x += 3;
+				bgX -= 10;
+				//System.out.println("오른쪽");
+				break;
+			case KeyEvent.VK_SPACE:
+				if (!isJump)
+				{ //점프여부 확인하고 점프 기능 실행
+					isJump = true;
+					jump(70);
+				}
+				break;
+			case KeyEvent.VK_UP:
              
-            break;
-		case KeyEvent.VK_DOWN:
-			break;
-		case KeyEvent.VK_A:
-			 if (!isAttacking) {
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+			case KeyEvent.VK_A:
+				if (!isAttacking) {
 	                // 공격 중이 아닌 경우에만 공격 생성
 	                isAttacking = true; // 현재 공격 중
 	               //atteck = new Attack(x + 65, y +12  , 1, 2); // 총알의 초기 위치 설정
@@ -325,7 +324,7 @@ public class Player implements KeyListener{
 	                    //atteck = new Attack(x + 65, y + 12, 1, 2);
 	                }
 	            }
-	        break;
+				break;
 		}
 	}
 	public Rectangle getRect() {
@@ -397,10 +396,12 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+	/*
 	private void monsterCheck() {
         Rectangle playerBox = new Rectangle(x, y, width, height);
         Rectangle monsterBox = new Rectangle(stage.getX()+bgX+10, stage.getY()+8, stage.getWidth()-10, stage.getHeight()-10);
-
+        
+        System.out.println(playerBox+", "+monsterBox);
         if (playerBox.intersects(monsterBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
                 hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
@@ -411,6 +412,7 @@ public class Player implements KeyListener{
         stage.checkMonster(playerBox, prevY, initialY, gravitySpeed);
        
     }
+    */
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
@@ -429,6 +431,9 @@ public class Player implements KeyListener{
 		}
 	}
 	public void draw(Graphics g, GameCanvas gameCanvas) {
+		if(stage == null)
+			return;
+		
 		stage.draw(g);
 		for(Attack attack : attackList) {
 			attack.move();
@@ -445,8 +450,12 @@ public class Player implements KeyListener{
 	        // 기존의 캐릭터 이미지를 그리는 로직
 	        drawCharacter(getState(), g, gameCanvas);
 	    }
+<<<<<<< HEAD
+		//monsterCheck(); // 충돌 체크
+=======
 	    */
 		/*monsterCheck(); // 충돌 체크
+>>>>>>> branch 'main' of https://github.com/GM0317/A_Project2023.git
 		width = getState().width;		// 현재 플레이어의 가로와 세로 길이
 		height = getState().height;
 		// 캐릭터의 이전 위치 저장
