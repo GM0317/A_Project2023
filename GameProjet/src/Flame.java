@@ -55,4 +55,4 @@ public class Flame{
             yList.set(i, y); // 좌표 리스트 업데이트
         }
     }
-}//sdfc
+}

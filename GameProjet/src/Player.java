@@ -52,8 +52,9 @@ public class Player implements KeyListener{
 	private int height; // 추가: 캐릭터의 세로 길이
 	private int prevX; // 추가: 이전 X 위치
 	private int prevY; // 추가: 이전 Y 위치
-
+	private boolean isStanding;
 	public Player() {
+		isStanding = true;
 		loadImage();
 		states = new State[6];
 		State state = new State();
@@ -172,6 +173,9 @@ public class Player implements KeyListener{
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 		this.atteck = new Attack(x+20, y+20, 100, 1);//x, y, speed, direction
 	}
+	public Attack getAttack() {
+		return this.atteck;
+	}
 	public PlayerHp getPlayerHp() {
 		return this.hp;
 	}
@@ -196,7 +200,7 @@ public class Player implements KeyListener{
 	}
 	private boolean flip = false;
 	private void drawCharacter(State state, Graphics g, GameCanvas gameCanvas) {
-		//hp.draw(g);
+		hp.draw(g);
 		BufferedImage bufferedImage = new BufferedImage(state.width, state.height, BufferedImage.TYPE_INT_ARGB);
 
 	    Graphics gb = bufferedImage.getGraphics();
@@ -210,7 +214,8 @@ public class Player implements KeyListener{
 	                state.width * state.index_x + state.width + state.start_x,
 	                state.height * state.index_y + state.start_y + state.height,
 	                gameCanvas);
-	    }else if (isAttacking) {
+	    }
+	    else if (isAttacking) {
 	    	gb.drawImage(attack,0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
 	                state.start_x,
@@ -218,7 +223,8 @@ public class Player implements KeyListener{
 	                state.width + state.start_x,
 	                state.start_y + state.height,
 	                gameCanvas);
-	    }/*else if(x == prevX && y == prevY){
+	    }
+	    else if(isStanding){
 	    	gb.drawImage(standing,0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
 	                state.start_x,
@@ -226,7 +232,8 @@ public class Player implements KeyListener{
 	                state.width + state.start_x,
 	                state.start_y + state.height,
 	                gameCanvas);
-	    }*/else{
+	    }
+	    else{
 	    	gb.drawImage(sprite, 
 					0, 0,  //위치 
 					0 + state.width, 0 + state.height, //크기 
@@ -269,42 +276,42 @@ public class Player implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		this.stage.keyPressed(e);
-		switch(e.getKeyCode())
-		{
-		case KeyEvent.VK_LEFT:
-            this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
-            isFlip = true;
-            x -= 3;
-			bgX += 10;
-			//System.out.println("왼쪽");
-			break;
-		case KeyEvent.VK_RIGHT:
-            this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
-            isFlip = false;
-            x += 3;
-			bgX -= 10;
-			//System.out.println("오른쪽");
-			break;
-		case KeyEvent.VK_SPACE:
-			if (!isJump)
-			{ //점프여부 확인하고 점프 기능 실행
-                isJump = true;
-                jump(70);
-            }
-			break;
-		case KeyEvent.VK_UP:
+		isStanding = false;
+		switch(e.getKeyCode()){
+			case KeyEvent.VK_LEFT:
+				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
+				isFlip = true;
+				x -= 3;
+				bgX += 10;
+				//System.out.println("왼쪽");
+				break;
+			case KeyEvent.VK_RIGHT:
+				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
+				isFlip = false;
+				x += 3;
+				bgX -= 10;
+				//System.out.println("오른쪽");
+				break;
+			case KeyEvent.VK_SPACE:
+				if (!isJump)
+				{ //점프여부 확인하고 점프 기능 실행
+					isJump = true;
+					jump(70);
+				}
+				break;
+			case KeyEvent.VK_UP:
              
-            break;
-		case KeyEvent.VK_DOWN:
-			break;
-		case KeyEvent.VK_A:
-			 if (!isAttacking) {
+				break;
+			case KeyEvent.VK_DOWN:
+				break;
+			case KeyEvent.VK_A:
+				if (!isAttacking) {
 	                // 공격 중이 아닌 경우에만 공격 생성
 	                isAttacking = true; // 현재 공격 중
 	                atteck = new Attack(x + 65, y +12  , 1, 2); // 총알의 초기 위치 설정
 	                // 공격 애니메이션 재생 또는 공격에 따른 동작 수행
 	            }
-	        break;
+				break;
 		}
 	}
 	public Rectangle getRect() {
@@ -356,6 +363,7 @@ public class Player implements KeyListener{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		isStanding = true;
 		this.stateIdx = 0;
 		switch(e.getKeyCode()) {
         case KeyEvent.VK_A:
@@ -375,10 +383,12 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
+	/*
 	private void monsterCheck() {
         Rectangle playerBox = new Rectangle(x, y, width, height);
         Rectangle monsterBox = new Rectangle(stage.getX()+bgX+10, stage.getY()+8, stage.getWidth()-10, stage.getHeight()-10);
-
+        
+        System.out.println(playerBox+", "+monsterBox);
         if (playerBox.intersects(monsterBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
                 hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
@@ -389,10 +399,14 @@ public class Player implements KeyListener{
         stage.checkMonster(playerBox, prevY, initialY, gravitySpeed);
        
     }
+    */
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
 	public void draw(Graphics g, GameCanvas gameCanvas) {
+		if(stage == null)
+			return;
+		
 		stage.draw(g);
 		atteck.move();
 		if (isAttacking) {
@@ -404,7 +418,7 @@ public class Player implements KeyListener{
 	        // 기존의 캐릭터 이미지를 그리는 로직
 	        drawCharacter(getState(), g, gameCanvas);
 	    }
-		monsterCheck(); // 충돌 체크
+		//monsterCheck(); // 충돌 체크
 		width = getState().width;		// 현재 플레이어의 가로와 세로 길이
 		height = getState().height;
 		// 캐릭터의 이전 위치 저장

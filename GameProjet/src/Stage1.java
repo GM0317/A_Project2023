@@ -38,13 +38,22 @@ public class Stage1 extends Stage {
 	 	Tile3 = new ImageIcon("stage/Tiles_03.png").getImage();
 	 	
 	 	vine = new ImageIcon("stage/덩쿨.png").getImage();
-		monsterList.add(new Monster1(player, 50, 505, bgX));
+		monsterList.add(new Monster1(player, 150, 420, bgX));
 	    this.hp = player.getPlayerHp();
 	    
 
 	}
 	public void draw(Graphics g) {
 		super.draw(g);
+		 //여기 아래가 왼쪽은 배경이 안나가게 잘 설정되어있는데 오른쪽이 안되쒀ㅇ
+		//draw 여기만 있음 배경은 고정이 되는데 플레이어만 빠져나가더라
+		
+	    // 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+	    if (bgX > 0) {
+	        bgX = 0;
+	    } else if (bgX < -3150) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -3150;
+	    }
 	     g.drawImage(background, bgX, 0, 3500, 600, null);
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
 	     g.drawImage(sign, 3200+bgX, 453 ,100, 100, null);
@@ -75,14 +84,8 @@ public class Stage1 extends Stage {
 		 
 	     drawMonster(g);
 	     //PortalChek();
-	       for(Monster monster : monsterList) {
-	          if(monster.Checkmonster()) {
-	             hp.draw(g);
-	             monster.DieMT(50);
-	          }
-	       }
-	       check();	   
-	       vineCheck();
+		 check();	   
+		 vineCheck();
 	}
 	public void setPlaer(Player p) {
 		player = p;
@@ -119,25 +122,48 @@ public class Stage1 extends Stage {
 			Rectangle playerBox = player.getRect();
 			boolean onGround = false;
 
-           for (Rectangle tileBoundary : tileLine) {
-               if (playerBox.intersects(tileBoundary)) {
-                   int playerBottom = playerBox.y + playerBox.height;
-                   int tileTop = tileBoundary.y;
-                   int overlap = playerBottom - tileTop;
+          for (Rectangle tileBoundary : tileLine) {
+              if (playerBox.intersects(tileBoundary)) {
+                  int playerBottom = playerBox.y + playerBox.height;
+                  int tileTop = tileBoundary.y;
+                  int overlap = playerBottom - tileTop;
+                  
+                  //아래가 추가한 부분
+                  int newX = player.getX();
+                  int newY = player.getY();
+                  
+                  /*
+                  //여기 아래가 플레이어가 지정한 범위를 나가지 못하게 하는건데
+                   * 왼쪽은 배경이 안나가는데 오른쪽은 배경흰색이 보여(이부분은 위에 draw 부분)
+                   *  공중에 떠잇는 바닥부분에 점프해서 갔을때 방향키하면 여기도 고정되서 안나가져
+                  
+                  // X 좌표 조정 
+                  if (player.getX() < tileBoundary.getMinX()) {
+                      newX = (int) tileBoundary.getMinX();
+                  } else if (player.getX() + player.getWidth() > tileBoundary.getMaxX()) {
+                      newX = (int) (tileBoundary.getMaxX() - player.getWidth());
+                  }
+                  // Y 좌표 조정
+                  if (player.getY() < tileBoundary.getMinY()) {
+                      newY = (int) tileBoundary.getMinY();
+                  } else if (player.getY() + player.getHeight() > tileBoundary.getMaxY()) {
+                      newY = (int) (tileBoundary.getMaxY() - player.getHeight());
+                  }
+                  
+                  player.setX(newX);*/
+                  // 플레이어를 경계선 위로 이동시킴
+                  player.setY(player.getY() - overlap);
+                  onGround = true; // 바닥에 닿음을 표시
+                  break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
+              }
+          }
 
-                   // 플레이어를 경계선 위로 이동시킴
-                   player.setY(player.getY() - overlap);
-                   onGround = true; // 바닥에 닿음을 표시
-                   break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
-               }
-           }
-
-           // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
-           if (!onGround) {
-               player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
-           }
-       } else {
-           System.out.println("플레이어 객체가 null입니다.");	
+          // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
+          if (!onGround) {
+              player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
+          }
+      } else {
+          System.out.println("플레이어 객체가 null입니다.");	
 		 }
 	}
 	public void vineCheck() {
@@ -185,10 +211,14 @@ public class Stage1 extends Stage {
 		// TODO Auto-generated method stub
 		LinkedList<Monster> removeM = new LinkedList<>();
 	      for (Monster monster : monsterList) {
-	            monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
-	        if(monster.getHP()==0) {
-	             removeM.add(monster);
-	           }
+	            monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그
+	  		    if(monster.Checkmonster()) {
+	  		         hp.draw(g);
+	  		         monster.DieMT(50);
+	  		    }
+		        if(monster.getHP()==0) {
+		             removeM.add(monster);
+		        }
 	      }
 	      monsterList.removeAll(removeM);
 

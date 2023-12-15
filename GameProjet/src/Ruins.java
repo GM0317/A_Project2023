@@ -155,7 +155,7 @@ public class Ruins extends Stage{
 	            if (System.currentTimeMillis() - lastTime > Delay) {
 	                hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
 	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
-	                System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+	                System.out.println("(flame)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
 	            }       
 	        }
 	    }
@@ -170,7 +170,7 @@ public class Ruins extends Stage{
 	        	if (System.currentTimeMillis() - lastTime > Delay) {
 	                hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
 	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
-	                System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+	                System.out.println("(flame2)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
 	            }   
 	            System.out.println("아!"); // 충돌 시 수행할 동작   
 	        }

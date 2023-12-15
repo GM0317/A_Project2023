@@ -14,12 +14,10 @@ public class Monster1 extends Monster{
     private State[] states;
     private int stateIdx = 0;
     private BufferedImage sprite;
-    private int x = 150;
-	private int y = 420;
 
    public Monster1(Player play, int x, int y, int bgX) {
 
-      super(play, x, y, 1000, 1430, 200);
+	   super(play, x, y, 90, 110, 200);
        monsterImage = new ImageIcon("rsc/모나피.png").getImage();
        loadImage();
         
@@ -91,12 +89,7 @@ public class Monster1 extends Monster{
     private State getState() {
     	return states[stateIdx];
       }
-
-/*
-    public void draw(Graphics g) {
-        g.drawImage(monsterImage, x, y, mWidth, mHeight, null); // monster 이미지를 현재 x, y 위치에 그림
-    }
-*/    
+ 
     public void draw(Graphics g, GameCanvas screen) {
         drawMonster(getState(), g, screen); // monster 이미지를 현재 x, y 위치에 그림
     }
@@ -124,15 +117,16 @@ public class Monster1 extends Monster{
                  state.index_x = state.frame_size-1;
            }
         }
+        
+        Rectangle playerBox = player.getRect();
+        Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
+        //Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
+        g.drawRect(monsterBox.x, monsterBox.y, monsterBox.width, monsterBox.height);
+        g.drawRect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
+        //System.out.println(this.getClass().getName()+", "+ playerBox+", "+monsterBox+":"+playerBox.intersects(monsterBox));
+        
      }
 
-    
-   /*
-    * private void loadImage() { try { this.sprite = ImageIO.read(new
-    * File("resources/ryu.png")); this.sprite =
-    * TransformColorToTransparency(this.sprite, new Color(70, 112, 104)); } catch
-    * (IOException e) { // TODO Auto-generated catch block e.printStackTrace(); } }
-    */
 
     public void moveMonster(int direction) {
     	// direction이 1이면 오른쪽, -1이면 왼쪽으로 이동
