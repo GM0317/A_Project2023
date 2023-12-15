@@ -90,6 +90,10 @@ public class Stage1 extends Stage {
 	public void setPlaer(Player p) {
 		player = p;
 	}
+	public void setBGX(int bgX) {
+	      this.bgX=bgX;
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
@@ -105,6 +109,26 @@ public class Stage1 extends Stage {
             vineCheck();
             PortalChek();
             break;
+		case KeyEvent.VK_SPACE:
+	         System.out.println("bgx "+bgX);
+	         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
+	          int moveAmount = 10; // 한 번에 움직이는 양 설정
+	          int repeatCount = 10; // 반복 횟수 설정
+	          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
+	          for (int i = 0; i < repeatCount; i++) {
+	             if (player.isFlip()) {
+	                bgX += moveAmount;
+	             } else {
+	                bgX -= moveAmount;
+	             }
+	             setBGX(bgX);
+	             try {
+	                Thread.sleep(sleepDuration); 
+	             } catch (InterruptedException ex) {
+	                 ex.printStackTrace();
+	             }
+	          }
+	          break;
 		}
 	}
 	public void check() {
