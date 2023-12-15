@@ -185,7 +185,7 @@ public class Stage1 extends Stage {
 		// TODO Auto-generated method stub
 		LinkedList<Monster> removeM = new LinkedList<>();
 	      for (Monster monster : monsterList) {
-	            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
+	            monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
 	        if(monster.getHP()==0) {
 	             removeM.add(monster);
 	           }

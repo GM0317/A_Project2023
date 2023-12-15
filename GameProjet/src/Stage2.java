@@ -120,7 +120,7 @@ public class Stage2 extends Stage {
 	public void drawMonster(Graphics g) {
 		LinkedList<Monster> removeM = new LinkedList<>();
 		for (Monster monster : monsterList) {
-            monster.draw(g);  // 몬스터 리스트에 있는 몬스터들을 그림
+            monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
             //monster.moveMonster();
             if(monster.getHP()==0) {
   		  	removeM.add(monster);

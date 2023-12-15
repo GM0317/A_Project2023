@@ -21,7 +21,7 @@ public class Monster3 extends Monster {
     }
     
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g, GameCanvas screen) {
         g.drawImage(monsterImage, x, y, mWidth, mHeight, null);
     }
 }

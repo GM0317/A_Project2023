@@ -14,8 +14,8 @@ public class Monster1 extends Monster{
     private State[] states;
     private int stateIdx = 0;
     private BufferedImage sprite;
-    private int x = 50;
-	private int y = 450;
+    private int x = 150;
+	private int y = 420;
 
    public Monster1(Player play, int x, int y, int bgX) {
 
@@ -92,11 +92,11 @@ public class Monster1 extends Monster{
     	return states[stateIdx];
       }
 
-
+/*
     public void draw(Graphics g) {
         g.drawImage(monsterImage, x, y, mWidth, mHeight, null); // monster 이미지를 현재 x, y 위치에 그림
     }
-    
+*/    
     public void draw(Graphics g, GameCanvas screen) {
         drawMonster(getState(), g, screen); // monster 이미지를 현재 x, y 위치에 그림
     }
@@ -135,6 +135,11 @@ public class Monster1 extends Monster{
     */
 
     public void moveMonster(int direction) {
-       
-    };
+    	// direction이 1이면 오른쪽, -1이면 왼쪽으로 이동
+        if (direction == 1) {
+        	x += 10;
+        } else if (direction == -1) {
+        	x -= 10;
+        }
+    }
 }

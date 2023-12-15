@@ -24,7 +24,7 @@ public abstract class Monster {
     }
 
     public abstract void moveMonster(int direction);
-    public abstract void draw(Graphics g);
+    public abstract void draw(Graphics g, GameCanvas screen);
     
     public int getX() {
         return x;
