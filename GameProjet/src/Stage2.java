@@ -144,10 +144,17 @@ public class Stage2 extends Stage {
 		LinkedList<Monster> removeM = new LinkedList<>();
 		for (Monster monster : monsterList) {
             monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
-            //monster.moveMonster();
+            if(monster.Checkmonster()) {
+ 		         hp.draw(g);
+ 		    }
+            if(monster.Checkattack()) {
+ 		         monster.DieMT(50);
+ 		    }
             if(monster.getHP()==0) {
   		  	removeM.add(monster);
+  		  	
       	  }
+            
 		}
 		monsterList.removeAll(removeM);
 		check();

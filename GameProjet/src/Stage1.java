@@ -6,14 +6,16 @@ import java.util.LinkedList;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
-
+import javax.swing.JFrame;
 import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 public class Stage1 extends Stage {
 	private Graphics screenGraphic;
 	private GameCanvas canvas;
 	protected Image background;
 	protected Image floor;
+	protected Image b;
 	protected Image vine;
 	protected Image sign;
 	private Tile2 tile2;
@@ -24,7 +26,7 @@ public class Stage1 extends Stage {
 	private int Px = 1000; //포탈 x좌표
 	private int Py = 400; //포탈 y좌표
 	
-	 private LinkedList<Monster> monsterList = new LinkedList<>();
+	private LinkedList<Monster> monsterList = new LinkedList<>();
 	private LinkedList<Onbject> objectList = new LinkedList<>();
 	public Stage1(Player player, GameCanvas canvas){
 		this.canvas = canvas;
@@ -32,7 +34,7 @@ public class Stage1 extends Stage {
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
 		sign = new ImageIcon("stage/표시판.png").getImage();
-		
+		b = new ImageIcon("stage/stage1 바닥.png").getImage();
 		Tile = new ImageIcon("stage/Tiles_01.png").getImage();
 		Tile2 = new ImageIcon("stage/Tiles_02.png").getImage();
 	 	Tile3 = new ImageIcon("stage/Tiles_03.png").getImage();
@@ -40,8 +42,16 @@ public class Stage1 extends Stage {
 	 	vine = new ImageIcon("stage/덩쿨.png").getImage();
 		monsterList.add(new Monster1(player, 150, 420, bgX));
 	    this.hp = player.getPlayerHp();
-	    
-
+	}
+	public boolean backCheck() {
+		
+		
+		Rectangle back = new Rectangle(3500, 0, 100, 2000);
+		Rectangle playerBox = player.getRect();
+		if(back.intersects(playerBox)) {
+			return false;
+		}
+		return true;
 	}
 	public void draw(Graphics g) {
 		super.draw(g);
@@ -56,7 +66,9 @@ public class Stage1 extends Stage {
 	    }
 	     g.drawImage(background, bgX, 0, 3500, 600, null);
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
+	     g.drawImage(b, 3000, 0, 100, 2000, null);
 	     g.drawImage(sign, 3200+bgX, 453 ,100, 100, null);
+	     
 	     
 	     g.drawImage(Tile, 1500 + bgX, 320,null);
 		 g.drawImage(Tile2, 1000 + bgX, 320,null);
@@ -65,7 +77,6 @@ public class Stage1 extends Stage {
 		 g.drawImage(Tile3, 2300 + bgX, 320,null);
 		 g.drawImage(Tile, 800 + bgX, 100,null);
 		 g.drawImage(Tile, 2150 + bgX, 100,null);
-		 
 		 g.drawImage(vine, 1150 + bgX, 130, 50, 100, null);
 		 g.drawImage(vine, 1150 + bgX, 220, 50, 100, null);
 		 g.drawImage(vine, 2190 + bgX, 130, 50, 100, null);
@@ -100,20 +111,32 @@ public class Stage1 extends Stage {
 		switch(e.getKeyCode())
 		{
 		case KeyEvent.VK_LEFT:
-			bgX += 10;
+			if(player.getX()>-3) {
+				System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
+				bgX += 10;
+			}
 			break;
 		case KeyEvent.VK_RIGHT:
-			bgX -= 10;
+			if(player.getX()<750) {
+				System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
+				//x += 3;
+				bgX -= 10;
+			}
 			break;
 		case KeyEvent.VK_UP:
             vineCheck();
             PortalChek();
             break;
 		case KeyEvent.VK_SPACE:
-	         System.out.println("bgx "+bgX);
-	         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
-	          int moveAmount = 10; // 한 번에 움직이는 양 설정
-	          int repeatCount = 10; // 반복 횟수 설정
+			if (player.isFlip()) {
+                bgX += 100;
+             } else {
+                bgX -= 100;
+             }
+	         /*System.out.println("bgx "+bgX);
+	         System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
+	          int moveAmount = 7; // 한 번에 움직이는 양 설정
+	          int repeatCount = 20; // 반복 횟수 설정
 	          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
 	          for (int i = 0; i < repeatCount; i++) {
 	             if (player.isFlip()) {
@@ -128,7 +151,7 @@ public class Stage1 extends Stage {
 	                 ex.printStackTrace();
 	             }
 	          }
-	          break;
+	          break;*/
 		}
 	}
 	public void check() {
@@ -286,22 +309,31 @@ public class Stage1 extends Stage {
 	}
 
 	@Override
-	public void drawMonster(Graphics g) {;
+	public void drawMonster(Graphics g) {
 		// TODO Auto-generated method stub
 		LinkedList<Monster> removeM = new LinkedList<>();
 	      for (Monster monster : monsterList) {
 	            monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그
 	  		    if(monster.Checkmonster()) {
 	  		         hp.draw(g);
+	  		    }
+	  		    if(monster.Checkattack()) {
 	  		         monster.DieMT(50);
 	  		    }
 		        if(monster.getHP()==0) {
 		             removeM.add(monster);
 		        }
+		        if(player.getPlayerHp().getHp()==0) {
+		            new GameStart(); // 새로운 GameStart 창 열기
+		        	player.getPlayerHp().returnHP(300);
+		        	//dispose();
+		        }
+		        
 	      }
 	      monsterList.removeAll(removeM);
 
 	}
+	
 	public void PortalChek() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열

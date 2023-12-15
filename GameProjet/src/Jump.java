@@ -14,6 +14,8 @@ public class Jump extends Thread  {
     	player.setJump(true);
         int Y = player.getY();
         int X = player.getX();
+        int bgx = player.getBGX();
+        //int bgx = player.
         //this.jumpHeight = Y - this.jumpHeight;
         //System.out.println("jumpHeight: "+jumpHeight+", y: "+Y);
         final int MoveX = 1; // 앞으로 가는 길이
@@ -24,15 +26,19 @@ public class Jump extends Thread  {
             if(player.isFlip()) {
               if(X>-3) {
                  X = X-MoveX;
+                 bgx-=MoveX;
+                 //bgx=bgx-MoveX;
               }
             }
             else {
-               if(X<930)
+               if(X<750)
                   X = X+MoveX;
+               	  bgx+=MoveX;
             }
 
            player.setY(Y);
            player.setX(X);
+           player.setBGX(bgx);
            try {
                 Thread.sleep(5); // 20ms마다 증가하도록 수정하여 천천히 올라가게 함
             } catch (InterruptedException e) {
@@ -46,21 +52,25 @@ public class Jump extends Thread  {
            if(player.isFlip()) {
                if(X>-3) {
                   X = X-MoveX;
+                  bgx-=MoveX;
                }
             }
             else {
-               if(X<930)
+               if(X<750)
                   X = X+MoveX;
+               	  bgx+=MoveX;
             }
 
            player.setX(X);
-           //player.setY(Y);
+           player.setBGX(bgx);
            try {
                 Thread.sleep(5); // 20ms마다 증가하도록 수정하여 천천히 올라가게 함
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
+     	System.out.println("X: "+X+", bgx: "+bgx);
         player.setJump(false);
    }  
 }
