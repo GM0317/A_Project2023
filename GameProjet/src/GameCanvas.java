@@ -42,7 +42,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		stageList.add(sg3);
 		stageList.add(sg4);
 		
-		this.step.setStage(stageList.get(3));
+		this.step.setStage(stageList.get(1));
 		
 		ruins.setPlaer(step);
 		addComponentListener(this);

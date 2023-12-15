@@ -51,19 +51,22 @@ public abstract class Monster {
     }
     
     public boolean Checkattack() {
-        Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
-        Rectangle attackbox = new Rectangle(player.getAttack().getX(), player.getAttack().getY(), 10, 10);
-        //System.out.println("x:"+boom.getX()+", y:"+boom.getY() + monsterBox);
-        
-         if (monsterBox.intersects(attackbox)) {
-             if (System.currentTimeMillis() - lastTime > Delay) {
-                 DieMT(50); // 충돌 시 몬스터의 체력을 50 감소
-                 lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
-                 System.out.println("몬스터 공격! 플레이어 체력: " + player.getPlayerHp().getHp()+"몬스터 체력 : " + Mhp);
-                 return true;
-             }
-         }
-         return false;
+    	boolean retValue = false;
+    	for(Attack attack : player.getAttackList()) {
+	        Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
+	        Rectangle attackbox = new Rectangle(attack.getX(), attack.getY(), 10, 10);
+	        //System.out.println("x:"+boom.getX()+", y:"+boom.getY() + monsterBox);
+	        
+	         if (monsterBox.intersects(attackbox)) {
+	             if (System.currentTimeMillis() - lastTime > Delay) {
+	                 DieMT(50); // 충돌 시 몬스터의 체력을 50 감소
+	                 lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                 System.out.println("몬스터 공격! 플레이어 체력: " + player.getPlayerHp().getHp()+"몬스터 체력 : " + Mhp);
+	                 retValue = true;
+	             }
+	         }
+    	}
+         return retValue;
      }
     public void DieMT(int amount) { // Hp 감소시키기
         Mhp -= amount;
