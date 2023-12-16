@@ -63,13 +63,13 @@ public class GameStart extends JFrame {
                 
                 // Image startButton이 마우스 클릭 범위에 포함되어 있는지 확인
                 if (mouseX >= 384 && mouseX <= 664 && mouseY >= 451 && mouseY <= 531) {
-                	 // 배경음악 정지
-                    if (clip != null && clip.isRunning()) {
-                        clip.stop();
-                    }
+                	
+                    
                     statueSound(new File("Sound/시작화면버튼.wav"));
                     // Stage1 클래스의 화면 보이도록 호출
                     new GameScreen();
+                    clip.stop();
+                    
                     // 현재 화면은 종료
                     dispose();
                 }

@@ -9,6 +9,11 @@ import java.awt.Dimension;
 
 import javax.swing.ImageIcon;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 public class Stage1 extends Stage {
 	private Graphics screenGraphic;
 	private GameCanvas canvas;
@@ -51,8 +56,8 @@ public class Stage1 extends Stage {
 	    // 배경이 내가 설정한 범위를 넘어가지 않도록 고정
 	    if (bgX > 0) {
 	        bgX = 0;
-	    } else if (bgX < -3150) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
-	        bgX = -3150;
+	    } else if (bgX < -2800) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2800;
 	    }
 	     g.drawImage(background, bgX, 0, 3500, 600, null);
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
