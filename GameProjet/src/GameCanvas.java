@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.ComponentEvent;
+
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class GameCanvas extends JPanel implements ComponentListener{
@@ -27,23 +29,24 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	private Ruins ruins;
 	private Attack attack;
 	private Player step;
+	private GameOver gaemOver;
+	private GameScreen gameScreen;
+	private Ending endings;
 	private int countNumber = 0;
 	private LinkedList<Stage> stageList = new LinkedList<>();
-	public GameCanvas() {
+	public GameCanvas() {	
 		this.step = new Player();
-		this.sg1 = new Stage1(step,this);
+		this.sg1 = new Stage1(step,this,gaemOver);
 		this.sg2 = new Stage2(step,this);
 		this.sg3 = new Stage3(step,this);
-		this.sg4 = new Stage4(step);
+		this.sg4 = new Stage4(step, ruins, this);
 		this.ruins = new Ruins(step, this);
 		stageList.add(ruins);
 		stageList.add(sg1);
 		stageList.add(sg2);
 		stageList.add(sg3);
 		stageList.add(sg4);
-
-		//this.step.setStage(stageList.get(1));
-		
+		this.step.setStage(stageList.get(1));
 		ruins.setPlaer(step);
 		addComponentListener(this);
 		addKeyListener(step);
@@ -59,7 +62,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 			}
 		}, 0, 1);
 		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
-		changeStage(1);
+		changeStage(0);
 	}
 	public void changeStage(int num) {
 		this.step.setStage(stageList.get(num));
@@ -72,12 +75,22 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	}
 	@Override
 	public void paint(Graphics g) {
-		this.step.setStage(stageList.get(0));
+		//this.step.setStage(stageList.get(0));
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
 	    step.draw(buffer, this); //player 그리기
 	    g.drawImage(this.offScreen, 0, 0, this);
 	    sg2.moveMonster();// 몬스터 호출
+	    if(step.getPlayerHp().getHp()==0) {//만약 hp가 0이면 게임 over 화면 출력
+       	 GameOver gameOver = new GameOver(step);
+            gameOver.showGameOver();
+            gameOver.draw(g);        
+       }
+	    if(ruins.isPortalActive()) {
+	    	Ending ending = new Ending(ruins);
+       	 	ending.showEnding();
+       	 	ending.draw(g);
+	    }
 	}
 	private void initBuffer() {
 		this.dim = getSize();
@@ -93,6 +106,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		// TODO Auto-generated method stub
 		initBuffer();
 	}
+	
 	@Override
 	public void componentMoved(ComponentEvent e) {
 		// TODO Auto-generated method stub

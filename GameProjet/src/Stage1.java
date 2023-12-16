@@ -13,11 +13,13 @@ import javax.swing.SwingUtilities;
 public class Stage1 extends Stage {
 	private Graphics screenGraphic;
 	private GameCanvas canvas;
+	private GameOver gameOver;
 	protected Image background;
 	protected Image floor;
 	protected Image b;
 	protected Image vine;
 	protected Image sign;
+
 	private Tile2 tile2;
 	private int bgX = 0;
 	private Monster Mhp;
@@ -28,7 +30,7 @@ public class Stage1 extends Stage {
 	
 	private LinkedList<Monster> monsterList = new LinkedList<>();
 	private LinkedList<Onbject> objectList = new LinkedList<>();
-	public Stage1(Player player, GameCanvas canvas){
+	public Stage1(Player player, GameCanvas canvas, GameOver gameOver){
 		this.canvas = canvas;
 		this.player = player;
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
@@ -38,7 +40,6 @@ public class Stage1 extends Stage {
 		Tile = new ImageIcon("stage/Tiles_01.png").getImage();
 		Tile2 = new ImageIcon("stage/Tiles_02.png").getImage();
 	 	Tile3 = new ImageIcon("stage/Tiles_03.png").getImage();
-	 	
 	 	vine = new ImageIcon("stage/덩쿨.png").getImage();
 		monsterList.add(new Monster1(player, 150, 420, bgX));
 	    this.hp = player.getPlayerHp();
@@ -83,7 +84,6 @@ public class Stage1 extends Stage {
 		 g.drawImage(vine, 770 + bgX, 410, 50, 100, null);
 		 g.drawImage(vine, 2500 + bgX, 340, 50, 100, null);
 		 g.drawImage(vine, 2500 + bgX, 410, 50, 100, null);
-		 
 		 g.setColor(Color.RED);
 		    int rectX7 = 3220 + bgX; 
 		    int rectY7 = 460; 
@@ -95,6 +95,7 @@ public class Stage1 extends Stage {
 	     //PortalChek();
 		 check();	   
 		 vineCheck();
+		 
 	}
 	public void setPlaer(Player p) {
 		player = p;
@@ -315,11 +316,11 @@ public class Stage1 extends Stage {
 		        if(monster.getHP()==0) {
 		             removeM.add(monster);
 		        }
-		        if(player.getPlayerHp().getHp()==0) {
-		            new GameStart(); // 새로운 GameStart 창 열기
-		        	player.getPlayerHp().returnHP(300);
-		        	//dispose();
-		        }
+//		        if(player.getPlayerHp().getHp()==0) {
+//		        	 GameOver gameOver = new GameOver(player);
+//		             gameOver.showGameOver();
+//		             gameOver.draw(g);
+//		        }
 		        
 	      }
 	      monsterList.removeAll(removeM);

@@ -59,29 +59,9 @@ public class Stage2 extends Stage {
 	            }
 	            break;
 	        case KeyEvent.VK_UP:
-	            PortalChek();
+	            //PortalChek();
 	            PortalChek2();
 	            break;
-/*	        case KeyEvent.VK_SPACE:
-		         System.out.println("bgx "+bgX);
-		         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
-		          int moveAmount = 10; // 한 번에 움직이는 양 설정
-		          int repeatCount = 10; // 반복 횟수 설정
-		          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
-		          for (int i = 0; i < repeatCount; i++) {
-		             if (player.isFlip()) {
-		                bgX += moveAmount;
-		             } else {
-		                bgX -= moveAmount;
-		             }
-		             setBGX(bgX);
-		             try {
-		                Thread.sleep(sleepDuration); 
-		             } catch (InterruptedException ex) {
-		                 ex.printStackTrace();
-		             }
-		          }
-		          break;*/
 			}    
 	    
 	    }
@@ -186,12 +166,7 @@ public class Stage2 extends Stage {
 			boolean onGround = false;
 
             for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {
-                    //int playerBottom = playerBox.y + playerBox.height;
-                    //int tileTop = tileBoundary.y;
-                    //int overlap = playerBottom - tileTop;
-                    // 플레이어를 경계선 위로 이동시킴
-                    //player.setY(player.getY() - overlap);
+                if (playerBox.intersects(tileBoundary)) {             
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
@@ -204,7 +179,7 @@ public class Stage2 extends Stage {
             System.out.println("플레이어 객체가 null입니다.");	
 		 }
 	}
-	public void PortalChek() {
+	/*public void PortalChek() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
 			        new Rectangle(1392+bgX, 140 , 35, 60)
@@ -219,7 +194,7 @@ public class Stage2 extends Stage {
                 }
             }	
 		 }
-	}
+	}*/
 	public void PortalChek2() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열

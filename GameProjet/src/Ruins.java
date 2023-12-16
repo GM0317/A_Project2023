@@ -20,6 +20,8 @@ public class Ruins extends Stage{
 	private PlayerHp hp;
 	private Flame flame;
 	private GameCanvas canvas;
+	private Stage4 stage4;
+	private Ending ending;
 	protected Image portal;
 	protected Image black;
 	protected Image map; //유적 이미지
@@ -29,11 +31,12 @@ public class Ruins extends Stage{
 	protected Image key;
 	protected Image attack; //불꽃
 	protected Image keyEat;
+	protected Image Ending;
 	private boolean isKeyCollected = false;//key를 먹었는지 안먹었는지 여부 확인
 	private long lastTime = 0; // 마지막 충돌 시간 저장
     private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
     private boolean flip = false;
-    private int energy = 100;
+    private int energy = 1;
 	private int rectX;
     private int rectY;
     private int rectWidth;
@@ -41,15 +44,18 @@ public class Ruins extends Stage{
     private Clip bgClip;
     private Clip crackClip;
     private boolean isShattered = false;
+    private boolean isPortalActive = false;
     private final int delay = 1000; // 1초마다 생성
     private Timer timer;
     private Color energyColor = Color.RED;
     private LinkedList<Flame> flames = new LinkedList<>();
     private LinkedList<Onbject> objectList = new LinkedList<>();
     private String monsterName = "PERSEPHONE";
+    private int endingY = 0;
 	public Ruins(Player player, GameCanvas canvas) {
 		this.flame = new Flame(this);
 		this.canvas = canvas;
+		this.ending = ending;
 		flames.add(flame);
 		List<String> myList = new ArrayList<String>();
         timer = new Timer(delay, new ActionListener() {
@@ -71,9 +77,11 @@ public class Ruins extends Stage{
 		map = new ImageIcon("stage/유적.png").getImage();
 		key = new ImageIcon("stage/pixel-key.png").getImage();
 		
-		
-		
 	}	
+	 public boolean isKeyCollected() {
+	        return isKeyCollected;
+	}
+	 
 	public void setPlaer(Player p) {
 		player = p;
 	}
@@ -90,6 +98,7 @@ public class Ruins extends Stage{
 		g.drawImage(statue2, 1518+bgX, 1-97,500,700,null);
 		g.drawImage(statue3, 1518+bgX, 1-97,500,700,null);
 		g.drawImage(portal, 2800+bgX, 327,120,150,null);
+		g.drawImage(Ending, 0, endingY, null);
 		
 		if (isKeyCollected && energy > 0) {
 		    g.setColor(Color.WHITE); // Set the color of the text
@@ -119,6 +128,11 @@ public class Ruins extends Stage{
 	    	flamesCheck5();
 	    	flamesCheck6();
 	    	Checkattack();
+	    	/*if(!isPortalActive()) {
+    	    	Ending ending = new Ending(this);
+           	 	ending.showEnding();
+           	 	ending.draw(g);
+    	    }*/
 	    	if (isKeyCollected) {
 	    		drawEnergyBar(g);
 	    	}
@@ -388,18 +402,40 @@ public class Ruins extends Stage{
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(3); //유적으로 이동
-                	player.setX(50);
-                	player.setY(445);
-                	System.out.println("Portal!");	
+//                	if (isPortalActive()) { // Check if the portal is active
+                    // Perform actions when the portal is active
+                    //canvas.changeStage(3); // Move to ruins
+                   // player.setX(50);
+                   // player.setY(445);
+                	//Ending();
+                	//ending.showEnding();
+                	taste();
+                    System.out.println("Portal!");
+                } else {
+                	System.out.println("NO");
                 }
             }	
 		 }
+	}
+	public void setPortalActive(boolean isActive) {
+	    this.isPortalActive = isActive;
+	}
+	public boolean isPortalActive() {
+        return isPortalActive;
+    }
+	public void Ending() {
+		Ending = new ImageIcon("Ending/Happy Eending.png").getImage();
 	}
 	public void drawFlame(int x, int y) {
 	    //Graphics g = getGraphics(); // 현재 패널의 그래픽스 객체 가져오기
 	   // g.drawImage(black, x, y, 20, 20, null); // 불꽃 이미지 그리기 (가로, 세로 크기는 20으로 설정)
 	}
+	public void taste() {
+		if(isPortalActive()) {
+			System.out.println("활성화");
+		}
+	}
+
 	@Override
 	public void drawBackground(Graphics g) {
 		// TODO Auto-generated method stub

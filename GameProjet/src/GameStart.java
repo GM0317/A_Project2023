@@ -25,9 +25,6 @@ import javax.swing.SwingConstants;
 //import javazoom.jl.player.Player;
 
 import javax.swing.JFrame;
-
-
-
 public class GameStart extends JFrame {
 	
     //private Graphics backgraphic; 

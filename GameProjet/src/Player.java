@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -13,11 +14,14 @@ import java.io.IOException;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 public class Player implements KeyListener{
 	private Image player;
 	private GameCanvas canvas;
 	private Jump jump;
+	private JFrame frame;
+	private GameScreen gameScreen;
 	//private Stage2 stage2;
 	//private Stage3 stage3;
 	private Stage stage;
@@ -175,6 +179,7 @@ public class Player implements KeyListener{
 		this.initialY = y; // 초기 Y 좌표 저장
 		this.hp = new PlayerHp(); // PlayerHp 객체 인스턴스
 		//this.atteck = new Attack(x+20, y+20, 100, 1);//x, y, speed, direction
+		this.gameScreen = gameScreen;
 	}
 	public LinkedList<Attack> getAttackList() {
 		return this.attackList;
@@ -311,7 +316,10 @@ public class Player implements KeyListener{
 				}
 				break;
 			case KeyEvent.VK_UP:
-             
+				if (getPlayerHp().getHp() == 0) {
+					new GameStart();
+					gameScreen.dispose();
+				}
 				break;
 			case KeyEvent.VK_DOWN:
 				break;

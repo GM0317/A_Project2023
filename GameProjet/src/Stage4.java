@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
@@ -7,20 +8,57 @@ import javax.swing.ImageIcon;
 
 public class Stage4 extends Stage{
 	private Player player;
+	private Ruins ruins;
+	private GameCanvas canvas;
 	protected Image map;
 	protected Image floor;
-	public Stage4(Player player) {
+	protected Image statue;
+	public Stage4(Player player, Ruins ruins, GameCanvas canvas) {
 		this.player = player;
-		
+		this.ruins = ruins;
+		this.canvas = canvas;
+		// Stage4를 생성하는 코드 어딘가에서
 		map = new ImageIcon("stage/Background.png").getImage();
 		floor = new ImageIcon("stage/stage4 Floor.png").getImage();
+		statue = new ImageIcon("stage/Stage4동상.png").getImage();
 	}
 	public void draw (Graphics g) {
 		super.draw(g);
 		g.drawImage(map,bgX,-230,2100,800,null);
 		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥	
+		g.drawImage(statue, 900 + bgX,375,null);
 		check();
+		statueCheck();
+	/*	g.setColor(Color.RED);
+	    int rectX7 = 1020 + bgX; 
+	    int rectY7 = 400; 
+	    int rectWidth7 = 35; 
+	    int rectHeight7 = 90; 
+	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);*/
 	}
+	public Rectangle statueRect() {
+		return new Rectangle(1020 + bgX, 400, 35, 90);
+	}
+	public boolean isKeyCollected() {
+        // Implement the logic here to check if the key is collected in Stage4
+        // For example:
+        // return keyCollected;
+        return false; // Replace false with your actual condition to check if the key is collected
+    }
+	public void statueCheck() {
+	    Rectangle playerBox = player.getRect();  
+	    Rectangle statueBox = statueRect();
+	        if (playerBox.intersects(statueBox)) {
+	            System.out.println("동상"); // 충돌 시 수행할 동작   
+	            if (ruins != null && ruins.isKeyCollected()) {
+	            	 System.out.println("키 먹음!");
+	            }else {
+	            	 System.out.println("키 안먹음!");
+	            }
+	        }
+	        
+	}
+	
 	@Override
 	public void drawBackground(Graphics g) {
 		// TODO Auto-generated method stub

@@ -238,7 +238,7 @@ public class Stage3 extends Stage {
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(4); 
+                	canvas.changeStage(0); 
                 	player.setX(50);
                 	player.setY(445);
                 	System.out.println("Portal!");	

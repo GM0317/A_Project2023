@@ -19,12 +19,11 @@ public abstract class Stage {
 	private Ledder ledder;
 	private Tile tile;
 	private Tile2 tile2;
+	private Ending ending;
 	
 	private Monster1 m1;
 	private Monster2 m2;
-	private Monster3 m3;
-	
-	
+	private Monster3 m3;	
 	protected int monsterX = 1000; // 몬스터의 초기 X 좌표
 	protected int monsterY = 468; // 몬스터의 Y 좌표
 	protected int width;
@@ -138,6 +137,7 @@ public abstract class Stage {
 		drawTile(g);
 		drawObject(g);
 		drawMonster(g);
+		
 	}
 	public abstract void keyPressed(KeyEvent e);
 }
