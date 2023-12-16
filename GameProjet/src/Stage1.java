@@ -41,7 +41,7 @@ public class Stage1 extends Stage {
 	 	
 	 	vine = new ImageIcon("stage/덩쿨.png").getImage();
 		monsterList.add(new Monster1(player, 300, 420, 90, 110, bgX, 2, 300));//x,y,가로,세로,속도,이동거리
-		monsterList.add(new Monster1(player, 700, 240, 90, 110, bgX, 1, 140));
+		monsterList.add(new Monster1(player, 700, 240, 90, 110, bgX, 1, 120));
 		monsterList.add(new Monster1(player, 1000, 420, 90, 110, bgX, 2, 200));
 		monsterList.add(new Monster1(player, 1500, 240, 90, 110, bgX, 1, 230));
 		monsterList.add(new Monster1(player, 1700, 420, 90, 110, bgX, 2, 400));

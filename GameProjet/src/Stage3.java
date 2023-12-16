@@ -35,7 +35,7 @@ public class Stage3 extends Stage {
 	 	
 	 	monsterList.add(new Monster3(player, 200, 440, 100, 100, bgX, 2, 500));//x,y,가로,세로,속도,이동거리
 	 	monsterList.add(new Monster3(player, 500, 460, 80, 80, bgX, 4, 400));
-	 	monsterList.add(new Monster3(player, 150, 150, 50, 50, bgX, 1, 200));
+	 	monsterList.add(new Monster3(player, 200, 150, 50, 50, bgX, 1, 200));
 	 	monsterList.add(new Monster3(player, 1000, 480, 50, 50, bgX, 2, 300));
 	 	monsterList.add(new Monster3(player, 1500, 450, 80, 80, bgX, 2, 200));
 	 	monsterList.add(new Monster3(player, 2500, 480, 50, 50, bgX, 2, 500));
