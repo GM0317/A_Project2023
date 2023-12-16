@@ -147,7 +147,6 @@ public class Stage3 extends Stage {
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
             }
-
             // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
             if (!onGround) {
                 player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
@@ -175,7 +174,7 @@ public class Stage3 extends Stage {
 	           case KeyEvent.VK_UP:
 	               PortalChek();
 	               break;
-	           case KeyEvent.VK_SPACE:
+/*	           case KeyEvent.VK_SPACE:
 	  	         System.out.println("bgx "+bgX);
 	  	         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
 	  	          int moveAmount = 10; // 한 번에 움직이는 양 설정
@@ -194,7 +193,7 @@ public class Stage3 extends Stage {
 	  	                 ex.printStackTrace();
 	  	             }
 	  	          }
-	  	          break;
+	  	          break;*/
 	       }
 	   }
 	@Override

@@ -62,7 +62,7 @@ public class Stage2 extends Stage {
 	            PortalChek();
 	            PortalChek2();
 	            break;
-	        case KeyEvent.VK_SPACE:
+/*	        case KeyEvent.VK_SPACE:
 		         System.out.println("bgx "+bgX);
 		         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
 		          int moveAmount = 10; // 한 번에 움직이는 양 설정
@@ -81,7 +81,7 @@ public class Stage2 extends Stage {
 		                 ex.printStackTrace();
 		             }
 		          }
-		          break;
+		          break;*/
 			}    
 	    
 	    }

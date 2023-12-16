@@ -72,7 +72,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	}
 	@Override
 	public void paint(Graphics g) {
-		//this.step.setStage(stageList.get(0));
+		//this.step.setStage(stageList.get(2));
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
 	    step.draw(buffer, this); //player 그리기
