@@ -124,19 +124,13 @@ public class Stage1 extends Stage {
 
           for (Rectangle tileBoundary : tileLine) {
               if (playerBox.intersects(tileBoundary)) {
-                  int playerBottom = playerBox.y + playerBox.height;
-                  int tileTop = tileBoundary.y;
-                  int overlap = playerBottom - tileTop;
-                  
+                  //int playerBottom = playerBox.y + playerBox.height;
+                  //int tileTop = tileBoundary.y;
+                 // int overlap = playerBottom - tileTop;             
                 //아래가 추가한 부분
                   // 플레이어가 지정된 범위를 벗어난 경우, 위치를 조정합니다.
                   int newX = player.getX();
                   int newY = player.getY();
-                  
-                  
-                //여기 아래가 플레이어가 지정한 범위를 나가지 못하게 하는건데
-                  // 왼쪽은 배경이 안나가는데 오른쪽은 배경흰색이 보여(이부분은 위에 draw 부분)
-                  //공중에 떠잇는 바닥부분에 점프해서 갔을때 방향키하면 여기도 고정되서 안나가져
                   // X 좌표 조정
                   if (player.getX() < tileBoundary.getMinX()) {
                       newX = (int) tileBoundary.getMinX();
@@ -153,7 +147,7 @@ public class Stage1 extends Stage {
                   // 조정된 위치로 설정
                   player.setX(newX);
                   // 플레이어를 경계선 위로 이동시킴
-                  player.setY(player.getY() - overlap);
+                //  player.setY(player.getY() - overlap);
                   onGround = true; // 바닥에 닿음을 표시
                   break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
               }
@@ -286,7 +280,7 @@ public class Stage1 extends Stage {
 			    };
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {  
+                if (playerBox.intersects(tileBoundary)) { 
                 	canvas.changeStage(2);
                 	player.setX(50);
                 	player.setY(445);

@@ -19,30 +19,36 @@ public class Ruins extends Stage{
 	private Player player;
 	private PlayerHp hp;
 	private Flame flame;
+	private GameCanvas canvas;
+	protected Image portal;
 	protected Image black;
 	protected Image map; //유적 이미지
 	protected Image statue; //동상
 	protected Image statue2;
+	protected Image statue3;
 	protected Image key;
 	protected Image attack; //불꽃
+	protected Image keyEat;
 	private boolean isKeyCollected = false;//key를 먹었는지 안먹었는지 여부 확인
 	private long lastTime = 0; // 마지막 충돌 시간 저장
     private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
     private boolean flip = false;
     private int energy = 100;
-	
 	private int rectX;
     private int rectY;
     private int rectWidth;
     private int rectHeight;
-    
+    private Clip bgClip;
+    private Clip crackClip;
+    private boolean isShattered = false;
     private final int delay = 1000; // 1초마다 생성
     private Timer timer;
     private LinkedList<Flame> flames = new LinkedList<>();
     private LinkedList<Onbject> objectList = new LinkedList<>();
     
-	public Ruins(Player player) {
+	public Ruins(Player player, GameCanvas canvas) {
 		this.flame = new Flame(this);
+		this.canvas = canvas;
 		flames.add(flame);
 		List<String> myList = new ArrayList<String>();
         timer = new Timer(delay, new ActionListener() {
@@ -64,6 +70,8 @@ public class Ruins extends Stage{
 		map = new ImageIcon("stage/유적.png").getImage();
 		key = new ImageIcon("stage/pixel-key.png").getImage();
 		
+		
+		
 	}	
 	public void setPlaer(Player p) {
 		player = p;
@@ -71,16 +79,36 @@ public class Ruins extends Stage{
 	public void draw(Graphics g) {
 		g.drawImage(black, bgX, 0, 3000, 600, null);
 		g.drawImage(map, bgX, 0, 3000, 600, null);
+		g.drawImage(keyEat, 140, 20, 80, 30, null);
 		g.drawImage(statue, 1518+bgX, 1-97,500,700,null);
 		g.drawImage(statue2, 1518+bgX, 1-97,500,700,null);
+		g.drawImage(statue3, 1518+bgX, 1-97,500,700,null);
+		g.drawImage(portal, 2800+bgX, 327,120,150,null);
+		
+//		g.setColor(Color.RED);
+//	    int rectX7 = 2850 + bgX; 
+//	    int rectY7 = 365; 
+//	    int rectWidth7 = 35; 
+//	    int rectHeight7 = 60; 
+//	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 		if (!isKeyCollected) { // 키가 아직 먹히지 않았을 경우에만 키를 그림
 	        g.drawImage(key, 1752 + bgX, 216, 35, 20, null);
+	    }
+		if (energy <= 0) {
+	        statue = null;
+	        statue2 = null;
+	        portal = new ImageIcon("stage/유적 입구.png").getImage();
+	        statue3 = new ImageIcon("stage/깨진 여신상.png").getImage();
 	    }
 	    	check();
 	    	keyCheck();
 	    	flamesCheck();
 	    	flamesCheck2();
-	    	
+	    	flamesCheck3();
+	    	flamesCheck4();
+	    	flamesCheck5();
+	    	flamesCheck6();
+	    	Checkattack();
 	    	if (isKeyCollected) {
 	    		drawEnergyBar(g);
 	    	}
@@ -103,22 +131,14 @@ public class Ruins extends Stage{
                 new Rectangle(0 + bgX, 557, 500, 10),
                 new Rectangle(1400 + bgX, 540, 200, 50) // 예시로 추가된 바닥 영역. 수정이 필요합니다.
             };
-
             boolean onGround = false;
 
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {
-                    //int playerBottom = playerBox.y + playerBox.height;
-                    //int tileTop = tileBoundary.y;
-                    //int overlap = playerBottom - tileTop;
-
-                    // 플레이어를 경계선 위로 이동시킴
-                    //player.setY(player.getY() - overlap);
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
             }
-
             // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
             if (!onGround) {
                 player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
@@ -133,15 +153,28 @@ public class Ruins extends Stage{
 		if(playerBox.intersects(keyBox)) {
 			if (!isKeyCollected) { // 키를 먹은 상태인 경우에만 사운드 재생
 	            isKeyCollected = true; // 키를 먹었으므로 상태 변경
+	            keyEat = new ImageIcon("stage/key 먹음 표시.png").getImage();
 	            statueSound(new File("Sound/여신상 웃음소리.wav")); // 여신상 웃음소리 효과음 재생
-	            statueSound(new File("Sound/Ruins.wav"));
+	            bgSound(new File("Sound/Ruins.wav"));
 	            createFlame();
+	           
 	        }
 			System.out.println("key!");
 			statue2 = new ImageIcon("stage/여신상눈.png").getImage();
 		}else {
 			statue = new ImageIcon("stage/여신상.png").getImage();
 		}
+		if (energy <= 0) {
+	        statue = null;
+	        statue2 = null;
+	        statue3 = new ImageIcon("stage/깨진 여신상.png").getImage();
+	        stopBgSound();
+	        if (!isShattered) {
+	            shattering(new File("Sound/깨지는 소리.wav"));
+	            isShattered = true;
+	        }
+	        //PortalChek();
+	    }
 	}
 	public void flamesCheck() {
 	    Rectangle playerBox = player.getRect();
@@ -167,11 +200,70 @@ public class Ruins extends Stage{
 
 	        if (playerBox.intersects(flameBox)) {
 	        	if (System.currentTimeMillis() - lastTime > Delay) {
-	                hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
+	        		player.getPlayerHp().decreaseHp(50);
 	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
 	                System.out.println("(flame2)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
 	            }   
 	            System.out.println("아!"); // 충돌 시 수행할 동작   
+	        }
+	    }
+	}
+	public void flamesCheck3() {
+	    Rectangle playerBox = player.getRect();    
+	    for (Flame flame : flames) {
+	        Rectangle flameBox = flame.getRect(2); // 각 불꽃 객체의 충돌 영역을 가져옴
+
+	        if (playerBox.intersects(flameBox)) {
+	        	if (System.currentTimeMillis() - lastTime > Delay) {
+	        		player.getPlayerHp().decreaseHp(50);
+	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                System.out.println("(flame2)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+	            }   
+	            System.out.println("흥!"); // 충돌 시 수행할 동작   
+	        }
+	    }
+	}public void flamesCheck4() {
+	    Rectangle playerBox = player.getRect();	    
+	    for (Flame flame : flames) {
+	        Rectangle flameBox = flame.getRect(3); // 각 불꽃 객체의 충돌 영역을 가져옴
+
+	        if (playerBox.intersects(flameBox)) {
+	        	if (System.currentTimeMillis() - lastTime > Delay) {
+	        		player.getPlayerHp().decreaseHp(50);
+	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                System.out.println("(flame2)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+	            }   
+	            System.out.println("아우치!"); // 충돌 시 수행할 동작   
+	        }
+	    }
+	}
+	public void flamesCheck5() {
+	    Rectangle playerBox = player.getRect();    
+	    for (Flame flame : flames) {
+	        Rectangle flameBox = flame.getRect(4); // 각 불꽃 객체의 충돌 영역을 가져옴
+
+	        if (playerBox.intersects(flameBox)) {
+	        	if (System.currentTimeMillis() - lastTime > Delay) {
+	        		player.getPlayerHp().decreaseHp(50);
+	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                System.out.println("(flame2)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+	            }   
+	            System.out.println("핫!"); // 충돌 시 수행할 동작   
+	        }
+	    }
+	}
+	public void flamesCheck6() {
+	    Rectangle playerBox = player.getRect();  
+	    for (Flame flame : flames) {
+	        Rectangle flameBox = flame.getRect(5); // 각 불꽃 객체의 충돌 영역을 가져옴
+
+	        if (playerBox.intersects(flameBox)) {
+	        	if (System.currentTimeMillis() - lastTime > Delay) {
+	        		player.getPlayerHp().decreaseHp(50);
+	                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                System.out.println("(flame2)몬스터와 충돌! 플레이어 체력: " + hp.getHp());
+	            }   
+	            System.out.println("뜨거!"); // 충돌 시 수행할 동작   
 	        }
 	    }
 	}
@@ -190,6 +282,11 @@ public class Ruins extends Stage{
 		case KeyEvent.VK_RIGHT:
 			bgX -= 10;
 			break;
+		case KeyEvent.VK_UP:
+			if(energy <= 0) {
+				PortalChek();
+			}
+            break;
 		}
 	}
 	
@@ -203,23 +300,43 @@ public class Ruins extends Stage{
 		e.printStackTrace();
 		}
 	}
-	private void bgSound(File file) { // 백그라운드 배경음악
-		Clip clip = null;
-		try {
-		clip = AudioSystem.getClip();
-		clip.open(AudioSystem.getAudioInputStream(file));
-		clip.start();
-		} catch (Exception e) {
-		e.printStackTrace();
-		}
+	private void shattering(File file) { // 여신상 웃음소리 효과음 메서드	
+			try {				
+				crackClip = AudioSystem.getClip();
+				crackClip.open(AudioSystem.getAudioInputStream(file));
+				crackClip.start();
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
 	}
-	
+	private void bgSound(File file) { // 백그라운드 배경음악
+		//statueSound(new File("Sound/Ruins.wav"));
+	    try {
+	        bgClip = AudioSystem.getClip();
+	        bgClip.open(AudioSystem.getAudioInputStream(file));
+	        bgClip.start();
+	        if (energy <= 0) {
+	            bgClip.stop();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	private void stopBgSound() {
+	    if (bgClip != null && bgClip.isRunning()) {
+	        bgClip.stop();
+	        System.out.println("Background music stopped.");
+	    } else {
+	        System.out.println("No background music playing.");
+	    }
+	}
+
 	public void createFlame() {
-		if (isKeyCollected) { // 키를 먹은 후에만 불꽃을 생성
+	    if (isKeyCollected && energy > 0) { // 키를 먹은 후에 에너지가 0보다 큰 경우에만 불꽃을 생성
 	        Flame flame = new Flame(this);
 	        flames.add(flame);
 	    }
-    }
+	}
 	private void drawEnergyBar(Graphics g) {
 		g.drawRect(1615+bgX , 60, 300, 20);
 		g.fillRect(1615+bgX, 60, energy * 3, 20);
@@ -229,9 +346,44 @@ public class Ruins extends Stage{
 		this.energy -= 10;
 		else
 		this.energy = 0;
-		}
-
-
+	}
+	public Rectangle BossRect() {
+		return new Rectangle(1720 + bgX, 100, 100, 800);
+	}
+	public boolean Checkattack() {
+	    boolean retValue = false;
+	    if (isKeyCollected) { // 키를 먹은 후에만 여신상과 충돌 체크
+	        for (Attack attack : player.getAttackList()) {
+	            Rectangle bossBox = BossRect();
+	            Rectangle attackBox = new Rectangle(attack.getX(), attack.getY(), 10, 10);
+	            if (bossBox.intersects(attackBox)) {
+	                if (System.currentTimeMillis() - lastTime > Delay) {
+	                    lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                    System.out.println("여신상 공격!");
+	                    retValue = true;
+	                    decreaseEnergy(); // 에너지 감소
+	                }
+	            }
+	        }
+	    }
+	    return retValue;
+	}
+	public void PortalChek() {
+		if (player != null) {
+			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
+					new Rectangle(2850 + bgX, 365, 35, 60)
+			    };
+			Rectangle playerBox = player.getRect();
+            for (Rectangle tileBoundary : tileLine) {
+                if (playerBox.intersects(tileBoundary)) {  
+                	canvas.changeStage(3); //유적으로 이동
+                	player.setX(50);
+                	player.setY(445);
+                	System.out.println("Portal!");	
+                }
+            }	
+		 }
+	}
 	public void drawFlame(int x, int y) {
 	    //Graphics g = getGraphics(); // 현재 패널의 그래픽스 객체 가져오기
 	   // g.drawImage(black, x, y, 20, 20, null); // 불꽃 이미지 그리기 (가로, 세로 크기는 20으로 설정)
