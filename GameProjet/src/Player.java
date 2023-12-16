@@ -283,17 +283,24 @@ public class Player implements KeyListener{
 		isStanding = false;
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_LEFT:
+		        System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
 				isFlip = true;
-				x -= 3;
-				bgX += 10;
+				if(x>0) {
+					x -= 3;
+					bgX += 10;
+				}
+				
 				//System.out.println("왼쪽");
 				break;
 			case KeyEvent.VK_RIGHT:
+				System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
 				isFlip = false;
-				x += 3;
-				bgX -= 10;
+				if(x<750) {
+					x += 3;
+					bgX -= 10;
+				}
 				//System.out.println("오른쪽");
 				break;
 			case KeyEvent.VK_SPACE:
@@ -371,6 +378,12 @@ public class Player implements KeyListener{
     }
     public void setX(int newX) {
         x = newX;
+    }
+    public int getBGX() {
+        return bgX;
+    }
+    public void setBGX(int newBGX) {
+        bgX = newBGX;
     }
 
 	@Override

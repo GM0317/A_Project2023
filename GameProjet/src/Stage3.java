@@ -39,6 +39,9 @@ public class Stage3 extends Stage {
 	public void setPlayer(Player p) {
 		player = p;
 	}
+	public void setBGX(int bgX) {
+	      this.bgX=bgX;
+	}
 	public void draw(Graphics g) {
 	   super.draw(g);
 	   g.drawImage(map, bgX, 0, 3500, 600, null);
@@ -172,6 +175,26 @@ public class Stage3 extends Stage {
 	           case KeyEvent.VK_UP:
 	               PortalChek();
 	               break;
+	           case KeyEvent.VK_SPACE:
+	  	         System.out.println("bgx "+bgX);
+	  	         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
+	  	          int moveAmount = 10; // 한 번에 움직이는 양 설정
+	  	          int repeatCount = 10; // 반복 횟수 설정
+	  	          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
+	  	          for (int i = 0; i < repeatCount; i++) {
+	  	             if (player.isFlip()) {
+	  	                bgX += moveAmount;
+	  	             } else {
+	  	                bgX -= moveAmount;
+	  	             }
+	  	             setBGX(bgX);
+	  	             try {
+	  	                Thread.sleep(sleepDuration); 
+	  	             } catch (InterruptedException ex) {
+	  	                 ex.printStackTrace();
+	  	             }
+	  	          }
+	  	          break;
 	       }
 	   }
 	@Override
@@ -189,9 +212,15 @@ public class Stage3 extends Stage {
 		LinkedList<Monster> removeM = new LinkedList<>();
 		for (Monster monster : monsterList) {
             monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
-        if(monster.getHP()==0) {
-  		  	removeM.add(monster);
-      	  }
+            if(monster.Checkmonster()) {
+ 		         hp.draw(g);
+ 		    }
+ 		    if(monster.Checkattack()) {
+ 		         monster.DieMT(50);
+ 		    }
+	        if(monster.getHP()==0) {
+	  		  	removeM.add(monster);
+	      	}
 		}
 		monsterList.removeAll(removeM);
 	}
