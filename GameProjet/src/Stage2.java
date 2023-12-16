@@ -32,9 +32,23 @@ public class Stage2 extends Stage {
 		Tile3 = new ImageIcon("stage/Tile_11.png").getImage();
 		Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
 		Portal = new ImageIcon("stage/유적 입구.png").getImage();
-		monsterList.add(new Monster2(player, 300, 400, bgX)); //x, y좌표 설정
+		
+		monsterList.add(new Monster2(player, 300, 400, 43, 122, bgX, 1, 100)); //x,y,가로,세로,속도,이동거리
+		monsterList.add(new Monster2(player, 800, 375, 55, 150, bgX, 2, 300));
+		monsterList.add(new Monster2(player, 1200, 80, 43, 122, bgX, 2, 150));
+		monsterList.add(new Monster2(player, 2300, 400, 43, 122, bgX, 2, 400));
 		this.hp = player.getPlayerHp();
 
+	}
+	public void draw(Graphics g) {
+		super.draw(g);
+		drawBackground(g);
+		drawTile(g);
+		drawMonster(g);
+	     for (Monster monster : monsterList) {
+	    	 monster.moveMonster();
+	     }
+		
 	}
 	public void setPlaer(Player p) {
 		player = p;
@@ -62,26 +76,7 @@ public class Stage2 extends Stage {
 	            PortalChek();
 	            PortalChek2();
 	            break;
-/*	        case KeyEvent.VK_SPACE:
-		         System.out.println("bgx "+bgX);
-		         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
-		          int moveAmount = 10; // 한 번에 움직이는 양 설정
-		          int repeatCount = 10; // 반복 횟수 설정
-		          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
-		          for (int i = 0; i < repeatCount; i++) {
-		             if (player.isFlip()) {
-		                bgX += moveAmount;
-		             } else {
-		                bgX -= moveAmount;
-		             }
-		             setBGX(bgX);
-		             try {
-		                Thread.sleep(sleepDuration); 
-		             } catch (InterruptedException ex) {
-		                 ex.printStackTrace();
-		             }
-		          }
-		          break;*/
+
 			}    
 	    
 	    }
@@ -142,6 +137,7 @@ public class Stage2 extends Stage {
 	@Override
 	public void drawMonster(Graphics g) {
 		LinkedList<Monster> removeM = new LinkedList<>();
+		
 		for (Monster monster : monsterList) {
             monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
             if(monster.Checkmonster()) {
@@ -158,6 +154,7 @@ public class Stage2 extends Stage {
 		}
 		monsterList.removeAll(removeM);
 		check();
+		
 		//PortalChek();
 		//PortalChek2();
 	}	

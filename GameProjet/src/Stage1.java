@@ -34,14 +34,18 @@ public class Stage1 extends Stage {
 		background = new ImageIcon("rsc/스테이지1art.png").getImage();		
 		floor = new ImageIcon("stage/stage1 바닥.png").getImage();
 		sign = new ImageIcon("stage/표시판.png").getImage();
-		b = new ImageIcon("stage/stage1 바닥.png").getImage();
+		//b = new ImageIcon("stage/stage1 바닥.png").getImage();
 		Tile = new ImageIcon("stage/Tiles_01.png").getImage();
 		Tile2 = new ImageIcon("stage/Tiles_02.png").getImage();
 	 	Tile3 = new ImageIcon("stage/Tiles_03.png").getImage();
 	 	
 	 	vine = new ImageIcon("stage/덩쿨.png").getImage();
-		monsterList.add(new Monster1(player, 150, 420, bgX));
-	    this.hp = player.getPlayerHp();
+		monsterList.add(new Monster1(player, 300, 420, 90, 110, bgX, 2, 300));//x,y,가로,세로,속도,이동거리
+		monsterList.add(new Monster1(player, 700, 240, 90, 110, bgX, 1, 140));
+		monsterList.add(new Monster1(player, 1000, 420, 90, 110, bgX, 2, 200));
+		monsterList.add(new Monster1(player, 1500, 240, 90, 110, bgX, 1, 230));
+		monsterList.add(new Monster1(player, 1700, 420, 90, 110, bgX, 2, 400));
+		this.hp = player.getPlayerHp();
 	}
 	public boolean backCheck() {
 		
@@ -94,6 +98,9 @@ public class Stage1 extends Stage {
 		    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 		 
 	     drawMonster(g);
+	     for (Monster monster : monsterList) {
+	    	 monster.moveMonster();
+	     }
 	     //PortalChek();
 		 check();	   
 		 vineCheck();
@@ -111,28 +118,22 @@ public class Stage1 extends Stage {
 		switch(e.getKeyCode())
 		{
 		case KeyEvent.VK_LEFT:
-			if(player.getX()>-3) {
-				System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
-				bgX += 10;
-			}
-			break;
-		case KeyEvent.VK_RIGHT:
-			if(player.getX()<750) {
-				System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
-				//x += 3;
-				bgX -= 10;
-			}
-			break;
-		case KeyEvent.VK_UP:
-            vineCheck();
+            bgX += 10; // 배경을 왼쪽으로 스크롤
+            for (Monster monster : monsterList) {
+                monster.moveMonster(1); // 몬스터를 오른쪽으로 이동
+                
+            }
+            break;
+        case KeyEvent.VK_RIGHT:
+            bgX -= 10; // 배경을 오른쪽으로 스크롤
+            for (Monster monster : monsterList) {
+                monster.moveMonster(-1); // 몬스터를 왼쪽으로 이동
+                
+            }
+            break;
+        case KeyEvent.VK_UP:
             PortalChek();
             break;
-		case KeyEvent.VK_SPACE:
-			if (player.isFlip()) {
-                bgX += 100;
-             } else {
-                bgX -= 100;
-             }
 	         /*System.out.println("bgx "+bgX);
 	         System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
 	          int moveAmount = 7; // 한 번에 움직이는 양 설정

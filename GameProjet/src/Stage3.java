@@ -32,8 +32,17 @@ public class Stage3 extends Stage {
 	 	Tile3 = new ImageIcon("stage/Tiles3.png").getImage();
 	 	//Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
 	 	Portal = new ImageIcon("stage/유적 입구.png").getImage();
-	 	monsterList.add(new Monster3(player, 300, 440, bgX));
-	 	monsterList.add(new Monster3(player, 500, 440, bgX));
+	 	
+	 	monsterList.add(new Monster3(player, 200, 440, 100, 100, bgX, 2, 500));//x,y,가로,세로,속도,이동거리
+	 	monsterList.add(new Monster3(player, 500, 460, 80, 80, bgX, 4, 400));
+	 	monsterList.add(new Monster3(player, 150, 150, 50, 50, bgX, 1, 200));
+	 	monsterList.add(new Monster3(player, 1000, 480, 50, 50, bgX, 2, 300));
+	 	monsterList.add(new Monster3(player, 1500, 450, 80, 80, bgX, 2, 200));
+	 	monsterList.add(new Monster3(player, 2500, 480, 50, 50, bgX, 2, 500));
+	 	monsterList.add(new Monster3(player, 2000, 390, 150, 150, bgX, 1, 500));
+	 	monsterList.add(new Monster3(player, 1000, 150, 50, 50, bgX, 2, 200));
+	 	
+	 	
 	 	this.hp = player.getPlayerHp();
 	}
 	public void setPlayer(Player p) {
@@ -46,17 +55,12 @@ public class Stage3 extends Stage {
 	   super.draw(g);
 	   g.drawImage(map, bgX, 0, 3500, 600, null);
 	   g.drawImage(floor, bgX, 0, 3500, 570, null);  
-	   g.drawImage(Portal, Px+bgX, Py ,120, 150, null);
 	   g.drawImage(sign, 3200+bgX, 453 ,100, 100, null);
 	   drawMonster(g);
-	   for(Monster monster : monsterList) {
-		   if(monster.Checkmonster()) {
-			   hp.draw(g);
-		   }
-		   if(monster.Checkattack()) {
-			   hp.draw(g);
-		   }
+	   for (Monster monster : monsterList) {
+	    	 monster.moveMonster();
 	   }
+	   
       
    // 사각형 경계선 그리기
 	    g.setColor(Color.RED);
@@ -174,26 +178,7 @@ public class Stage3 extends Stage {
 	           case KeyEvent.VK_UP:
 	               PortalChek();
 	               break;
-/*	           case KeyEvent.VK_SPACE:
-	  	         System.out.println("bgx "+bgX);
-	  	         System.out.println("player x:"+player.getX()+"player y:"+player.getY());
-	  	          int moveAmount = 10; // 한 번에 움직이는 양 설정
-	  	          int repeatCount = 10; // 반복 횟수 설정
-	  	          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
-	  	          for (int i = 0; i < repeatCount; i++) {
-	  	             if (player.isFlip()) {
-	  	                bgX += moveAmount;
-	  	             } else {
-	  	                bgX -= moveAmount;
-	  	             }
-	  	             setBGX(bgX);
-	  	             try {
-	  	                Thread.sleep(sleepDuration); 
-	  	             } catch (InterruptedException ex) {
-	  	                 ex.printStackTrace();
-	  	             }
-	  	          }
-	  	          break;*/
+           
 	       }
 	   }
 	@Override
