@@ -350,7 +350,7 @@ public class Ruins extends Stage{
 	        bgClip.stop();
 	        System.out.println("Background music stopped.");
 	    } else {
-	        System.out.println("No background music playing.");
+	       // System.out.println("No background music playing.");
 	    }
 	}
 
@@ -395,26 +395,19 @@ public class Ruins extends Stage{
 	    return retValue;
 	}
 	public void PortalChek() {
+		System.out.println("포탈");
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
 					new Rectangle(2850 + bgX, 365, 35, 60)
-			    };
+			};
 			Rectangle playerBox = player.getRect();
-            for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {  
-//                	if (isPortalActive()) { // Check if the portal is active
-                    // Perform actions when the portal is active
-                    //canvas.changeStage(3); // Move to ruins
-                   // player.setX(50);
-                   // player.setY(445);
-                	//Ending();
-                	//ending.showEnding();
-                	taste();
-                    System.out.println("Portal!");
-                } else {
-                	System.out.println("NO");
-                }
-            }	
+	        for (Rectangle tileBoundary : tileLine) {
+	        	if (playerBox.intersects(tileBoundary)) { 
+	        		setPortalActive(true);
+	            } else {
+	            	System.out.println("NO");
+	            }
+	        }
 		 }
 	}
 	public void setPortalActive(boolean isActive) {
@@ -423,9 +416,6 @@ public class Ruins extends Stage{
 	public boolean isPortalActive() {
         return isPortalActive;
     }
-	public void Ending() {
-		Ending = new ImageIcon("Ending/Happy Eending.png").getImage();
-	}
 	public void drawFlame(int x, int y) {
 	    //Graphics g = getGraphics(); // 현재 패널의 그래픽스 객체 가져오기
 	   // g.drawImage(black, x, y, 20, 20, null); // 불꽃 이미지 그리기 (가로, 세로 크기는 20으로 설정)
