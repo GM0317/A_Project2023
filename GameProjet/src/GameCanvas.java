@@ -42,7 +42,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		stageList.add(sg3);
 		stageList.add(sg4);
 
-		this.step.setStage(stageList.get(1));
+		//this.step.setStage(stageList.get(1));
 		
 		ruins.setPlaer(step);
 		addComponentListener(this);
@@ -72,7 +72,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	}
 	@Override
 	public void paint(Graphics g) {
-		//this.step.setStage(stageList.get(2));
+		this.step.setStage(stageList.get(0));
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
 	    step.draw(buffer, this); //player 그리기

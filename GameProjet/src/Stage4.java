@@ -15,13 +15,21 @@ public class Stage4 extends Stage{
 		map = new ImageIcon("stage/Background.png").getImage();
 		floor = new ImageIcon("stage/stage4 Floor.png").getImage();
 	}
-
+	public void draw (Graphics g) {
+		super.draw(g);
+		g.drawImage(map,bgX,-230,2100,800,null);
+		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥	
+		check();
+	}
 	@Override
 	public void drawBackground(Graphics g) {
 		// TODO Auto-generated method stub
-		g.drawImage(map,bgX,-230,2100,800,null);
-		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥
-		check();
+		// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+	    if (bgX > 0) {
+	        bgX = 0;
+	    } else if (bgX < -1100) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -1100;
+	    }
 	}
 
 	@Override

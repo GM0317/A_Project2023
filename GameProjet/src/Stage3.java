@@ -53,6 +53,12 @@ public class Stage3 extends Stage {
 	}
 	public void draw(Graphics g) {
 	   super.draw(g);
+	// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+	    if (bgX > 0) {
+	        bgX = 0;
+	    } else if (bgX < -2513) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2513;
+	    }
 	   g.drawImage(map, bgX, 0, 3500, 600, null);
 	   g.drawImage(floor, bgX, 0, 3500, 570, null);  
 	   g.drawImage(sign, 3200+bgX, 453 ,100, 100, null);

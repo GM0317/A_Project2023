@@ -43,9 +43,10 @@ public class Ruins extends Stage{
     private boolean isShattered = false;
     private final int delay = 1000; // 1초마다 생성
     private Timer timer;
+    private Color energyColor = Color.RED;
     private LinkedList<Flame> flames = new LinkedList<>();
     private LinkedList<Onbject> objectList = new LinkedList<>();
-    
+    private String monsterName = "PERSEPHONE";
 	public Ruins(Player player, GameCanvas canvas) {
 		this.flame = new Flame(this);
 		this.canvas = canvas;
@@ -77,6 +78,11 @@ public class Ruins extends Stage{
 		player = p;
 	}
 	public void draw(Graphics g) {
+		if (bgX > 0) {
+	        bgX = 0;
+	    } else if (bgX < -2010) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2010;
+	    }
 		g.drawImage(black, bgX, 0, 3000, 600, null);
 		g.drawImage(map, bgX, 0, 3000, 600, null);
 		g.drawImage(keyEat, 140, 20, 80, 30, null);
@@ -85,6 +91,10 @@ public class Ruins extends Stage{
 		g.drawImage(statue3, 1518+bgX, 1-97,500,700,null);
 		g.drawImage(portal, 2800+bgX, 327,120,150,null);
 		
+		if (isKeyCollected && energy > 0) {
+		    g.setColor(Color.WHITE); // Set the color of the text
+		    g.drawString(monsterName, 1730 + bgX, 40); // Draw the monster's name at the specified coordinates
+		}
 //		g.setColor(Color.RED);
 //	    int rectX7 = 2850 + bgX; 
 //	    int rectY7 = 365; 
@@ -156,8 +166,7 @@ public class Ruins extends Stage{
 	            keyEat = new ImageIcon("stage/key 먹음 표시.png").getImage();
 	            statueSound(new File("Sound/여신상 웃음소리.wav")); // 여신상 웃음소리 효과음 재생
 	            bgSound(new File("Sound/Ruins.wav"));
-	            createFlame();
-	           
+	            createFlame();      
 	        }
 			System.out.println("key!");
 			statue2 = new ImageIcon("stage/여신상눈.png").getImage();
@@ -338,8 +347,11 @@ public class Ruins extends Stage{
 	    }
 	}
 	private void drawEnergyBar(Graphics g) {
-		g.drawRect(1615+bgX , 60, 300, 20);
-		g.fillRect(1615+bgX, 60, energy * 3, 20);
+	    if (energy > 0) {
+	    	g.setColor(energyColor);
+	        g.drawRect(1615 + bgX, 60, 300, 20);
+	        g.fillRect(1615 + bgX, 60, energy * 3, 20);
+	    }
 	}
 	public void decreaseEnergy() {
 		if(this.energy >= 0)

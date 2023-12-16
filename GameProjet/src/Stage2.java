@@ -40,16 +40,6 @@ public class Stage2 extends Stage {
 		this.hp = player.getPlayerHp();
 
 	}
-	public void draw(Graphics g) {
-		super.draw(g);
-		drawBackground(g);
-		drawTile(g);
-		drawMonster(g);
-	     for (Monster monster : monsterList) {
-	    	 monster.moveMonster();
-	     }
-		
-	}
 	public void setPlaer(Player p) {
 		player = p;
 	}
@@ -80,15 +70,11 @@ public class Stage2 extends Stage {
 			}    
 	    
 	    }
-	@Override
-	public void drawBackground(Graphics g) {
+	public void draw(Graphics g) {
+		super.draw(g);
 		g.drawImage(map, bgX, 0, 3000, 600, null); // 백그라운드 배경
 		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥		
 		g.drawImage(sign, 2800+bgX, 453 ,100, 100, null); //포털
-		
-	}
-	@Override
-	public void drawTile(Graphics g) {
 		// 사다리와 Tile 이미지를 고정된 좌표에 그리기
 	    g.drawImage(Tile, 600 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile2, 635 + bgX, 400, 35, 40, null);
@@ -122,8 +108,23 @@ public class Stage2 extends Stage {
 	    g.drawImage(Tile2, 2105 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile3, 2140 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile4, 2175 + bgX, 400, 35, 40, null);
-	    
 	    g.drawImage(Portal, 1345+bgX, 75 ,130, 150, null);//유적 포털
+	    
+	}
+	@Override
+	public void drawBackground(Graphics g) {
+		
+		if (bgX > 0) {// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+	        bgX = 0;
+	    } else if (bgX < -2010) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2010;
+	    }	
+		
+	}
+	@Override
+	public void drawTile(Graphics g) {   
+		
+	    
 	    g.setColor(Color.RED);
 	    int rectX7 = 3220 + bgX; 
 	    int rectY7 = 460; 

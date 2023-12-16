@@ -47,26 +47,24 @@ public class Stage1 extends Stage {
 		monsterList.add(new Monster1(player, 1700, 420, 90, 110, bgX, 2, 400));
 		this.hp = player.getPlayerHp();
 	}
-	public boolean backCheck() {
-		
-		
+	/*public boolean backCheck() {	
 		Rectangle back = new Rectangle(3500, 0, 100, 2000);
 		Rectangle playerBox = player.getRect();
 		if(back.intersects(playerBox)) {
 			return false;
 		}
 		return true;
-	}
+	}*/
 	public void draw(Graphics g) {
 		super.draw(g);
 		 //여기 아래가 왼쪽은 배경이 안나가게 잘 설정되어있는데 오른쪽이 안되쒀ㅇ
 		//draw 여기만 있음 배경은 고정이 되는데 플레이어만 빠져나가더라
 		
-	    // 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+		// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
 	    if (bgX > 0) {
 	        bgX = 0;
-	    } else if (bgX < -3150) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
-	        bgX = -3150;
+	    } else if (bgX < -2513) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2513;
 	    }
 	     g.drawImage(background, bgX, 0, 3500, 600, null);
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
@@ -131,9 +129,11 @@ public class Stage1 extends Stage {
                 
             }
             break;
-        case KeyEvent.VK_UP:
+		case KeyEvent.VK_UP:
+            vineCheck();
             PortalChek();
             break;
+
 	         /*System.out.println("bgx "+bgX);
 	         System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
 	          int moveAmount = 7; // 한 번에 움직이는 양 설정
