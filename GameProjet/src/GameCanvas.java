@@ -59,7 +59,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 			}
 		}, 0, 1);
 		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
-		changeStage(3);
+		changeStage(1);
 	}
 	public void changeStage(int num) {
 		this.step.setStage(stageList.get(num));
@@ -72,7 +72,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	}
 	@Override
 	public void paint(Graphics g) {
-		this.step.setStage(stageList.get(0));
+		//this.step.setStage(stageList.get(2));
 	    initBuffer(); //Offscreen buffer 초기화
 	    buffer.clearRect(0, 0, dim.width, dim.height);
 	    step.draw(buffer, this); //player 그리기

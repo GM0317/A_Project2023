@@ -45,6 +45,7 @@ public class Stage1 extends Stage {
 		monsterList.add(new Monster1(player, 1000, 420, 90, 110, bgX, 2, 200));
 		monsterList.add(new Monster1(player, 1500, 240, 90, 110, bgX, 1, 230));
 		monsterList.add(new Monster1(player, 1700, 420, 90, 110, bgX, 2, 400));
+		monsterList.add(new Monster1(player, 2500, 420, 90, 110, bgX, 2, 400));
 		this.hp = player.getPlayerHp();
 	}
 	/*public boolean backCheck() {	
