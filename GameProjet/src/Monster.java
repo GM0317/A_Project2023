@@ -1,5 +1,6 @@
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.LinkedList;
 
 public abstract class Monster {
 	protected int x;
@@ -21,6 +22,7 @@ public abstract class Monster {
         
     }
 
+    public abstract void moveMonster();
     public abstract void moveMonster(int direction);
     public abstract void draw(Graphics g, GameCanvas screen);
     public int getX() {
@@ -52,6 +54,7 @@ public abstract class Monster {
     
     public boolean Checkattack() {
     	boolean retValue = false;
+    	LinkedList<Attack> removeAttack = new LinkedList<>(); 
     	for(Attack attack : player.getAttackList()) {
 	        Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
 	        Rectangle attackbox = new Rectangle(attack.getX(), attack.getY(), 10, 10);
@@ -61,6 +64,10 @@ public abstract class Monster {
 	             if (System.currentTimeMillis() - lastTime > Delay) {
 	                 DieMT(50); // 충돌 시 몬스터의 체력을 50 감소
 	                 lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
+	                 removeAttack.add(attack);
+	                 player.getAttackList().removeAll(removeAttack);
+	                 
+	                 System.out.println(player.getAttackList());
 	                 System.out.println("몬스터 공격! 플레이어 체력: " + player.getPlayerHp().getHp()+"몬스터 체력 : " + Mhp);
 	                 retValue = true;
 	             }

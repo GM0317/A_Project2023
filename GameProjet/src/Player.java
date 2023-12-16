@@ -184,7 +184,9 @@ public class Player implements KeyListener{
 	public LinkedList<Attack> getAttackList() {
 		return this.attackList;
 	}
-
+	/*public LinkedList<Attack> setAttackList(attack) {
+		this.attackList=attack;
+	}*/
 	public PlayerHp getPlayerHp() {
 		return this.hp;
 	}
@@ -291,10 +293,9 @@ public class Player implements KeyListener{
 		        System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
 				isFlip = true;
-				if(x>0) {
-					x -= 3;
-					bgX += 10;
-				}
+				x -= 3;
+				bgX += 10;
+				
 				
 				//System.out.println("왼쪽");
 				break;
@@ -302,10 +303,8 @@ public class Player implements KeyListener{
 				System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
 				isFlip = false;
-				if(x<750) {
-					x += 3;
-					bgX -= 10;
-				}
+				x += 3;
+				bgX -= 10;
 				//System.out.println("오른쪽");
 				break;
 			case KeyEvent.VK_SPACE:
@@ -331,11 +330,11 @@ public class Player implements KeyListener{
 	                // 공격 애니메이션 재생 또는 공격에 따른 동작 수행
 	                if (isFlip) {
 	                    // 캐릭터가 반전된 상태이면, 오른쪽으로 공격
-	                	attackList.add(new Attack(x + 65, y + 12, 1, 3));
+	                	attackList.add(new Attack(x-10 , y + 12, 1, 3));
 	                    //atteck = new Attack(x + 65, y + 12, 1, 3);
 	                } else {
 	                    // 반전되지 않은 상태이면, 왼쪽으로 공격
-	                	attackList.add(new Attack(x + 65, y + 12, 1, 2));
+	                	attackList.add(new Attack(x + 55, y + 12, 1, 2));
 	                    //atteck = new Attack(x + 65, y + 12, 1, 2);
 	                }
 	            }
