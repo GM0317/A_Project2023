@@ -14,10 +14,16 @@ public class Monster1 extends Monster{
     private State[] states;
     private int stateIdx = 0;
     private BufferedImage sprite;
+    protected int speed; // 몬스터 이동 속도
+    protected int move; // 몬스터 움직이는 거리
+    protected int maxX; // 몬스터 최대 x좌표
+    protected int minX; // 몬스터 최소 x좌표
+    protected boolean isFlipped; // 이미지 반전 여부
 
-   public Monster1(Player play, int x, int y, int bgX) {
-
-	   super(play, x, y, 90, 110, 200);
+   public Monster1(Player play, int x, int y, int w, int h, int bgX, int speed, int move) {
+	   super(play, x, y, w, h, 100);
+	   this.speed=speed;
+	   this.move=move;
        monsterImage = new ImageIcon("rsc/모나피.png").getImage();
        loadImage();
         
@@ -74,7 +80,10 @@ public class Monster1 extends Monster{
         state.start_y = 260;
         state.frame_size = 2;
         state.stop = true;
+        
       
+        maxX=x+move;
+        minX=x;
 
     }
     private void loadImage() {
@@ -131,9 +140,41 @@ public class Monster1 extends Monster{
     public void moveMonster(int direction) {
     	// direction이 1이면 오른쪽, -1이면 왼쪽으로 이동
         if (direction == 1) {
-        	x += 10;
+        	if(player.getX()>3) {
+        		minX += 10;
+        		maxX += 10;
+        	}
+        		
+        	
         } else if (direction == -1) {
-        	x -= 10;
+        	if(player.getX()>3)
+        	{
+        		minX -= 10;
+        		maxX -= 10;
+        	}
+        		
         }
+    }
+    @Override
+    public void moveMonster() {
+        // 몬스터가 일정한 속도로 계속해서 왼쪽과 오른쪽으로 반복해서 이동
+    	//System.out.println("몬스터 이동");
+    	
+    		x += speed; // 몬스터의 현재 방향으로 이동
+
+            // x 좌표가 오른쪽 끝에 도달하면 방향을 반전하고 이미지도 반전
+            if (x >= maxX) {
+                x = maxX;
+                speed = -speed; // 방향 반전
+                isFlipped = true; // 이미지 반전 플래그 설정
+            }
+
+            // x 좌표가 왼쪽 끝에 도달하면 방향을 반전하고 이미지도 반전
+            if (x <= minX) {
+                x = minX;
+                speed = -speed; // 방향 반전
+                isFlipped = false; // 이미지 반전 플래그 해제
+            }
+    	
     }
 }

@@ -34,6 +34,9 @@ public class PlayerHp {
         }
         
     }
+    public void returnHP(int num) {
+    	hp=num;
+    }
     
     public int getHp() {
         return hp; // 플레이어 체력을 반환

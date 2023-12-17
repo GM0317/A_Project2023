@@ -20,11 +20,11 @@ public class GameScreen extends JFrame{
 		GameCanvas canvas = new GameCanvas();
 		add(canvas);
 		setVisible(true); // 창을 화면애 보여준다. (이거 없으면 창 안보임.)
-
 	}
 	public static void main(String[] args) {
-        new GameStart();
-		//GameScreen gameScreen = new GameScreen(); // GameScreen 객체 생성
+       new GameStart();
+        //GameScreen gameScreen = new GameScreen(); // GameScreen 객체 생성
 	    //gameScreen.setVisible(true); // GameScreen 객체의 setVisible(true) 호출
-    }
+	    //gameScreen.dispose();
+    }	
 }

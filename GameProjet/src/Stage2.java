@@ -32,14 +32,30 @@ public class Stage2 extends Stage {
 		Tile3 = new ImageIcon("stage/Tile_11.png").getImage();
 		Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
 		Portal = new ImageIcon("stage/유적 입구.png").getImage();
-		monsterList.add(new Monster2(player, 300, 400, bgX)); //x, y좌표 설정
+		
+		monsterList.add(new Monster2(player, 300, 400, 43, 122, bgX, 1, 100)); //x,y,가로,세로,속도,이동거리
+		monsterList.add(new Monster2(player, 800, 375, 55, 150, bgX, 2, 300));
+		monsterList.add(new Monster2(player, 1300, 80, 43, 122, bgX, 2, 150));
+		monsterList.add(new Monster2(player, 2300, 400, 43, 122, bgX, 2, 400));
 		this.hp = player.getPlayerHp();
 
+	}
+	public void draw(Graphics g) {
+		super.draw(g);
+		drawBackground(g);
+		drawTile(g);
+		drawMonster(g);
+	     for (Monster monster : monsterList) {
+	    	 monster.moveMonster();
+	     }
+		
 	}
 	public void setPlaer(Player p) {
 		player = p;
 	}
-	
+	public void setBGX(int bgX) {
+	      this.bgX=bgX;
+	}
 	@Override
 	public void keyPressed(KeyEvent e) {
 	    switch (e.getKeyCode()) {
@@ -57,10 +73,11 @@ public class Stage2 extends Stage {
 	            }
 	            break;
 	        case KeyEvent.VK_UP:
-	            PortalChek();
+	            //PortalChek();
 	            PortalChek2();
 	            break;
 			}    
+	    
 	    }
 	@Override
 	public void drawBackground(Graphics g) {
@@ -119,15 +136,24 @@ public class Stage2 extends Stage {
 	@Override
 	public void drawMonster(Graphics g) {
 		LinkedList<Monster> removeM = new LinkedList<>();
+		
 		for (Monster monster : monsterList) {
             monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
-            //monster.moveMonster();
+            if(monster.Checkmonster()) {
+ 		         hp.draw(g);
+ 		    }
+            if(monster.Checkattack()) {
+ 		         monster.DieMT(50);
+ 		    }
             if(monster.getHP()==0) {
   		  	removeM.add(monster);
+  		  	
       	  }
+            
 		}
 		monsterList.removeAll(removeM);
 		check();
+		
 		//PortalChek();
 		//PortalChek2();
 	}	
@@ -145,12 +171,7 @@ public class Stage2 extends Stage {
 			boolean onGround = false;
 
             for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {
-                    //int playerBottom = playerBox.y + playerBox.height;
-                    //int tileTop = tileBoundary.y;
-                    //int overlap = playerBottom - tileTop;
-                    // 플레이어를 경계선 위로 이동시킴
-                    //player.setY(player.getY() - overlap);
+                if (playerBox.intersects(tileBoundary)) {             
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
@@ -163,7 +184,7 @@ public class Stage2 extends Stage {
             System.out.println("플레이어 객체가 null입니다.");	
 		 }
 	}
-	public void PortalChek() {
+	/*public void PortalChek() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
 			        new Rectangle(1392+bgX, 140 , 35, 60)
@@ -178,7 +199,7 @@ public class Stage2 extends Stage {
                 }
             }	
 		 }
-	}
+	}*/
 	public void PortalChek2() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열

@@ -13,7 +13,7 @@ public class Flame{
     private List<Image> flames; // 여러 개의 불꽃 이미지를 저장할 리스트
     private List<Integer> xList; // 불꽃의 x 좌표를 저장할 리스트
     private List<Integer> yList; // 불꽃의 y 좌표를 저장할 리스트
-    private int numberOfFlames = 3; // 생성할 불꽃 개수
+    private int numberOfFlames = 6; // 생성할 불꽃 개수
 
     public Flame(Stage stage) {
     	this.stage = stage;

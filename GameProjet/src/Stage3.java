@@ -32,28 +32,41 @@ public class Stage3 extends Stage {
 	 	Tile3 = new ImageIcon("stage/Tiles3.png").getImage();
 	 	//Tile4 = new ImageIcon("stage/Tile_12.png").getImage();
 	 	Portal = new ImageIcon("stage/유적 입구.png").getImage();
-	 	monsterList.add(new Monster3(player, 300, 440, bgX));
-	 	monsterList.add(new Monster3(player, 500, 440, bgX));
+	 	
+	 	monsterList.add(new Monster3(player, 200, 440, 100, 100, bgX, 2, 500));//x,y,가로,세로,속도,이동거리
+	 	monsterList.add(new Monster3(player, 500, 460, 80, 80, bgX, 4, 400));
+	 	monsterList.add(new Monster3(player, 200, 150, 50, 50, bgX, 1, 200));
+	 	monsterList.add(new Monster3(player, 1000, 480, 50, 50, bgX, 2, 300));
+	 	monsterList.add(new Monster3(player, 1500, 450, 80, 80, bgX, 2, 200));
+	 	monsterList.add(new Monster3(player, 2500, 480, 50, 50, bgX, 2, 500));
+	 	monsterList.add(new Monster3(player, 2000, 390, 150, 150, bgX, 1, 500));
+	 	monsterList.add(new Monster3(player, 1000, 150, 50, 50, bgX, 2, 200));
+	 	
+	 	
 	 	this.hp = player.getPlayerHp();
 	}
 	public void setPlayer(Player p) {
 		player = p;
 	}
+	public void setBGX(int bgX) {
+	      this.bgX=bgX;
+	}
 	public void draw(Graphics g) {
 	   super.draw(g);
+	// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+	    if (bgX > 0) {
+	        bgX = 0;
+	    } else if (bgX < -2513) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2513;
+	    }
 	   g.drawImage(map, bgX, 0, 3500, 600, null);
 	   g.drawImage(floor, bgX, 0, 3500, 570, null);  
-	   g.drawImage(Portal, Px+bgX, Py ,120, 150, null);
 	   g.drawImage(sign, 3200+bgX, 453 ,100, 100, null);
 	   drawMonster(g);
-	   for(Monster monster : monsterList) {
-		   if(monster.Checkmonster()) {
-			   hp.draw(g);
-		   }
-		   if(monster.Checkattack()) {
-			   hp.draw(g);
-		   }
+	   for (Monster monster : monsterList) {
+	    	 monster.moveMonster();
 	   }
+	   
       
    // 사각형 경계선 그리기
 	    g.setColor(Color.RED);
@@ -144,7 +157,6 @@ public class Stage3 extends Stage {
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
             }
-
             // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
             if (!onGround) {
                 player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
@@ -172,6 +184,7 @@ public class Stage3 extends Stage {
 	           case KeyEvent.VK_UP:
 	               PortalChek();
 	               break;
+           
 	       }
 	   }
 	@Override
@@ -189,9 +202,15 @@ public class Stage3 extends Stage {
 		LinkedList<Monster> removeM = new LinkedList<>();
 		for (Monster monster : monsterList) {
             monster.draw(g, canvas);  // 몬스터 리스트에 있는 몬스터들을 그림
-        if(monster.getHP()==0) {
-  		  	removeM.add(monster);
-      	  }
+            if(monster.Checkmonster()) {
+ 		         hp.draw(g);
+ 		    }
+ 		    if(monster.Checkattack()) {
+ 		         monster.DieMT(50);
+ 		    }
+	        if(monster.getHP()==0) {
+	  		  	removeM.add(monster);
+	      	}
 		}
 		monsterList.removeAll(removeM);
 	}
@@ -204,7 +223,7 @@ public class Stage3 extends Stage {
 			Rectangle playerBox = player.getRect();
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(4); 
+                	canvas.changeStage(0); 
                 	player.setX(50);
                 	player.setY(445);
                 	System.out.println("Portal!");	
