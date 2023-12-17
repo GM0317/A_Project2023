@@ -200,7 +200,7 @@ public class Player implements KeyListener{
 	private void loadImage() {
 		try {
 			this.sprite = ImageIO.read(new File("character/step.png"));
-			this.jumping = ImageIO.read(new File("character/jump.png"));
+			this.jumping = ImageIO.read(new File("character/jumping.png"));
 			this.attack = ImageIO.read(new File("character/Attack.png"));
 			this.standing = ImageIO.read(new File("character/standing.png"));
 		} catch (IOException e) {
@@ -222,10 +222,10 @@ public class Player implements KeyListener{
 	        gb.drawImage(jumping,
 	                0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
-	                state.width * state.index_x + state.start_x,
-	                state.height * state.index_y + state.start_y,
-	                state.width * state.index_x + state.width + state.start_x,
-	                state.height * state.index_y + state.start_y + state.height,
+	                state.start_x,
+	                state.start_y,
+	                state.width + state.start_x,
+	                state.start_y + state.height,
 	                gameCanvas);
 	    }
 	    else if (isAttacking) {
@@ -292,7 +292,7 @@ public class Player implements KeyListener{
 		isStanding = false;
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_LEFT:
-		        System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
+		        //System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
 				isFlip = true;
 				x -= 3;
@@ -302,7 +302,7 @@ public class Player implements KeyListener{
 				//System.out.println("왼쪽");
 				break;
 			case KeyEvent.VK_RIGHT:
-				System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
+				//System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
 				isFlip = false;
 				x += 3;
