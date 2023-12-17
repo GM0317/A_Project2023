@@ -43,7 +43,7 @@ public class GameStart extends JFrame {
         setLayout(null);
         setVisible(true);
         
-        bgSound();
+        //bgSound();
        
         
      // 게임 시작 버튼
@@ -89,28 +89,8 @@ public class GameStart extends JFrame {
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
-	}/*
-    private void bgplay() {
-        try {
-            // 오디오 입력 스트림을 가져옵니다.
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("Sound/gamestart.wav"));
-
-            // Clip을 생성하고 열어서 오디오 스트림을 로드합니다.
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-
-            clip.addLineListener(event -> {
-                if (event.getType() == LineEvent.Type.STOP) {
-                    event.getLine().close();
-                }
-            });
-            
-            // Clip을 재생합니다.
-            clip.start();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
+	}
+    
     private void bgSound() { // 백그라운드 배경음악
 	    try {
 	        Clip clip = AudioSystem.getClip();
