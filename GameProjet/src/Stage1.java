@@ -65,9 +65,9 @@ public class Stage1 extends Stage {
 		// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
 	    if (bgX > 0) {
 	        bgX = 0;
-	    } else if (bgX < -2513) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
-	        bgX = -2513;
-	    }
+	    } else if (bgX <-2400) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2400;
+	    } 
 	     g.drawImage(background, bgX, 0, 3500, 600, null);
 	     g.drawImage(floor, bgX, 0, 3500, 560, null);
 	     g.drawImage(b, 3000, 0, 100, 2000, null);

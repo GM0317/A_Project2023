@@ -62,7 +62,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 			}
 		}, 0, 1);
 		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
-		changeStage(0);
+		changeStage(1);
 	}
 	public void changeStage(int num) {
 		this.step.setStage(stageList.get(num));
