@@ -23,7 +23,7 @@ public class GameScreen extends JFrame{
 	}
 	public static void main(String[] args) {
         new GameStart();
-        //GameScreen gameScreen = new GameScreen(); // GameScreen 객체 생성
+       // GameScreen gameScreen = new GameScreen(); // GameScreen 객체 생성
 	    //gameScreen.setVisible(true); // GameScreen 객체의 setVisible(true) 호출
 	    //gameScreen.dispose();
     }	

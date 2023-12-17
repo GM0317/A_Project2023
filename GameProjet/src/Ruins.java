@@ -419,6 +419,7 @@ public class Ruins extends Stage{
 			Rectangle playerBox = player.getRect();
 	        for (Rectangle tileBoundary : tileLine) {
 	        	if (playerBox.intersects(tileBoundary)) { 
+	        		statueSound(new File("Sound/Mae.wav"));
 	        		setPortalActive(true);
 	            } else {
 	            	System.out.println("NO");

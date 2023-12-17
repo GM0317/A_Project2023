@@ -13,6 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -198,7 +200,7 @@ public class Player implements KeyListener{
 	private void loadImage() {
 		try {
 			this.sprite = ImageIO.read(new File("character/step.png"));
-			this.jumping = ImageIO.read(new File("character/jump.png"));
+			this.jumping = ImageIO.read(new File("character/jumping.png"));
 			this.attack = ImageIO.read(new File("character/Attack.png"));
 			this.standing = ImageIO.read(new File("character/standing.png"));
 		} catch (IOException e) {
@@ -220,10 +222,10 @@ public class Player implements KeyListener{
 	        gb.drawImage(jumping,
 	                0, 0,  // 위치
 	                0 + state.width, 0 + state.height, // 크기
-	                state.width * state.index_x + state.start_x,
-	                state.height * state.index_y + state.start_y,
-	                state.width * state.index_x + state.width + state.start_x,
-	                state.height * state.index_y + state.start_y + state.height,
+	                state.start_x,
+	                state.start_y,
+	                state.width + state.start_x,
+	                state.start_y + state.height,
 	                gameCanvas);
 	    }
 	    else if (isAttacking) {
@@ -290,7 +292,7 @@ public class Player implements KeyListener{
 		isStanding = false;
 		switch(e.getKeyCode()){
 			case KeyEvent.VK_LEFT:
-		        System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
+		        //System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = true; // 왼쪽 키 눌렸을 때 flip을 true로 설정하여 이미지 반전
 				isFlip = true;
 				x -= 3;
@@ -300,7 +302,7 @@ public class Player implements KeyListener{
 				//System.out.println("왼쪽");
 				break;
 			case KeyEvent.VK_RIGHT:
-				System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
+				//System.out.println("player 키보드 입력 / player x:"+x+"player y:"+y+"bgx: "+bgX);
 				this.flip = false; // 오른쪽 키 눌렸을 때 flip을 false로 설정하여 이미지 반전 해제
 				isFlip = false;
 				x += 3;
@@ -308,10 +310,12 @@ public class Player implements KeyListener{
 				//System.out.println("오른쪽");
 				break;
 			case KeyEvent.VK_SPACE:
+				statueSound(new File("Sound/jump.wav"));
 				if (!isJump)
 				{ //점프여부 확인하고 점프 기능 실행
 					isJump = true;
 					jump(70);
+					
 				}
 				break;
 			case KeyEvent.VK_UP:
@@ -323,6 +327,7 @@ public class Player implements KeyListener{
 			case KeyEvent.VK_DOWN:
 				break;
 			case KeyEvent.VK_A:
+				statueSound(new File("Sound/shoot.wav"));
 				if (!isAttacking) {
 	                // 공격 중이 아닌 경우에만 공격 생성
 	                isAttacking = true; // 현재 공격 중
@@ -340,6 +345,17 @@ public class Player implements KeyListener{
 	            }
 				break;
 		}
+	}
+	private void statueSound(File file) {
+		Clip clip = null;
+		try {
+		clip = AudioSystem.getClip();
+		clip.open(AudioSystem.getAudioInputStream(file));
+		clip.start();
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		
 	}
 	public Rectangle getRect() {
 		return new Rectangle(x, y, this.states[state].width, this.states[state].height);

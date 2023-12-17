@@ -67,60 +67,7 @@ public class Stage3 extends Stage {
 	    	 monster.moveMonster();
 	   }
 	   
-      
-   // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX = 0 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY = 365; //경계선 Y좌표
-	    int rectWidth = 238; // 경계선 너비
-	    int rectHeight = 40; // 경계선 높이
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX2 = 580 + bgX;
-	    int rectY2 = 200; 
-	    int rectWidth2 = 140;
-	    int rectHeight2 = 40;
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX3 = 930 + bgX;
-	    int rectY3 = 200;
-	    int rectWidth3 = 340;
-	    int rectHeight3 = 40;
-	    
-	    // 사각형 경계선 그리기
-	    g.setColor(Color.RED);
-	    int rectX4 = 1500 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY4 = 300; //경계선 Y좌표
-	    int rectWidth4 = 140; // 경계선 너비
-	    int rectHeight4 = 40; // 경계선 높이
-	    
-	    g.setColor(Color.RED);
-	    int rectX5 = 1700 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY5 = 400; //경계선 Y좌표
-	    int rectWidth5 = 140; // 경계선 너비
-	    int rectHeight5 = 40; // 경계선 높이
-	    
-	    g.setColor(Color.RED);
-	    int rectX6 = 80 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY6 = 200; //경계선 Y좌표
-	    int rectWidth6 = 330; // 경계선 너비
-	    int rectHeight6 = 40; // 경계선 높이
-	    
-	    g.setColor(Color.RED);
-	    int rectX7 = 0 + bgX; //경계선 X좌표, bgX는 배경이 이동할 때 경계선 위치를 고정
-	    int rectY7 = 524; //경계선 Y좌표
-	    int rectWidth7 = 3500; // 경계선 너비
-	    int rectHeight7 = 40; // 경계선 높이
-	    
-	    g.drawRect(rectX, rectY, rectWidth, rectHeight); //타일 경계선
-	    g.drawRect(rectX2, rectY2, rectWidth2, rectHeight2);
-	    g.drawRect(rectX3, rectY3, rectWidth3, rectHeight3);
-	    g.drawRect(rectX4, rectY4, rectWidth4, rectHeight4);
-	    g.drawRect(rectX5, rectY5, rectWidth5, rectHeight5);
-	    g.drawRect(rectX6, rectY6, rectWidth6, rectHeight6);
-	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
+  
 	    
 	    g.drawImage(Tile, 386 + bgX, 129, 530, 180, null);
 	    g.drawImage(Tile, 1305 + bgX, 227, 530, 180, null);
@@ -138,10 +85,11 @@ public class Stage3 extends Stage {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
 					new Rectangle(0 + bgX, 365, 238, 40),
 			        new Rectangle(580 + bgX, 200, 140, 40),
-			        new Rectangle(0 + bgX, 200, 410, 40),
+			        new Rectangle(930 + bgX, 200, 340, 40),
 			        new Rectangle(1500 + bgX, 300, 140, 40),
 			        new Rectangle(1700 + bgX, 400, 140, 40),
-			        new Rectangle(0 + bgX, 524, 3500, 40)
+			        new Rectangle(0 + bgX, 524, 3500, 40),
+			        new Rectangle(80 + bgX, 200, 330, 40)
 			    };
 			boolean onGround = false;
 

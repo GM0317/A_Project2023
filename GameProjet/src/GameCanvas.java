@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ComponentListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.ComponentEvent;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -63,6 +66,9 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		}, 0, 1);
 		setLayout(new GridLayout(1, 1)); // 예시로 GridLayout을 사용하여 한 개의 컴포넌트만 추가할 때
 		changeStage(1);
+		if(ruins.isPortalActive()) {
+			
+		}
 	}
 	public void changeStage(int num) {
 		this.step.setStage(stageList.get(num));
@@ -76,7 +82,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	@Override
 	public void paint(Graphics g) {
 	    initBuffer(); //Offscreen buffer 초기화
-	    buffer.clearRect(0, 0, dim.width, dim.height);
+	   // buffer.clearRect(0, 0, dim.width, dim.height);
 	    step.draw(buffer, this); //player 그리기
 	    g.drawImage(this.offScreen, 0, 0, this);
 	    sg2.moveMonster();// 몬스터 호출
@@ -88,8 +94,9 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	   if(ruins.isPortalActive()) {
 	    	Ending ending = new Ending(ruins);
        	 	ending.showEnding();
-       	 	ending.draw(g);  	 	
-	    }
+       	 	ending.draw(g);  	
+       	 	
+	    }     	
 	}
 	private void initBuffer() {
 		this.dim = getSize();
@@ -99,6 +106,16 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	@Override
 	public void update(Graphics g) {
 		paint(g);
+	}
+	private void statueSound(File file) { // 여신상 웃음소리 효과음 메서드
+		Clip clip = null;
+		try {
+		clip = AudioSystem.getClip();
+		clip.open(AudioSystem.getAudioInputStream(file));
+		clip.start();
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
 	}
 	@Override
 	public void componentResized(ComponentEvent e) {

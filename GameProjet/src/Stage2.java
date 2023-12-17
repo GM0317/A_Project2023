@@ -127,13 +127,13 @@ public class Stage2 extends Stage {
 	    g.drawImage(Tile3, 2140 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile4, 2175 + bgX, 400, 35, 40, null);
 	    
-	    g.drawImage(Portal, 1345+bgX, 75 ,130, 150, null);//유적 포털
+	   // g.drawImage(Portal, 1345+bgX, 75 ,130, 150, null);//유적 포털
 	    g.setColor(Color.RED);
-	    int rectX7 = 3220 + bgX; 
-	    int rectY7 = 460; 
-	    int rectWidth7 = 50; 
-	    int rectHeight7 = 50; 
-	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
+//	    int rectX7 = 3220 + bgX; 
+//	    int rectY7 = 460; 
+//	    int rectWidth7 = 50; 
+//	    int rectHeight7 = 50; 
+//	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 	}
 	public void drawPotal(Graphics g) {
 		
