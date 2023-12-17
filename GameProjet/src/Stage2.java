@@ -84,6 +84,11 @@ public class Stage2 extends Stage {
 		g.drawImage(map, bgX, 0, 3000, 600, null); // 백그라운드 배경
 		g.drawImage(floor, bgX, 0, 3500, 570, null); // 바닥		
 		g.drawImage(sign, 2800+bgX, 453 ,100, 100, null); //포털
+		if (bgX > 0) {// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
+	        bgX = 0;
+	    } else if (bgX < -2010) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
+	        bgX = -2010;
+	    }	
 		
 	}
 	@Override
@@ -171,7 +176,24 @@ public class Stage2 extends Stage {
 			boolean onGround = false;
 
             for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {             
+                if (playerBox.intersects(tileBoundary)) {  
+                	 int newX = player.getX();
+                     int newY = player.getY();
+                     // X 좌표 조정
+                     if (player.getX() < tileBoundary.getMinX()) {
+                         newX = (int) tileBoundary.getMinX();
+                     } else if (player.getX() + player.getWidth() > tileBoundary.getMaxX()) {
+                         newX = (int) (tileBoundary.getMaxX() - player.getWidth());
+                     }
+
+                     // Y 좌표 조정
+                     if (player.getY() < tileBoundary.getMinY()) {
+                         newY = (int) tileBoundary.getMinY();
+                     } else if (player.getY() + player.getHeight() > tileBoundary.getMaxY()) {
+                         newY = (int) (tileBoundary.getMaxY() - player.getHeight());
+                     }
+                     // 조정된 위치로 설정
+                     player.setX(newX);
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }

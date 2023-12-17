@@ -85,10 +85,10 @@ public class GameCanvas extends JPanel implements ComponentListener{
             gameOver.showGameOver();
             gameOver.draw(g);
        }
-	    if(ruins.isPortalActive()) {
+	   if(ruins.isPortalActive()) {
 	    	Ending ending = new Ending(ruins);
        	 	ending.showEnding();
-       	 	ending.draw(g);
+       	 	ending.draw(g);  	 	
 	    }
 	}
 	private void initBuffer() {

@@ -49,14 +49,14 @@ public class Stage1 extends Stage {
 		monsterList.add(new Monster1(player, 2500, 420, 90, 110, bgX, 2, 400));
 		this.hp = player.getPlayerHp();
 	}
-	/*public boolean backCheck() {	
+	public boolean backCheck() {	
 		Rectangle back = new Rectangle(3500, 0, 100, 2000);
 		Rectangle playerBox = player.getRect();
 		if(back.intersects(playerBox)) {
 			return false;
 		}
 		return true;
-	}*/
+	}
 	public void draw(Graphics g) {
 		super.draw(g);
 		 //여기 아래가 왼쪽은 배경이 안나가게 잘 설정되어있는데 오른쪽이 안되쒀ㅇ
@@ -90,11 +90,11 @@ public class Stage1 extends Stage {
 		 g.drawImage(vine, 2500 + bgX, 340, 50, 100, null);
 		 g.drawImage(vine, 2500 + bgX, 410, 50, 100, null);
 		 g.setColor(Color.RED);
-		    int rectX7 = 3220 + bgX; 
-		    int rectY7 = 460; 
-		    int rectWidth7 = 50; 
-		    int rectHeight7 = 50; 
-		    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
+//		    int rectX7 = 3220 + bgX; 
+//		    int rectY7 = 460; 
+//		    int rectWidth7 = 50; 
+//		    int rectHeight7 = 50; 
+//		    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 		 
 	     drawMonster(g);
 	     for (Monster monster : monsterList) {

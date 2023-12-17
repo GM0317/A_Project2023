@@ -147,6 +147,23 @@ public class Stage3 extends Stage {
 
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {
+                	int newX = player.getX();
+                    int newY = player.getY();
+                    // X 좌표 조정
+                    if (player.getX() < tileBoundary.getMinX()) {
+                        newX = (int) tileBoundary.getMinX();
+                    } else if (player.getX() + player.getWidth() > tileBoundary.getMaxX()) {
+                        newX = (int) (tileBoundary.getMaxX() - player.getWidth());
+                    }
+
+                    // Y 좌표 조정
+                    if (player.getY() < tileBoundary.getMinY()) {
+                        newY = (int) tileBoundary.getMinY();
+                    } else if (player.getY() + player.getHeight() > tileBoundary.getMaxY()) {
+                        newY = (int) (tileBoundary.getMaxY() - player.getHeight());
+                    }
+                    // 조정된 위치로 설정
+                    player.setX(newX);
                     //int playerBottom = playerBox.y + playerBox.height;
                     //int tileTop = tileBoundary.y;
                     //int overlap = playerBottom - tileTop;

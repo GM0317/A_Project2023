@@ -36,7 +36,7 @@ public class Ruins extends Stage{
 	private long lastTime = 0; // 마지막 충돌 시간 저장
     private final long Delay = 2000; // 충돌 딜레이: 2초(2000ms)
     private boolean flip = false;
-    private int energy = 1;
+    private int energy = 100;
 	private int rectX;
     private int rectY;
     private int rectWidth;
@@ -156,9 +156,25 @@ public class Ruins extends Stage{
                 new Rectangle(1400 + bgX, 540, 200, 50) // 예시로 추가된 바닥 영역. 수정이 필요합니다.
             };
             boolean onGround = false;
-
             for (Rectangle tileBoundary : tileLine) {
                 if (playerBox.intersects(tileBoundary)) {
+                	int newX = player.getX();
+                    int newY = player.getY();
+                    // X 좌표 조정
+                    if (player.getX() < tileBoundary.getMinX()) {
+                        newX = (int) tileBoundary.getMinX();
+                    } else if (player.getX() + player.getWidth() > tileBoundary.getMaxX()) {
+                        newX = (int) (tileBoundary.getMaxX() - player.getWidth());
+                    }
+
+                    // Y 좌표 조정
+                    if (player.getY() < tileBoundary.getMinY()) {
+                        newY = (int) tileBoundary.getMinY();
+                    } else if (player.getY() + player.getHeight() > tileBoundary.getMaxY()) {
+                        newY = (int) (tileBoundary.getMaxY() - player.getHeight());
+                    }
+                    // 조정된 위치로 설정
+                    player.setX(newX);
                     onGround = true; // 바닥에 닿음을 표시
                     break; // 첫 번째 충돌 발견 시 반복문을 빠져나감
                 }
