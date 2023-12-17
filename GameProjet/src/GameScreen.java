@@ -27,4 +27,4 @@ public class GameScreen extends JFrame{
 	    //gameScreen.setVisible(true); // GameScreen 객체의 setVisible(true) 호출
 	    //gameScreen.dispose();
     }	
-}
+}//

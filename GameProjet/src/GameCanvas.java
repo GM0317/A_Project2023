@@ -139,4 +139,4 @@ public class GameCanvas extends JPanel implements ComponentListener{
 		
 	}
 	
-}
+}//

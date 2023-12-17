@@ -65,4 +65,4 @@ public class Ending extends JPanel implements ActionListener{
             e.printStackTrace();
         }
     }
-}
+}//
