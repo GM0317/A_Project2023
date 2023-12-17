@@ -83,7 +83,7 @@ public class GameCanvas extends JPanel implements ComponentListener{
 	    if(step.getPlayerHp().getHp()==0) {//만약 hp가 0이면 게임 over 화면 출력
        	 GameOver gameOver = new GameOver(step);
             gameOver.showGameOver();
-            gameOver.draw(g);        
+            gameOver.draw(g);
        }
 	    if(ruins.isPortalActive()) {
 	    	Ending ending = new Ending(ruins);

@@ -136,25 +136,6 @@ public class Stage1 extends Stage {
             PortalChek();
             break;
 
-	         /*System.out.println("bgx "+bgX);
-	         System.out.println("stage1 키보드 입력 / player x:"+player.getX()+"player y:"+player.getY());
-	          int moveAmount = 7; // 한 번에 움직이는 양 설정
-	          int repeatCount = 20; // 반복 횟수 설정
-	          int sleepDuration = 5; // 1밀리초마다 쉬도록 설정
-	          for (int i = 0; i < repeatCount; i++) {
-	             if (player.isFlip()) {
-	                bgX += moveAmount;
-	             } else {
-	                bgX -= moveAmount;
-	             }
-	             setBGX(bgX);
-	             try {
-	                Thread.sleep(sleepDuration); 
-	             } catch (InterruptedException ex) {
-	                 ex.printStackTrace();
-	             }
-	          }
-	          break;*/
 		}
 	}
 	public void check() {
@@ -210,60 +191,6 @@ public class Stage1 extends Stage {
       } else {
           System.out.println("플레이어 객체가 null입니다.");	
 		 }
-	/*
-	public void check() {
-		 if (player != null) {
-			Rectangle[] tileLine = {
-			        new Rectangle(0 + bgX, 524, 3500, 40),
-			        new Rectangle(760 + bgX, 340, 125, 1),
-			        new Rectangle(1136 + bgX, 340, 180, 1),
-			        new Rectangle(830 + bgX, 120, 365, 1),
-			        new Rectangle(2190 + bgX, 120, 365, 1),
-			        new Rectangle(2130 + bgX, 340, 180, 1),
-			        new Rectangle(2460 + bgX, 340, 125, 1),
-			        new Rectangle(1535 + bgX, 340, 365, 1)
-			    };
-			Rectangle playerBox = player.getRect();
-			boolean onGround = false;
-			 //아래가 추가한 부분
-            int newX = player.getX();
-            int newY = player.getY();
-            
-            //여기 아래가 플레이어가 지정한 범위를 나가지 못하게 하는건데
-            // 왼쪽은 배경이 안나가는데 오른쪽은 배경흰색이 보여(이부분은 위에 draw 부분)
-            //공중에 떠잇는 바닥부분에 점프해서 갔을때 방향키하면 여기도 고정되서 안나가져
-            
-            // X 좌표 조정 
-            if (player.getX() < tileBoundary.getMinX()) {
-                newX = (int) tileBoundary.getMinX();
-            } else if (player.getX() + player.getWidth() > tileBoundary.getMaxX()) {
-                newX = (int) (tileBoundary.getMaxX() - player.getWidth());
-            }
-            // Y 좌표 조정
-            if (player.getY() < tileBoundary.getMinY()) {
-                newY = (int) tileBoundary.getMinY();
-            } else if (player.getY() + player.getHeight() > tileBoundary.getMaxY()) {
-                newY = (int) (tileBoundary.getMaxY() - player.getHeight());
-            }
-            
-            player.setX(newX); 
-                  
-            // 플레이어를 경계선 위로 이동시킴
-            player.setY(player.getY() - overlap);
-            onGround = true; // 바닥에 닿음을 표시
-            break; // 첫 번째 충돌 발견 시 반복문을 빠져나감    
-            }
-	
-
-
-           // 바닥에 닿지 않았을 경우, 플레이어를 내려감 (중력 적용)
-           if (!onGround) {
-               player.setY(player.getY() + 1); // 플레이어를 아래로 내림 (중력)
-           } else {
-           System.out.println("플레이어 객체가 null입니다.");	
-
-		 }
-		 */
 	}
 	public void vineCheck() {
 	    if (player != null) {
@@ -294,15 +221,9 @@ public class Stage1 extends Stage {
 	public void drawTile(Graphics g) {
 	}	
 	public void paint(Graphics g) {
-		 //super.paint(g);
-	     
-	     //monster1.draw(g); // Monster1 그리기
 	}
 	@Override
 	public void drawBackground(Graphics g) {
-		//super.draw(g);
-	     //g.drawImage(background, bgX, 0, 3000, 600, null);
-	     //g.drawImage(floor, bgX, 0, 3500, 560, null);
 	}
 
 	@Override
