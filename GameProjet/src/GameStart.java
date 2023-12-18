@@ -94,6 +94,7 @@ public class GameStart extends JFrame {
 		} catch (Exception e) {
 		e.printStackTrace();
 		}
+
 	}
     private void bgSound(File file) { // 백그라운드 배경음악
         try {

@@ -1,7 +1,10 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 
 public class PlayerHp {
@@ -26,11 +29,14 @@ public class PlayerHp {
         Heart1 = new ImageIcon("rsc/Heart1.png").getImage();
         Heart0 = new ImageIcon("rsc/Heart0.png").getImage();
     }
+    
     public void decreaseHp(int amount) { // Hp 감소시키기
         hp -= amount;
+        statueSound(new File("Sound/damaged7.wav"));
         if (hp < 0) {
             hp = 0;
             System.out.println("hp감소");
+           
         }
         
     }
@@ -41,6 +47,17 @@ public class PlayerHp {
     public int getHp() {
         return hp; // 플레이어 체력을 반환
     }
+    private void statueSound(File file) {
+		Clip clip = null;
+		try {
+		clip = AudioSystem.getClip();
+		clip.open(AudioSystem.getAudioInputStream(file));
+		clip.start();
+		} catch (Exception e) {
+		e.printStackTrace();
+		}
+		
+	}
 	public void draw(Graphics g) {
             if (hp >= 300) {
                 g.drawImage(Heart6, 18, 18, 98, 30, null); // hp이미지 생성
