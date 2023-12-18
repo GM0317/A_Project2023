@@ -127,13 +127,7 @@ public class Stage2 extends Stage {
 	    g.drawImage(Tile3, 2140 + bgX, 400, 35, 40, null);
 	    g.drawImage(Tile4, 2175 + bgX, 400, 35, 40, null);
 	    
-	   // g.drawImage(Portal, 1345+bgX, 75 ,130, 150, null);//유적 포털
 	    g.setColor(Color.RED);
-//	    int rectX7 = 3220 + bgX; 
-//	    int rectY7 = 460; 
-//	    int rectWidth7 = 50; 
-//	    int rectHeight7 = 50; 
-//	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 	}
 	public void drawPotal(Graphics g) {
 		
@@ -159,8 +153,6 @@ public class Stage2 extends Stage {
 		monsterList.removeAll(removeM);
 		check();
 		
-		//PortalChek();
-		//PortalChek2();
 	}	
 	public void check() {
 		 if (player != null) {
@@ -206,22 +198,6 @@ public class Stage2 extends Stage {
             System.out.println("플레이어 객체가 null입니다.");	
 		 }
 	}
-	/*public void PortalChek() {
-		if (player != null) {
-			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-			        new Rectangle(1392+bgX, 140 , 35, 60)
-			    };
-			Rectangle playerBox = player.getRect();
-            for (Rectangle tileBoundary : tileLine) {
-                if (playerBox.intersects(tileBoundary)) {  
-                	canvas.changeStage(0); //유적으로 이동
-                	player.setX(50);
-                	player.setY(445);
-                	System.out.println("Portal!");	
-                }
-            }	
-		 }
-	}*/
 	public void PortalChek2() {
 		if (player != null) {
 			Rectangle[] tileLine = { // 직사각형 타일 경계선 배열

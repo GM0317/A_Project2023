@@ -89,7 +89,6 @@ public class Monster1 extends Monster{
     private void loadImage() {
           try {
             this.sprite = ImageIO.read(new File("rsc/모나피.png"));
-            //this.sprite = TransformColorToTransparency(this.sprite, new Color(70, 112, 104));
          } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -129,10 +128,6 @@ public class Monster1 extends Monster{
         
         Rectangle playerBox = player.getRect();
         Rectangle monsterBox = new Rectangle(this.x, this.y, this.mWidth, this.mHeight);
-        //Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
-        //g.drawRect(monsterBox.x, monsterBox.y, monsterBox.width, monsterBox.height);
-        //g.drawRect(playerBox.x, playerBox.y, playerBox.width, playerBox.height);
-        //System.out.println(this.getClass().getName()+", "+ playerBox+", "+monsterBox+":"+playerBox.intersects(monsterBox));
         
      }
 

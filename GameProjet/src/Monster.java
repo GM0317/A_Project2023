@@ -39,8 +39,6 @@ public abstract class Monster {
     public boolean Checkmonster() {
        Rectangle playerBox = player.getRect();
        Rectangle monsterBox = new Rectangle(this.getX(), this.getY(), this.mWidth, this.mHeight);
-       //Rectangle attackbox = new Rectangle(boom.getX(), boom.getY(), 10, 10);
-       //System.out.println(this.getClass().getName()+", "+playerBox+", "+monsterBox+":"+playerBox.intersects(monsterBox));
         if (monsterBox.intersects(playerBox)) {
             if (System.currentTimeMillis() - lastTime > Delay) {
                 player.getPlayerHp().decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소

@@ -104,12 +104,6 @@ public class Ruins extends Stage{
 		    g.setColor(Color.WHITE); // Set the color of the text
 		    g.drawString(monsterName, 1730 + bgX, 40); // Draw the monster's name at the specified coordinates
 		}
-//		g.setColor(Color.RED);
-//	    int rectX7 = 2850 + bgX; 
-//	    int rectY7 = 365; 
-//	    int rectWidth7 = 35; 
-//	    int rectHeight7 = 60; 
-//	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 		if (!isKeyCollected) { // 키가 아직 먹히지 않았을 경우에만 키를 그림
 	        g.drawImage(key, 1752 + bgX, 216, 35, 20, null);
 	    }
@@ -128,11 +122,6 @@ public class Ruins extends Stage{
 	    	flamesCheck5();
 	    	flamesCheck6();
 	    	Checkattack();
-	    	/*if(!isPortalActive()) {
-    	    	Ending ending = new Ending(this);
-           	 	ending.showEnding();
-           	 	ending.draw(g);
-    	    }*/
 	    	if (isKeyCollected) {
 	    		drawEnergyBar(g);
 	    	}
@@ -434,8 +423,6 @@ public class Ruins extends Stage{
         return isPortalActive;
     }
 	public void drawFlame(int x, int y) {
-	    //Graphics g = getGraphics(); // 현재 패널의 그래픽스 객체 가져오기
-	   // g.drawImage(black, x, y, 20, 20, null); // 불꽃 이미지 그리기 (가로, 세로 크기는 20으로 설정)
 	}
 	public void taste() {
 		if(isPortalActive()) {

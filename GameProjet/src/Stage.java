@@ -34,15 +34,6 @@ public abstract class Stage {
 	private LinkedList<Onbject> objectList = new LinkedList<>();
 	private LinkedList<Monster> monsterList = new LinkedList<>();
 	public Stage() {
-		/*this.ledder = new Ledder(this);
-		this.tile = new Tile(this);
-		this.tile2 = new Tile2(this);
-		objectList.add(ledder);
-<<<<<<< HEAD
-		objectList.add(tile);
-		objectList.add(tile2);
-=======
-		objectList.add(tile);*/
 		
 	}
 	public void moveMonster() {
@@ -85,44 +76,7 @@ public abstract class Stage {
     
     public void checkMonster(Rectangle playerBox, int y, int initialY, int gravitySpeed) {
 	    boolean isOnTile = false; // 캐릭터가 타일 위에 있는지 여부를 확인하는 플래그
-	 // Stage2의 각 타일에 대한 직사각형 정의
-	  /*  Rectangle[] tileLine = { // 직사각형 타일 경계선 배열
-	        new Rectangle(600 + bgX, 400, 140, 40),
-	        new Rectangle(800 + bgX, 300, 140, 40),
-	        new Rectangle(1000 + bgX, 200, 410, 40),
-	        new Rectangle(1500 + bgX, 300, 140, 40),
-	        new Rectangle(1700 + bgX, 400, 140, 40)
-	        // 필요에 따라 다른 타일의 직사각형 추가 가능
-	    };
-	    // 각 타일과의 충돌 확인
-	    for (Rectangle tileBoundary : tileLine) {
-	        if (playerBox.intersects(tileBoundary)) {
-	            // 타일과의 충돌 감지
-	            // 원하는 작업 수행
-	            System.out.println("타일과 충돌 발생!");
-	            // 여기서 필요한 작업 수행 가능
-	            // 예를 들어, 플레이어의 위치 초기화 또는 특정 동작 수행 등
-	        }
-	    }
-	    // 각 타일 경계와의 충돌 확인
-	    for (Rectangle tileBoundary : tileLine) {
-	        if (playerBox.intersects(tileBoundary)) {
-	            // 타일과의 충돌 감지
-	            isOnTile = true; // 캐릭터가 타일 위에 서있는 것으로 플래그 설정
 	
-	            // 캐릭터 위치를 타일의 윗 표면에 서 있는 위치로 조정
-	            y = tileBoundary.y - height; // 캐릭터의 아래쪽을 타일의 윗쪽에 맞춤
-	
-	            // 필요한 경우 충돌 시 다른 동작 수행
-	
-	            break; // 이미 서 있는 타일이 있으면 다른 타일은 확인할 필요 없음
-	        }
-	    }
-	    if (!isOnTile && y < initialY) {
-	        // 중력이나 낙하 효과 적용
-	        y += gravitySpeed; // 낙하를 위해 'y' 위치 조정
-	        // 낙하 속도를 제어하기 위해 gravitySpeed 조절 가능
-	    }*/
     }
     public abstract void drawBackground(Graphics g);
     public void drawObject(Graphics g) {

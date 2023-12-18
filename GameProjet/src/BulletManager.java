@@ -50,13 +50,6 @@ public class BulletManager {
 
     public void shoot() {
         // 총알 이동 로직
-       /* for (int i = 0; i < numberOfBullets; i++) {
-            int x = xList.get(i);
-            x += bulletSpeed; // 총알의 이동 로직 (예시로 오른쪽으로 이동)
-
-            // 업데이트된 좌표 적용
-            xList.set(i, x);
-        }*/
      // A키를 누르면 활성화되지 않은 총알을 찾아 발사
         for (int i = 0; i < numberOfBullets; i++) {
             if (!isBulletActive.get(i)) {
@@ -80,12 +73,5 @@ public class BulletManager {
                 g.drawImage(bulletImage, x, y, 50, 50, null);
             }
         }
-        // 총알 이미지 그리기
-      /*  for (int i = 0; i < numberOfBullets; i++) {
-            Image bulletImage = bullets.get(i);
-            int x = xList.get(i);
-            int y = yList.get(i);
-            g.drawImage(bulletImage, x, y, 50, 50, null);
-        }*/
     }
 }

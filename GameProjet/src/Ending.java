@@ -51,7 +51,7 @@ public class Ending extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
+    	
     }
     public void playe() {
         bgSound(new File("Sound/Mae.wav"));
@@ -65,4 +65,4 @@ public class Ending extends JPanel implements ActionListener{
             e.printStackTrace();
         }
     }
-}//
+}

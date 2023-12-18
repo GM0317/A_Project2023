@@ -24,8 +24,6 @@ public class Player implements KeyListener{
 	private Jump jump;
 	private JFrame frame;
 	private GameScreen gameScreen;
-	//private Stage2 stage2;
-	//private Stage3 stage3;
 	private Stage stage;
 	private PlayerHp hp;
 	//private Attack atteck;//이건 클래스 가져온
@@ -186,9 +184,6 @@ public class Player implements KeyListener{
 	public LinkedList<Attack> getAttackList() {
 		return this.attackList;
 	}
-	/*public LinkedList<Attack> setAttackList(attack) {
-		this.attackList=attack;
-	}*/
 	public PlayerHp getPlayerHp() {
 		return this.hp;
 	}
@@ -418,13 +413,7 @@ public class Player implements KeyListener{
         case KeyEvent.VK_A:
             isAttacking = false; // 공격 상태 해제
             break;
-            
-//       /* case KeyEvent.VK_SPACE:
-//            // 캐릭터가 점프 중이라면 점프를 중지
-//            if (isJump) {
-//                isJump = false; // 점프를 멈춤
-//            }
-//            break;*/
+
 		}
 	}
 	@Override
@@ -432,23 +421,6 @@ public class Player implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-	/*
-	private void monsterCheck() {
-        Rectangle playerBox = new Rectangle(x, y, width, height);
-        Rectangle monsterBox = new Rectangle(stage.getX()+bgX+10, stage.getY()+8, stage.getWidth()-10, stage.getHeight()-10);
-        
-        System.out.println(playerBox+", "+monsterBox);
-        if (playerBox.intersects(monsterBox)) {
-            if (System.currentTimeMillis() - lastTime > Delay) {
-                hp.decreaseHp(50); // 충돌 시 플레이어의 체력을 50 감소
-                lastTime = System.currentTimeMillis(); // 충돌 시간 갱신
-                System.out.println("몬스터와 충돌! 플레이어 체력: " + hp.getHp());
-            }
-        }
-        stage.checkMonster(playerBox, prevY, initialY, gravitySpeed);
-       
-    }
-    */
 	public void setHp(PlayerHp hp) {
         this.hp = hp; // 플레이어 체력 객체 설정
     }
@@ -477,27 +449,7 @@ public class Player implements KeyListener{
 		}
 		clearAttack(gameCanvas);
 		drawCharacter(getState(), g, gameCanvas);
-		/*
-		if (isAttacking) {
-	        if (atteck.getX() > gameCanvas.getWidth()) {
-	            isAttacking = false;
-	        }
-		} else {
-	        // 기존의 캐릭터 이미지를 그리는 로직
-	        drawCharacter(getState(), g, gameCanvas);
-	    }
-<<<<<<< HEAD
-		//monsterCheck(); // 충돌 체크
-=======
-	    */
-		/*monsterCheck(); // 충돌 체크
->>>>>>> branch 'main' of https://github.com/GM0317/A_Project2023.git
-		width = getState().width;		// 현재 플레이어의 가로와 세로 길이
-		height = getState().height;
-		// 캐릭터의 이전 위치 저장
-		prevX = x;
-		prevY = y;
-		    drawCharacter(getState(), g, gameCanvas);*/
+		
 	}
 
 }

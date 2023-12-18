@@ -14,8 +14,6 @@ public class Jump extends Thread  {
     	player.setJump(true);
         int Y = player.getY();
         int X = player.getX();
-        //this.jumpHeight = Y - this.jumpHeight;
-        //System.out.println("jumpHeight: "+jumpHeight+", y: "+Y);
         final int MoveX = 1; // 앞으로 가는 길이
         final int gravity = 2; // 중력을 낮춤으로써 천천히 점프 및 낙하되도록 설정
         
@@ -34,7 +32,6 @@ public class Jump extends Thread  {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-           //System.out.println("jumpHeight: "+jumpHeight+", y: "+Y);
         }
         
         for (int i=0; i<jumpHeight; i++) {

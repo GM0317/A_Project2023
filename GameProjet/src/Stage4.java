@@ -29,12 +29,6 @@ public class Stage4 extends Stage{
 		g.drawImage(statue, 900 + bgX,375,null);
 		check();
 		statueCheck();
-	/*	g.setColor(Color.RED);
-	    int rectX7 = 1020 + bgX; 
-	    int rectY7 = 400; 
-	    int rectWidth7 = 35; 
-	    int rectHeight7 = 90; 
-	    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);*/
 	}
 	public Rectangle statueRect() {
 		return new Rectangle(1020 + bgX, 400, 35, 90);

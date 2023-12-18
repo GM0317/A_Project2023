@@ -69,11 +69,6 @@ public class Stage1 extends Stage {
 		
 		// 배경이 내가 설정한 범위를 넘어가지 않도록 고정
 	    if (bgX > 0) {
-
-	      /*  bgX = 0;
-	    } else if (bgX <-2400) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
-	        bgX = -2400;
-	    } */
 	        bgX = 0;
 	    } else if (bgX < -2800) {  // 3500 (배경의 전체 너비) - 350 (화면의 너비)
 	        bgX = -2800;
@@ -103,17 +98,11 @@ public class Stage1 extends Stage {
 		 g.drawImage(vine, 2500 + bgX, 340, 50, 100, null);
 		 g.drawImage(vine, 2500 + bgX, 410, 50, 100, null);
 		 g.setColor(Color.RED);
-//		    int rectX7 = 3220 + bgX; 
-//		    int rectY7 = 460; 
-//		    int rectWidth7 = 50; 
-//		    int rectHeight7 = 50; 
-//		    g.drawRect(rectX7, rectY7, rectWidth7, rectHeight7);
 		 
 	     drawMonster(g);
 	     for (Monster monster : monsterList) {
 	    	 monster.moveMonster();
 	     }
-	     //PortalChek();
 		 check();	   
 		 vineCheck();
 		 
@@ -168,10 +157,6 @@ public class Stage1 extends Stage {
 
           for (Rectangle tileBoundary : tileLine) {
               if (playerBox.intersects(tileBoundary)) {
-                  //int playerBottom = playerBox.y + playerBox.height;
-                  //int tileTop = tileBoundary.y;
-                 // int overlap = playerBottom - tileTop;             
-                //아래가 추가한 부분
                   // 플레이어가 지정된 범위를 벗어난 경우, 위치를 조정합니다.
                   int newX = player.getX();
                   int newY = player.getY();
@@ -254,12 +239,7 @@ public class Stage1 extends Stage {
 		        if(monster.getHP()==0) {
 		             removeM.add(monster);
 		        }
-//		        if(player.getPlayerHp().getHp()==0) {
-//		        	 GameOver gameOver = new GameOver(player);
-//		             gameOver.showGameOver();
-//		             gameOver.draw(g);
-//		        }
-		        
+		       
 	      }
 	      monsterList.removeAll(removeM);
 

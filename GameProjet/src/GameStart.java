@@ -112,44 +112,8 @@ public class GameStart extends JFrame {
 	        System.out.println("No background music playing.");
 	    }
 	}
-    /*
-    private void bgplay() {
-        try {
-            // 오디오 입력 스트림을 가져옵니다.
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("Sound/gamestart.wav"));
-
-            // Clip을 생성하고 열어서 오디오 스트림을 로드합니다.
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-
-            clip.addLineListener(event -> {
-                if (event.getType() == LineEvent.Type.STOP) {
-                    event.getLine().close();
-                }
-            });
-            
-            // Clip을 재생합니다.
-            clip.start();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }*/
-   /* private void bgSound() { // 백그라운드 배경음악
-	    try {
-	        Clip clip = AudioSystem.getClip();
-	        clip.open(AudioSystem.getAudioInputStream(new File("Sound/gamestart.wav")));
-	        clip.start();
-	        if (!isClassWindowOpen()) {
-	        	clip.stop();
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}*/
+    
 	private boolean isClassWindowOpen() {
-	    // 현재 클래스 창이 열려있는지 확인하는 로직 구현
-	    // 현재 클래스 창이 열려있다면 true 반환, 닫혔다면 false 반환
-	    // 필요에 따라서 해당 메소드를 수정하셔야 합니다.
 	    return true; // 예시로 임의로 true 반환
 	}
     public void paint(Graphics g) {
@@ -160,4 +124,4 @@ public class GameStart extends JFrame {
         g.drawImage(Gamename, 240, 30, 580, 142, this);
         
     }
-}//
+}
